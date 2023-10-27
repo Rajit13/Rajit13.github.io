@@ -58,55 +58,118 @@
 										<br>
 									<h4>Certificates</h4>
 									The major certification for different programs, competitions, and achievements are listed below
-
-									 <div class="image-gallery">
-									        <img id="gallery-image" src="images/certificates/DUNLAP.jpg" alt="Image 1" class="image fit">
-									        <button id="prev-button">Previous</button>
-									        <button id="next-button">Next</button>
-									    </div>
-									
-									    <script>
-									        var images = [
-									            "images/certificates/DUNLAP.jpg",
-									            "images/certificates/IOAA16.jpg",
-									            "images/certificates/IESO.jpg",
-									            "images/certificates/IOAA18.jpg",
-									            "images/certificates/GECAA.jpg",
-									            "images/certificates/IOAA21.jpg"
-									        ];
-									
-									        var currentIndex = 0;
-									        var galleryImage = document.getElementById("gallery-image");
-									        var prevButton = document.getElementById("prev-button");
-									        var nextButton = document.getElementById("next-button");
-									
-									        function showImage(index) {
-									            galleryImage.src = images[index];
-									        }
-									
-									        function autoChangeImage() {
-									            currentIndex = (currentIndex + 1) % images.length;
-									            showImage(currentIndex);
-									        }
-									
-									        // Function to handle previous button click
-									        prevButton.addEventListener("click", function () {
-									            currentIndex = (currentIndex - 1 + images.length) % images.length;
-									            showImage(currentIndex);
-									        });
-									
-									        // Function to handle next button click
-									        nextButton.addEventListener("click", function () {
-									            currentIndex = (currentIndex + 1) % images.length;
-									            showImage(currentIndex);
-									        });
-									
-									        // Initialize with the first image
-									        showImage(currentIndex);
-									
-									        // Automatically change image every 3 seconds (3000 milliseconds)
-									        setInterval(autoChangeImage, 3000);
-									    </script>
+								
+								<style>
+								        .image-gallery {
+								            position: relative;
+								        }
+								
+								        .image-gallery img {
+								            max-width: 100%;
+								        }
+								
+								        .nav-button {
+								            position: absolute;
+								            top: 50%;
+								            transform: translateY(-50%);
+								            background: rgba(0, 0, 0, 0.5);
+								            color: white;
+								            padding: 10px;
+								            border: none;
+								            cursor: pointer;
+								        }
+								
+								        #prev-button {
+								            left: 0;
+								        }
+								
+								        #next-button {
+								            right: 0;
+								        }
+								
+								        .nav-button i {
+								            font-size: 24px;
+								        }
+								
+								        .navigation-indicator {
+								            text-align: center;
+								            margin-top: 10px;
+								        }
+								
+								        .circle {
+								            display: inline-block;
+								            width: 10px;
+								            height: 10px;
+								            border-radius: 50%;
+								            background: rgba(255, 255, 255, 0.5);
+								            margin: 0 5px;
+								        }
+								
+								        .active-circle {
+								            background: white;
+								        }
+								    </style>
+								</head>
+								<body>
+								    <div class="image-gallery">
+								        <button id="prev-button" class="nav-button"><i class="fa fa-arrow-left"></i></button>
+								        <img id="gallery-image" src="images/certificates/DUNLAP.jpg" alt="Image 1" class="image fit">
+								        <button id="next-button" class="nav-button"><i class="fa fa-arrow-right"></i></button>
+								    </div>
+								
+								    <div class="navigation-indicator">
+								        <span class="circle active-circle"></span>
+								        <span class="circle"></span>
+								        <span class="circle"></span>
+								        <span class="circle"></span>
+								        <span class="circle"></span>
+								        <span class="circle"></span>
+								    </div>
+								
+								    <script>
+								        var images = [
+								            "images/certificates/DUNLAP.jpg",
+								            "images/certificates/IOAA16.jpg",
+								            "images/certificates/IESO.jpg",
+								            "images/certificates/IOAA18.jpg",
+								            "images/certificates/GECAA.jpg",
+								            "images/certificates/IOAA21.jpg"
+								        ];
+								
+								        var currentIndex = 0;
+								        var galleryImage = document.getElementById("gallery-image");
+								        var circles = document.querySelectorAll(".circle");
+								
+								        function showImage(index) {
+								            galleryImage.src = images[index];
+								            circles[currentIndex].classList.remove("active-circle");
+								            circles[index].classList.add("active-circle");
+								            currentIndex = index;
+								        }
+								
+								        function autoChangeImage() {
+								            currentIndex = (currentIndex + 1) % images.length;
+								            showImage(currentIndex);
+								        }
+								
+								        // Function to handle previous button click
+								        document.getElementById("prev-button").addEventListener("click", function () {
+								            currentIndex = (currentIndex - 1 + images.length) % images.length;
+								            showImage(currentIndex);
+								        });
+								
+								        // Function to handle next button click
+								        document.getElementById("next-button").addEventListener("click", function () {
+								            currentIndex = (currentIndex + 1) % images.length;
+								            showImage(currentIndex);
+								        });
+								
+								        // Initialize with the first image
+								        showImage(currentIndex);
+								
+								        // Automatically change image every 3 seconds (3000 milliseconds)
+								        setInterval(autoChangeImage, 3000);
+								    </script>
 									
 									<div class="box alt">
 										<div class="row gtr-50 gtr-uniform">
