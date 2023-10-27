@@ -58,70 +58,70 @@
 										<br>
 									<h4>Certificates</h4>
 									The major certifications for different programs, competitions, and achievements are listed below
-								
-									   <style>
-									        .image-gallery {
-									            width: 400px; /* Set the desired width */
-									            height: 300px; /* Set the desired height */
-									            position: relative;
-									            overflow: hidden; /* Hide overflow for images larger than the container */
-									            background: black; /* Black background for the entire box */
-									        }
 									
-									        .image-gallery img {
-									            max-width: none; /* Prevent the image from adjusting its width */
-									            max-height: 100%; /* Adjust height to match gallery box */
-									            display: block;
-									            margin: 0 auto;
-									        }
+									<style>
+									    .image-gallery {
+									        position: relative;
+									    }
 									
-									        .nav-button {
-									            position: absolute;
-									            top: 50%;
-									            transform: translateY(-50%);
-									            background: rgba(0, 0, 0, 0.5);
-									            color: white;
-									            padding: 10px;
-									            border: none;
-									            cursor: pointer;
-									        }
+									    .image-gallery img {
+									        max-width: 100%;
+									        display: block;
+									    }
 									
-									        #prev-button {
-									            left: 0;
-									        }
+									    .nav-button {
+									        position: absolute;
+									        top: 50%;
+									        transform: translateY(-50%);
+									        background: rgba(0, 0, 0, 0.5);
+									        color: white;
+									        padding: 10px;
+									        border: none;
+									        cursor: pointer;
+									        border-radius: 50%; /* Make the button circular */
+									        display: none; /* Initially hidden */
+									    }
 									
-									        #next-button {
-									            right: 0;
-									        }
+									    .nav-button:hover {
+									        background: rgba(0, 0, 0, 0.7); /* Darken the button on hover */
+									    }
 									
-									        .nav-button i {
-									            font-size: 24px;
-									        }
+									    #prev-button {
+									        left: 0;
+									    }
 									
-									        .navigation-indicator {
-									            text-align: center;
-									            margin-top: 10px;
-									        }
+									    #next-button {
+									        right: 0;
+									    }
 									
-									        .circle {
-									            display: inline-block;
-									            width: 10px;
-									            height: 10px;
-									            border-radius: 50%;
-									            background: rgba(128, 128, 128, 0.5); /* Initially gray */
-									            margin: 0 5px;
-									        }
+									    .nav-button i {
+									        font-size: 24px;
+									    }
 									
-									        .active-circle {
-									            background: blue; /* Turns blue when active */
-									        }
-									    </style>
+									    .navigation-indicator {
+									        text-align: center;
+									        margin-top: 10px;
+									    }
+									
+									    .circle {
+									        display: inline-block;
+									        width: 10px;
+									        height: 10px;
+									        border-radius: 50%;
+									        background: rgba(128, 128, 128, 0.5); /* Initially gray */
+									        margin: 0 5px;
+									    }
+									
+									    .active-circle {
+									        background: blue; /* Turns blue when active */
+									    }
+									</style>
 									</head>
 									<body>
 									    <div class="image-gallery">
-									        <button id="prev-button" class="nav-button"><i class="fa fa-arrow-left"></i></button>
-									        <img id="gallery-image" src="images/certificates/DUNLAP.jpg" alt="Image 1" class="image fit">
-									        <button id="next-button" class="nav-button"><i class="fa fa-arrow-right"></i></button>
+									        <button id="prev-button" class="nav-button" onmouseover="showButtons()"><i class="fa fa-arrow-left"></i></button>
+									        <img id="gallery-image" src="images/certificates/DUNLAP.jpg" alt="Image 1" class="image fit" onmouseover="showButtons()" onmouseout="hideButtons()">
+									        <button id="next-button" class="nav-button" onmouseover="showButtons()"><i class="fa fa-arrow-right"></i></button>
 									    </div>
 									
 									    <div class="navigation-indicator">
@@ -146,6 +146,19 @@
 									        var currentIndex = 0;
 									        var galleryImage = document.getElementById("gallery-image");
 									        var circles = document.querySelectorAll(".circle");
+									        var navButtons = document.querySelectorAll(".nav-button");
+									
+									        function showButtons() {
+									            navButtons.forEach(function (button) {
+									                button.style.display = "block";
+									            });
+									        }
+									
+									        function hideButtons() {
+									            navButtons.forEach(function (button) {
+									                button.style.display = "none";
+									            });
+									        }
 									
 									        function showImage(index) {
 									            galleryImage.src = images[index];
@@ -179,7 +192,9 @@
 									        // Automatically change image every 3 seconds (3000 milliseconds)
 									        setInterval(autoChangeImage, 3000);
 									    </script>
-									<br>
+									</body>
+
+								<br>
 									<div class="box alt">
 										<div class="row gtr-50 gtr-uniform">
 											<div class="col-4"><span class="image fit"><img src="images/certificates/DUNLAP.jpg" alt="Summer School" /></span></div>
