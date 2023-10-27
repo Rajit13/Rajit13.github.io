@@ -65,10 +65,11 @@
 									            height: 300px; /* Set the desired height */
 									            position: relative;
 									            overflow: hidden; /* Hide overflow for images larger than the container */
+									            background: black; /* Black background for the entire box */
 									        }
 									
 									        .image-gallery img {
-									            max-width: 100%;
+									            max-width: none; /* Prevent the image from adjusting its width */
 									            max-height: 100%; /* Adjust height to match gallery box */
 									            display: block;
 									            margin: 0 auto;
@@ -178,8 +179,6 @@
 									        // Automatically change image every 3 seconds (3000 milliseconds)
 									        setInterval(autoChangeImage, 3000);
 									    </script>
-									</body>		
-
 									<br>
 									<div class="box alt">
 										<div class="row gtr-50 gtr-uniform">
