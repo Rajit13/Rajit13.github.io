@@ -58,6 +58,33 @@
 										<br>
 									<h4>Certificates</h4>
 									The major certification for different programs, competitions, and achievements are listed below
+
+										<div class="image-gallery">
+										<img id="gallery-image" src="images/certificates/DUNLAP.jpg" alt="Image 1" class="image fit">
+										</div>
+										
+										<script>
+										var images = [
+										    "images/certificates/DUNLAP.jpg",
+										    "images/certificates/IOAA16.jpg",
+										    "images/certificates/IESO.jpg",
+										    "images/certificates/IOAA18.jpg",
+										    "images/certificates/GECAA.jpg",
+										    "images/certificates/IOAA21.jpg"
+										];
+										
+										var currentIndex = 0;
+										var galleryImage = document.getElementById("gallery-image");
+										
+										function changeImage() {
+										    galleryImage.src = images[currentIndex];
+										    currentIndex = (currentIndex + 1) % images.length;
+										}
+										
+										// Change image every 3 seconds (3000 milliseconds)
+										setInterval(changeImage, 3000);
+										</script>
+									
 									<div class="box alt">
 										<div class="row gtr-50 gtr-uniform">
 											<div class="col-4"><span class="image fit"><img src="images/certificates/DUNLAP.jpg" alt="Summer School" /></span></div>
