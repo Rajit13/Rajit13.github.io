@@ -59,13 +59,19 @@
 									<h4>Certificates</h4>
 									The major certifications for different programs, competitions, and achievements are listed below
 								
-										<style>
+									   <style>
 									        .image-gallery {
+									            width: 400px; /* Set the desired width */
+									            height: 300px; /* Set the desired height */
 									            position: relative;
+									            overflow: hidden; /* Hide overflow for images larger than the container */
 									        }
 									
 									        .image-gallery img {
 									            max-width: 100%;
+									            max-height: 100%; /* Adjust height to match gallery box */
+									            display: block;
+									            margin: 0 auto;
 									        }
 									
 									        .nav-button {
@@ -172,7 +178,9 @@
 									        // Automatically change image every 3 seconds (3000 milliseconds)
 									        setInterval(autoChangeImage, 3000);
 									    </script>
-									
+									</body>		
+
+									<br>
 									<div class="box alt">
 										<div class="row gtr-50 gtr-uniform">
 											<div class="col-4"><span class="image fit"><img src="images/certificates/DUNLAP.jpg" alt="Summer School" /></span></div>
