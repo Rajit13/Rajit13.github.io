@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date Request</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #fdf6f7; text-align: center; }
+        .card { background: white; padding: 2rem; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 350px; }
+        button { cursor: pointer; border: none; padding: 10px 20px; border-radius: 20px; margin: 10px; }
+        .yes-btn { background: #e91e63; color: white; width: 80%; font-size: 1.2rem; }
+        .no-btn { background: #eee; color: #555; }
+        .hidden { display: none; }
+        .time-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+    </style>
+</head>
+<body>
+
+    <div id="step1" class="card">
+        <h1>🌸 Will you go on a date with me? 🌸</h1>
+        <button class="yes-btn" onclick="nextStep(2)">YES ♥</button>
+        <button class="no-btn" onclick="alert('Oh no! Try again?')">NO 🥺</button>
+    </div>
+
+    <div id="step2" class="card hidden">
+        <h2>So... when are you free? 📅</h2>
+        <input type="date" id="datePicker" style="width: 90%; padding: 10px;">
+        <div class="time-grid">
+            <button onclick="saveTime('6:00 PM')">6:00 PM</button>
+            <button onclick="saveTime('7:00 PM')">7:00 PM</button>
+            <button onclick="saveTime('8:00 PM')">8:00 PM</button>
+            <button onclick="saveTime('9:00 PM')">9:00 PM</button>
+        </div>
+    </div>
+
+    <div id="step3" class="card hidden">
+        <h1>YAY!! 💕</h1>
+        <p id="finalDetails"></p>
+        <p>I can't wait to see you! 🌷✨</p>
+    </div>
+
+    <script>
+        let selectedDate = "";
+        let selectedTime = "";
+
+        function nextStep(step) {
+            document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
+            document.getElementById('step' + step).classList.remove('hidden');
+        }
+
+        function saveTime(time) {
+            selectedDate = document.getElementById('datePicker').value;
+            selectedTime = time;
+            if(!selectedDate) { alert("Please pick a date first!"); return; }
+            document.getElementById('finalDetails').innerText = `Date: ${selectedDate} at ${selectedTime}`;
+            nextStep(3);
+        }
+    </script>
+</body>
+</html>
