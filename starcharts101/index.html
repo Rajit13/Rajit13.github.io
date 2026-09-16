@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Star Charts 101 and Practices · Book & Observation Knowledge Graph</title>
-  <meta name="description" content="Interactive companion to Star Charts 101 and Practices, including the live book contents and the IOAA 2025 observation knowledge graph.">
+  <title>Star Charts 101 and Practices · Book Reading Guide and Knowledge Graph</title>
+  <meta name="description" content="Interactive companion to Star Charts 101 and Practices, including a book reading guide and the IOAA observation knowledge graph.">
   <link rel="canonical" href="https://rajit13.github.io/starcharts101/">
   <style>
     html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #101319; }
@@ -34,6 +34,60 @@
       const bengaliBookUrl = 'https://www.rokomari.com/book/471442/jyotirbigganer-jotokichu';
       let attempts = 0;
 
+      function buildTocAccordion(doc, tocPanel) {
+        const grid = tocPanel.querySelector('.toc-grid');
+        if (!grid || grid.dataset.accordion === 'true') return;
+
+        const items = [...grid.querySelectorAll('.toc-item')];
+        if (!items.length) return;
+
+        const accordion = doc.createElement('div');
+        accordion.className = 'toc-accordion';
+        let current = null;
+
+        for (const item of items) {
+          const isSection = item.classList.contains('depth-0');
+          const label = item.querySelector('span')?.textContent?.trim() || item.textContent.trim();
+          const page = item.querySelector('small')?.textContent?.trim() || '';
+
+          if (isSection) {
+            const section = doc.createElement('section');
+            section.className = 'toc-section';
+
+            const button = doc.createElement('button');
+            button.type = 'button';
+            button.className = 'toc-section-toggle';
+            button.setAttribute('aria-expanded', 'false');
+            button.innerHTML = `<span>${label}</span><small>${page}</small><b aria-hidden="true">▾</b>`;
+
+            const body = doc.createElement('div');
+            body.className = 'toc-section-body';
+            body.hidden = true;
+
+            button.addEventListener('click', () => {
+              const open = button.getAttribute('aria-expanded') === 'true';
+              button.setAttribute('aria-expanded', String(!open));
+              body.hidden = open;
+              button.querySelector('b').textContent = open ? '▾' : '▴';
+              section.classList.toggle('open', !open);
+            });
+
+            section.append(button, body);
+            accordion.appendChild(section);
+            current = body;
+          } else if (current) {
+            const row = doc.createElement('div');
+            const depth = item.classList.contains('depth-3') ? 3 : item.classList.contains('depth-2') ? 2 : 1;
+            row.className = `toc-subitem depth-${depth}`;
+            row.innerHTML = `<span>${label}</span><small>${page}</small>`;
+            current.appendChild(row);
+          }
+        }
+
+        grid.replaceWith(accordion);
+        accordion.dataset.accordion = 'true';
+      }
+
       function patch() {
         let doc;
         try { doc = frame.contentDocument || frame.contentWindow.document; }
@@ -43,179 +97,73 @@
         const authorLinks = doc.querySelector('.author-links');
         const bookArt = doc.querySelector('.book-art');
         const nav = doc.querySelector('.book-nav');
-        const tocToggle = doc.getElementById('toc-toggle');
+        const oldTocToggle = doc.getElementById('toc-toggle');
         const tocPanel = doc.getElementById('toc-panel');
         const footer = doc.querySelector('.license-foot');
         const workspace = doc.querySelector('main.workspace');
-        if (!authorLinks || !bookArt || !nav || !tocToggle || !tocPanel || !footer || !workspace) return false;
+        if (!authorLinks || !bookArt || !nav || !oldTocToggle || !tocPanel || !footer || !workspace) return false;
         if (doc.documentElement.dataset.polished === 'true') return true;
         doc.documentElement.dataset.polished = 'true';
-        doc.title = 'Star Charts 101 and Practices · Book & Observation Knowledge Graph';
+        doc.title = 'Star Charts 101 and Practices · Book Reading Guide and Knowledge Graph';
 
         const style = doc.createElement('style');
         style.textContent = `
           .author-bar{background:#0d131d!important}
           .author-links .promo-link{display:none!important}
           .author-links .promo-link[href*="orcid.org"]{display:inline-flex!important}
-
-          .author-id small{
-            color:var(--green);
-            font-size:10px;
-            letter-spacing:1.5px;
-            text-transform:uppercase
-          }
-          .author-id a{
-            color:#7ec8ff!important;
-            text-decoration:none!important;
-            font-weight:700!important;
-            font-size:2em!important;
-            line-height:1.1!important;
-            font-variant:small-caps;
-            font-variant-caps:small-caps;
-            letter-spacing:.08em;
-            font-family:"Palatino Linotype","Book Antiqua",Georgia,serif;
-          }
+          .author-id small{color:var(--green);font-size:10px;letter-spacing:1.5px;text-transform:uppercase}
+          .author-id a{color:#7ec8ff!important;text-decoration:none!important;font-weight:700!important;font-size:2em!important;line-height:1.1!important;font-variant:small-caps;font-variant-caps:small-caps;letter-spacing:.08em;font-family:"Palatino Linotype","Book Antiqua",Georgia,serif}
           .author-id a:hover{text-decoration:underline!important}
 
-          .book-art{
-            background:#07101b!important;
-            border-color:#34465d!important;
-            min-height:225px!important;
-            padding:14px!important;
-            box-shadow:inset 0 0 42px rgba(79,132,184,.08);
-          }
-          .book-art a{
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            width:100%;
-            height:100%;
-            pointer-events:none!important;
-            cursor:default!important;
-          }
-          .book-art img{
-            width:100%!important;
-            max-height:255px!important;
-            object-fit:contain!important;
-            background:transparent!important;
-            filter:none!important;
-            transform:rotate(180deg) scaleX(-1)!important;
-            transform-origin:center!important;
-          }
+          .book-art{background:#07101b!important;border-color:#34465d!important;min-height:225px!important;padding:14px!important;box-shadow:inset 0 0 42px rgba(79,132,184,.08)}
+          .book-art a{display:flex;align-items:center;justify-content:center;width:100%;height:100%;pointer-events:none!important;cursor:default!important}
+          .book-art img{width:100%!important;max-height:255px!important;object-fit:contain!important;background:transparent!important;filter:none!important;transform:rotate(180deg) scaleX(-1)!important;transform-origin:center!important}
           .book-art figcaption{display:none!important}
 
           .book-copy h1{line-height:1.12!important}
-          .book-copy h1 .graph-subtitle{
-            display:inline-block;
-            margin-top:6px;
-            font-size:.76em;
-            font-weight:620;
-            color:#cbd5e5;
-          }
+          .book-copy h1 .graph-subtitle{display:inline-block;margin-top:6px;font-size:.76em;font-weight:620;color:#cbd5e5}
 
-          .book-nav #toc-toggle{
-            background:#d9e9ff!important;
-            color:#101319!important;
-            border-color:#d9e9ff!important;
-            font-weight:800!important;
-            box-shadow:0 0 0 1px rgba(255,255,255,.08),0 5px 18px rgba(83,146,214,.18);
-          }
+          .book-callout{display:block!important}
+          .book-callout strong{display:block!important;margin-bottom:5px!important}
+          .book-callout span{display:block!important;max-width:none!important;margin-bottom:10px!important}
+          .book-callout button{display:inline-block!important;margin-top:2px!important}
+
+          .book-nav #toc-toggle{background:#d9e9ff!important;color:#101319!important;border-color:#d9e9ff!important;font-weight:800!important;box-shadow:0 0 0 1px rgba(255,255,255,.08),0 5px 18px rgba(83,146,214,.18)}
           .book-nav #toc-toggle:hover{background:#fff!important}
-          .toc-panel{display:block!important}
+          .toc-panel{display:none!important}
+          .toc-panel.open{display:block!important}
           .toc-head h2{font-size:21px!important}
           .toc-head h2::before{content:'★ ';color:var(--blue)}
 
-          .toc-static{
-            pointer-events:none!important;
-            cursor:default!important;
-          }
-          .toc-static:hover{
-            background:transparent!important;
-            color:inherit!important;
-          }
+          .toc-accordion{display:grid;gap:7px}
+          .toc-section{border:1px solid #30394a;border-radius:7px;background:#151b24;overflow:hidden}
+          .toc-section-toggle{width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:10px;text-align:left;padding:10px 12px!important;border:0!important;border-radius:0!important;background:#191f29!important;color:#fff!important;font-weight:750!important;cursor:pointer!important}
+          .toc-section-toggle:hover{background:#222b38!important}
+          .toc-section-toggle small{color:#8fa0b5;font-weight:400;white-space:nowrap}
+          .toc-section-toggle b{color:var(--blue);font-size:13px}
+          .toc-section-body{padding:5px 8px 9px;background:#121720}
+          .toc-section-body[hidden]{display:none!important}
+          .toc-subitem{display:flex;justify-content:space-between;gap:12px;padding:5px 8px;color:#d8e2ef;font-size:12px;cursor:default;pointer-events:none}
+          .toc-subitem small{color:#8fa0b5;white-space:nowrap}
+          .toc-subitem.depth-2{padding-left:25px;color:#bcc8d8}
+          .toc-subitem.depth-3{padding-left:42px;color:#9fabbc;font-size:11px}
 
-          .ioaa-context-footnote{
-            margin:18px 30px 20px!important;
-            padding:13px 15px!important;
-            border:1px solid #34465d!important;
-            border-left:3px solid var(--green)!important;
-            border-radius:7px!important;
-            background:#151b24!important;
-            color:#cbd5e5!important;
-            font-size:12px!important;
-          }
-          .ioaa-context-footnote strong{
-            display:block;
-            margin-bottom:4px;
-            color:#eef4ff!important;
-            font-size:13px!important;
-          }
+          .ioaa-context-footnote{margin:18px 30px 20px!important;padding:13px 15px!important;border:1px solid #34465d!important;border-left:3px solid var(--green)!important;border-radius:7px!important;background:#151b24!important;color:#cbd5e5!important;font-size:12px!important}
+          .ioaa-context-footnote strong{display:block;margin-bottom:4px;color:#eef4ff!important;font-size:13px!important}
 
-          .license-foot{
-            display:flex!important;
-            align-items:center!important;
-            justify-content:space-between!important;
-            gap:20px!important;
-            flex-wrap:wrap!important;
-          }
-          .footer-license-copy{flex:1 1 620px}
-          .additional-reading{
-            flex:1 0 100%;
-            border-top:1px solid var(--border);
-            padding-top:14px;
-            margin-top:2px;
-          }
-          .additional-reading strong{
-            display:block;
-            margin-bottom:7px;
-            color:var(--text)!important;
-            font-size:13px;
-          }
-          .additional-reading-links{
-            display:flex;
-            flex-wrap:wrap;
-            gap:8px 16px;
-          }
-          .additional-reading a{
-            display:inline-flex;
-            align-items:center;
-            gap:5px;
-            color:var(--blue)!important;
-            text-decoration:none;
-          }
+          .license-foot{display:block!important;padding-top:22px!important}
+          .additional-reading{margin:0 0 18px;padding:0 0 18px;border-bottom:1px solid var(--border)}
+          .additional-reading strong{display:block;margin-bottom:10px;color:var(--text)!important;font-size:20px!important;line-height:1.25}
+          .additional-reading-links{display:grid;gap:8px}
+          .additional-reading a{display:inline-flex;align-items:center;gap:6px;width:max-content;max-width:100%;color:var(--blue)!important;text-decoration:none;font-size:15px!important;font-weight:650}
           .additional-reading a:hover{text-decoration:underline}
-          .page-counter{
-            display:flex;
-            align-items:center;
-            gap:8px;
-            white-space:nowrap;
-            padding:6px 10px;
-            border:1px solid var(--border);
-            border-radius:7px;
-            background:#171d27
-          }
-          .page-counter span{
-            color:var(--muted);
-            font-size:11px;
-            text-transform:uppercase;
-            letter-spacing:.8px
-          }
-          .page-counter img{
-            display:block;
-            height:20px;
-            max-width:160px
-          }
+          .page-counter{display:flex;align-items:center;gap:8px;width:max-content;white-space:nowrap;padding:6px 10px;border:1px solid var(--border);border-radius:7px;background:#171d27;margin-bottom:16px}
+          .page-counter span{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.8px}
+          .page-counter img{display:block;height:20px;max-width:160px}
+          .footer-license-copy{display:block!important;border-top:1px solid var(--border);padding-top:14px!important;margin-top:0!important;color:var(--muted)!important;font-size:12px!important}
 
-          @media(max-width:850px){
-            .author-id a{font-size:1.7em!important}
-            .ioaa-context-footnote{margin-left:18px!important;margin-right:18px!important}
-          }
-          @media(max-width:540px){
-            .book-art{min-height:190px!important}
-            .book-art img{height:180px!important}
-            .license-foot{align-items:flex-start!important}
-            .author-id a{font-size:1.55em!important}
-          }
+          @media(max-width:850px){.author-id a{font-size:1.7em!important}.ioaa-context-footnote{margin-left:18px!important;margin-right:18px!important}}
+          @media(max-width:540px){.book-art{min-height:190px!important}.book-art img{height:180px!important}.author-id a{font-size:1.55em!important}.additional-reading strong{font-size:18px!important}}
         `;
         doc.head.appendChild(style);
 
@@ -239,13 +187,17 @@
         if (eyebrow) eyebrow.textContent = 'INTERACTIVE COMPANION TO THE BOOK';
 
         const title = doc.querySelector('.book-copy h1');
-        if (title) {
-          title.innerHTML = 'Star Charts 101 and Practices<br><span class="graph-subtitle">Book &amp; observation knowledge graph</span>';
-        }
+        if (title) title.innerHTML = 'Star Charts 101 and Practices<br><span class="graph-subtitle">Book Reading Guide and Knowledge Graph</span>';
 
         const intro = doc.querySelector('.book-copy p');
-        if (intro) {
-          intro.innerHTML = '<strong>Star Charts 101 and Practices</strong> is a practice book dedicated to astronomy enthusiasts and students preparing for the Star Charts/Observational Round of Astronomy and Earth Science Olympiads. It is not a full star atlas; rather, it is intended as a practical problem-solving companion. The book draws on the author’s experience as a participant in two international Olympiads, an IOAA team leader since 2018, a stargazer, and an observational astronomer.';
+        if (intro) intro.innerHTML = '<strong>Star Charts 101 and Practices</strong> is a practice book dedicated to astronomy enthusiasts and students preparing for the Star Charts/Observational Round of Astronomy and Earth Science Olympiads. It is not a full star atlas; rather, it is intended as a practical problem-solving companion. The book draws on the author’s experience as a participant in two international Olympiads, an IOAA team leader since 2018, a stargazer, and an observational astronomer.';
+
+        const callout = doc.querySelector('.book-callout');
+        if (callout) {
+          const strong = callout.querySelector('strong');
+          const span = callout.querySelector('span');
+          if (strong) strong.textContent = 'Learn from the book, then explore the links.';
+          if (span) span.textContent = 'The graph shows how book topics support one another and how they connect to several IOAA observation tasks.';
         }
 
         const ioaaNote = doc.querySelector('.ioaa-note');
@@ -255,15 +207,17 @@
           workspace.insertAdjacentElement('afterend', ioaaNote);
         }
 
-        tocPanel.classList.add('open');
-        tocToggle.setAttribute('aria-expanded', 'true');
-        tocToggle.textContent = 'Book contents ▴';
+        buildTocAccordion(doc, tocPanel);
 
-        [...doc.querySelectorAll('.toc-item')].forEach(link => {
-          const div = doc.createElement('div');
-          div.className = link.className + ' toc-static';
-          div.innerHTML = link.innerHTML;
-          link.replaceWith(div);
+        const tocToggle = oldTocToggle.cloneNode(true);
+        oldTocToggle.replaceWith(tocToggle);
+        tocPanel.classList.remove('open');
+        tocToggle.setAttribute('aria-expanded', 'false');
+        tocToggle.textContent = 'Book contents ▾';
+        tocToggle.addEventListener('click', () => {
+          const open = tocPanel.classList.toggle('open');
+          tocToggle.setAttribute('aria-expanded', String(open));
+          tocToggle.textContent = open ? 'Book contents ▴' : 'Book contents ▾';
         });
 
         const order = ['toc-toggle', 'Interactive graph', 'Latest PDF', 'Repository', 'Releases'];
@@ -279,13 +233,7 @@
 
         [...doc.querySelectorAll('a')].forEach(link => {
           const text = link.textContent.trim();
-          if (
-            text === 'Latest PDF' ||
-            /Download latest book PDF/i.test(text) ||
-            /Open full PDF/i.test(text) ||
-            link.href.includes('/releases/latest/download/StarMaps101.pdf') ||
-            link.href.includes('/blob/master/StarMaps101.pdf')
-          ) {
+          if (text === 'Latest PDF' || /Download latest book PDF/i.test(text) || /Open full PDF/i.test(text) || link.href.includes('/releases/latest/download/StarMaps101.pdf') || link.href.includes('/blob/master/StarMaps101.pdf')) {
             link.href = pdfPreview;
             link.target = '_blank';
             link.rel = 'noopener';
@@ -294,14 +242,11 @@
 
         const originalFooterHtml = footer.innerHTML;
         footer.innerHTML = '';
-        const copy = doc.createElement('div');
-        copy.className = 'footer-license-copy';
-        copy.innerHTML = originalFooterHtml;
 
         const reading = doc.createElement('div');
         reading.className = 'additional-reading';
         reading.innerHTML = `
-          <strong>Additional reading for Astronomy Olympiad preparation by Fahim Rajit Hossain Shwadhin</strong>
+          <strong>Additional reading for Astronomy Olympiad preparation</strong>
           <div class="additional-reading-links">
             <a href="${astroPotdUrl}" target="_blank" rel="noopener">Astronomy Problem of the Day — problem collection PDF ↗</a>
             <a href="${bengaliBookUrl}" target="_blank" rel="noopener"><span lang="bn">জ্যোতির্বিজ্ঞানের যতকিছু — অলিম্পিয়াড ও অন্যান্য</span> ↗</a>
@@ -311,8 +256,12 @@
         counter.className = 'page-counter';
         counter.setAttribute('aria-label', 'Star Charts 101 and Practices page views');
         counter.innerHTML = '<span>Page views</span><img src="https://visitor-badge.laobi.icu/badge?page_id=Rajit13.StarMaps101.Interactive" alt="Star Charts 101 and Practices page view counter">';
-        footer.append(copy, counter, reading);
 
+        const copy = doc.createElement('div');
+        copy.className = 'footer-license-copy';
+        copy.innerHTML = originalFooterHtml;
+
+        footer.append(reading, counter, copy);
         return true;
       }
 
