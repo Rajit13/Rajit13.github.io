@@ -28,6 +28,7 @@ window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},cht
 #tip{position:fixed;z-index:40;pointer-events:none;background:#171e28;border:1px solid #56647a;color:#edf2fa;padding:5px 8px;border-radius:5px;box-shadow:0 3px 12px rgba(0,0,0,.35);font-size:12px;max-width:280px}#tip[hidden]{display:none!important}.tip-meta{display:block;color:#9eadbf;font-size:10.5px;margin-top:2px}
 @media(max-width:900px){.author-bar{align-items:flex-start;flex-direction:column;padding-left:18px;padding-right:18px}.author-links{justify-content:flex-start}.author-id a{font-size:1.7em}.book-hero{grid-template-columns:110px minmax(0,1fr);padding-left:18px;padding-right:18px;gap:16px}.book-art{min-height:150px}.book-art img{max-height:165px}.book-nav,.toc-panel,.toolbar{padding-left:18px;padding-right:18px}.workspace{grid-template-columns:1fr}.plot{border-right:0}.side{border-top:1px solid var(--border);max-height:none}.graph-stage{height:610px}.ioaa-context,.method{margin-left:18px;margin-right:18px}.method-grid{grid-template-columns:1fr}}
 @media(max-width:540px){.book-hero{grid-template-columns:1fr}.book-art{max-height:220px}.book-art img{height:180px}.author-id a{font-size:1.55em}.toolbar label{width:100%;justify-content:space-between}.toolbar input{width:min(230px,62vw)}}
+.book-sources{margin:10px 0;padding-left:30px;color:#d8e2ef;font-size:14px;line-height:1.65}.book-sources li{padding:5px 8px 8px 0}.book-sources a{overflow-wrap:anywhere}.sources-pdf{display:inline-block;margin:4px 12px 12px;font-size:13px}
 </style>
 </head>
 <body>
@@ -227,10 +228,40 @@ function parseTexChunks(tex,toc){
   if(!heads.length)splitWindows(clean).forEach((text,j)=>chunks.push({id:'src-all-'+j,type:'document',title:'StarMaps101.tex',page:'',number:'',text,rawLength:clean.length}));
   return chunks;
 }
-function buildToc(toc){
+function sourceTextHtml(text){
+  const tokens=/\\(url|textbf|textit|emph)\{([^{}]*)\}|\\\\|\\&/g;
+  let html='',last=0,match;
+  while((match=tokens.exec(text))){
+    html+=esc(text.slice(last,match.index));
+    if(match[1]==='url'){
+      const label=match[2].trim(),url=/^www\./i.test(label)?'https://'+label:label;
+      html+=/^https?:\/\//i.test(url)?'<a href="'+esc(url)+'" target="_blank" rel="noopener">'+esc(label)+'</a>':esc(label);
+    }else if(match[1]){
+      const tag=match[1]==='textbf'?'strong':'em';html+='<'+tag+'>'+esc(match[2])+'</'+tag+'>';
+    }else html+=match[0]==='\\&'?'&amp;':'<br>';
+    last=tokens.lastIndex;
+  }
+  return html+esc(text.slice(last));
+}
+function bookSourcesHtml(tex){
+  const clean=String(tex||'').replace(/(^|[^\\])%.*$/gm,'$1');
+  const section=/\\section\*?\{Sources\}/i.exec(clean);
+  if(!section)return '';
+  const body=clean.slice(section.index+section[0].length).split(/\\section\*?\{|\\end\{document\}/)[0];
+  const list=/\\begin\{enumerate\}([\s\S]*?)\\end\{enumerate\}/.exec(body);
+  if(!list)return '';
+  const items=list[1].split(/\\item\b/).slice(1).map(x=>x.trim()).filter(Boolean);
+  return '<ol class="book-sources">'+items.map(x=>'<li>'+sourceTextHtml(x)+'</li>').join('')+'</ol>';
+}
+function buildToc(toc,tex){
   const host=$('#tocAccordion');host.innerHTML='';let current=null;
   toc.forEach(item=>{
     if(item.type==='section'){const sec=document.createElement('section');sec.className='toc-section';const b=document.createElement('button');b.className='toc-section-toggle';b.type='button';b.setAttribute('aria-expanded','false');b.innerHTML='<span>'+esc((item.number?item.number+' ':'')+item.title)+'</span><small>p. '+esc(item.page)+'</small><b>▾</b>';const body=document.createElement('div');body.className='toc-section-body';body.hidden=true;b.onclick=()=>{const open=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',String(!open));body.hidden=open;b.querySelector('b').textContent=open?'▾':'▴'};sec.append(b,body);host.append(sec);current=body;
+      if(normalizeTitle(item.title)==='sources'){
+        body.innerHTML=bookSourcesHtml(tex);
+        const pdf=document.createElement('a');pdf.href=pdfUrl+'#nameddest=section.7';pdf.target='_blank';pdf.rel='noopener';pdf.className='sources-pdf';pdf.textContent='Read Sources in the book PDF ↗';body.append(pdf);
+        b.setAttribute('aria-controls','book-sources-panel');body.id='book-sources-panel';
+      }
     }else if(current){const d=document.createElement('div');d.className='toc-subitem '+(item.type==='subsubsection'?'depth-2':'');d.innerHTML='<span>'+esc((item.number?item.number+' ':'')+item.title)+'</span><small>p. '+esc(item.page)+'</small>';current.append(d)}
   });
 }
@@ -378,7 +409,7 @@ function overview(){
 function initAdj(){lookup=new Map(DATA.nodes.map(n=>[n.id,n]));adj=new Map(DATA.nodes.map(n=>[n.id,new Set()]));for(const e of DATA.edges){adj.get(e.source)?.add(e.target);adj.get(e.target)?.add(e.source)}}
 async function boot(){
   try{
-    const [tr,cr]=await Promise.all([fetch(texUrl,{cache:'no-store'}),fetch(tocUrl,{cache:'no-store'})]);if(!tr.ok)throw new Error('TeX HTTP '+tr.status);const tex=await tr.text(),toc=cr.ok?parseToc(await cr.text()):[];buildToc(toc);
+    const [tr,cr]=await Promise.all([fetch(texUrl,{cache:'no-store'}),fetch(tocUrl,{cache:'no-store'})]);if(!tr.ok)throw new Error('TeX HTTP '+tr.status);const tex=await tr.text(),toc=cr.ok?parseToc(await cr.text()):[];buildToc(toc,tex);
     const chunks=parseTexChunks(tex,toc);const corpus=[...chunks.map(c=>c.text),...TASKS.map(x=>x.text+' '+x.skills),...GAPS.map(x=>x.seed)];const idf=makeIdf(corpus);DATA=buildGraph(chunks,idf);initAdj();layout=forceLayout(DATA.nodes,DATA.edges);
     $('#liveStatus').textContent='Full-text sync · '+DATA.topics.length+' live topics · '+chunks.length+' text windows · '+TASKS.length+' IOAA tasks';$('#runtime').innerHTML='<span>'+tex.length.toLocaleString()+' source characters scanned</span><span>'+chunks.length+' full-text windows</span><span>'+DATA.topics.length+' live book topics</span><span>'+DATA.edges.filter(e=>e.kind==='semantic').length+' book-topic relationships</span><span>'+TASKS.length+' equal-weight IOAA 2025 tasks</span><span>'+DATA.edges.filter(e=>e.kind==='association').length+' IOAA topic associations</span><span>book↔IOAA alignment '+DATA.bookAlignment.toFixed(3)+'</span>';
     filter();resize();fit();overview();if(window.MathJax?.typesetPromise)window.MathJax.typesetPromise();
