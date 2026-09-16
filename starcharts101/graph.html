@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Star Maps 101 · Interactive Observation Knowledge Graph</title>
-  <meta name="description" content="Interactive Star Maps 101 knowledge graph connecting book material with IOAA 2025 OM, OT and OP observation tasks.">
+  <meta name="description" content="Interactive companion to Star Charts 101 and Practices by Fahim Rajit Hossain Shwadhin, connecting book topics with each other and with IOAA observation tasks.">
   <style>
     :root { color-scheme: dark; }
     body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #101319; color: #edf2fa; font: 16px/1.5 system-ui, sans-serif; }
@@ -17,10 +17,266 @@
   <script>
     (async () => {
       const source = 'https://raw.githubusercontent.com/Rajit13/Star-Maps-101-and-Practices/master/star-maps-101-graph.html';
+      const bookPdf = 'https://github.com/Rajit13/Star-Maps-101-and-Practices/releases/latest/download/StarMaps101.pdf';
+      const repository = 'https://github.com/Rajit13/Star-Maps-101-and-Practices';
+      const orcid = 'https://orcid.org/0009-0002-4699-8059';
+
       try {
         const response = await fetch(source, { cache: 'no-store' });
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const html = await response.text();
+
+        const sourceHtml = await response.text();
+        const parsed = new DOMParser().parseFromString(sourceHtml, 'text/html');
+        parsed.title = 'Star Maps 101 · Interactive Book & Observation Knowledge Graph';
+
+        const extraStyle = parsed.createElement('style');
+        extraStyle.textContent = `
+          .site-header{padding:0!important;border-bottom:1px solid var(--border)}
+          .author-bar{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:13px 30px;border-bottom:1px solid var(--border);background:#121720}
+          .author-id{display:flex;flex-direction:column;gap:1px;min-width:0}
+          .author-id small{color:var(--green);font-size:10px;letter-spacing:1.5px;text-transform:uppercase}
+          .author-id a{color:var(--text);text-decoration:none;font-weight:750;letter-spacing:.1px}
+          .author-id a:hover{text-decoration:underline}
+          .author-links{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+          .promo-link{display:inline-flex;align-items:center;min-height:38px;padding:7px 12px;border:1px solid #485268;border-radius:7px;color:var(--text);text-decoration:none;background:#232b38;font-size:13px;font-weight:650}
+          .promo-link:hover{background:#344259}
+          .promo-link.primary{background:#d9e9ff;color:#101319;border-color:#d9e9ff}
+          .promo-link.primary:hover{background:#fff}
+          .book-hero{display:grid;grid-template-columns:112px minmax(0,1fr);gap:22px;align-items:center;padding:22px 30px 24px}
+          .book-cover{width:112px;max-height:154px;object-fit:cover;border:1px solid var(--border);border-radius:7px}
+          .book-copy{min-width:0}
+          .book-copy h1{font-size:28px;font-weight:680;margin:4px 0 6px}
+          .book-copy p{color:var(--muted);margin:4px 0;max-width:980px}
+          .book-callout{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:13px;padding:10px 12px;border-left:3px solid var(--blue);background:#171d27;border-radius:0 7px 7px 0}
+          .book-callout strong{color:var(--text)}
+          .book-callout span{color:var(--muted);font-size:13px;flex:1 1 320px}
+          .book-callout button{padding:7px 10px;font-size:13px}
+          .topic-note{padding:10px 12px;margin:10px 0 14px;border:1px solid var(--border);border-radius:8px;background:#171d27;color:#cbd3e1;font-size:13px}
+          .relation-pill{display:inline-block;padding:3px 7px;border:1px solid var(--border);border-radius:999px;color:var(--muted);font-size:11px;margin:2px 4px 2px 0}
+          @media(max-width:850px){
+            .author-bar{align-items:flex-start;flex-direction:column;padding-left:18px;padding-right:18px}
+            .author-links{justify-content:flex-start}
+            .book-hero{grid-template-columns:78px minmax(0,1fr);padding-left:18px;padding-right:18px}
+            .book-cover{width:78px;max-height:112px}
+            .book-copy h1{font-size:23px}
+          }
+        `;
+        parsed.head.appendChild(extraStyle);
+
+        const header = parsed.querySelector('header');
+        if (!header) throw new Error('Graph header not found');
+        header.className = 'site-header';
+        header.innerHTML = `
+          <div class="author-bar">
+            <div class="author-id">
+              <small>Author</small>
+              <a href="${orcid}" target="_blank" rel="noopener">Fahim Rajit Hossain Shwadhin</a>
+            </div>
+            <nav class="author-links" aria-label="Book and author links">
+              <a class="promo-link primary" href="${bookPdf}" target="_blank" rel="noopener">Download the book PDF ↗</a>
+              <a class="promo-link" href="${repository}" target="_blank" rel="noopener">Book repository ↗</a>
+              <a class="promo-link" href="${orcid}" target="_blank" rel="noopener">Author ORCID ↗</a>
+            </nav>
+          </div>
+          <div class="book-hero">
+            <img class="book-cover" src="https://raw.githubusercontent.com/Rajit13/Star-Maps-101-and-Practices/master/starcharts101_cover.png" alt="Cover of Star Charts 101 and Practices">
+            <div class="book-copy">
+              <div class="eyebrow">Interactive companion to the book</div>
+              <h1>Star Maps 101 · Observation knowledge graph</h1>
+              <p>Explore how <strong>Star Charts 101 and Practices</strong> builds observation skills, how its chapters and concepts connect to one another, and how those skills map onto IOAA observation tasks.</p>
+              <div class="book-callout">
+                <strong>Star Charts 101 and Practices</strong>
+                <span>A practical, Olympiad-focused guide to reading the night sky through star maps, charts and observation.</span>
+                <button id="bookmap" type="button">Explore book topic connections</button>
+              </div>
+            </div>
+          </div>`;
+
+        const view = parsed.querySelector('#view');
+        if (!view) throw new Error('View selector not found');
+        if (![...view.options].some(option => option.value === 'topics')) {
+          const option = parsed.createElement('option');
+          option.value = 'topics';
+          option.textContent = 'Book topic relationships';
+          view.insertBefore(option, view.options[1] || null);
+        }
+
+        const help = parsed.querySelector('.help');
+        if (help) help.textContent = 'Drag nodes or the background · Scroll to zoom · Select a node to highlight its neighbours · Choose “Book topic relationships” to isolate how the book concepts build on one another · Square nodes mark proposed training additions';
+
+        const footer = parsed.querySelector('.foot');
+        if (footer) footer.innerHTML = '<strong>Star Charts 101 and Practices</strong> by Fahim Rajit Hossain Shwadhin · Interactive companion reviewed 15 September 2026.<br>Direct / Partial / Gap are preparation judgments, not predicted scores. Internal topic edges describe conceptual relationships within the book; other edges are teaching links from the review.';
+
+        const graphData = parsed.querySelector('#graph-data');
+        if (!graphData) throw new Error('Graph data not found');
+        const data = JSON.parse(graphData.textContent);
+        const additions = [
+          ['coords','lines','coordinate framework'],
+          ['projection','lines','draws reference curves'],
+          ['projection','poles','changes map viewpoint'],
+          ['poles','navigation','orients the sky'],
+          ['monthly','navigation','adds seasonal context'],
+          ['coords','navigation','feeds coordinate transforms'],
+          ['lines','planets','provides ecliptic framework'],
+          ['navigation','planets','locates moving objects'],
+          ['mercator','planets','supports plotted positions'],
+          ['dso','telescope','provides observing targets'],
+          ['coords','telescope','supports chart-to-field location'],
+          ['magnitude','practice','feeds measurement practice'],
+          ['monthly','planets','supports seasonal placement'],
+          ['projection','navigation','connects map to sky geometry'],
+          ['dso','magnitude','connects targets to brightness comparison']
+        ];
+        const edgeKey = edge => `${edge.source}\u0000${edge.target}\u0000${edge.relation}`;
+        const knownEdges = new Set(data.edges.map(edgeKey));
+        for (const [sourceId, targetId, relation] of additions) {
+          const edge = { source: sourceId, target: targetId, relation };
+          if (!knownEdges.has(edgeKey(edge))) data.edges.push(edge);
+        }
+        graphData.textContent = JSON.stringify(data);
+
+        const enhancement = parsed.createElement('script');
+        enhancement.textContent = `(() => {
+          'use strict';
+          const data = JSON.parse(document.getElementById('graph-data').textContent);
+          const lookup = new Map(data.nodes.map(node => [node.id, node]));
+          const view = document.getElementById('view');
+          const paper = document.getElementById('paper');
+          const search = document.getElementById('search');
+          const reset = document.getElementById('reset');
+          const graph = document.getElementById('graph');
+          const details = document.getElementById('details');
+          const status = document.getElementById('status');
+          const bookButton = document.getElementById('bookmap');
+          const bookNodes = data.nodes.filter(node => node.kind === 'book');
+          const bookIds = new Set(bookNodes.map(node => node.id));
+          const bookEdges = data.edges.filter(edge => bookIds.has(edge.source) && bookIds.has(edge.target));
+
+          function escapeHtml(value) {
+            return String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+          }
+
+          function topicMatches() {
+            const query = search.value.trim().toLowerCase();
+            if (!query) return bookNodes.length;
+            return bookNodes.filter(node => (node.label + ' ' + node.body).toLowerCase().includes(query)).length;
+          }
+
+          function topicOverview() {
+            details.innerHTML = '<span class="tag">Book topic map</span>' +
+              '<h2>How the book fits together</h2>' +
+              '<p>This view isolates the book topics themselves. Each line shows a conceptual dependency, shared framework, or practical progression between sections.</p>' +
+              '<div class="topic-note"><strong>Suggested reading path:</strong> constellation recognition → celestial lines and coordinates → sky navigation → moving objects → telescope work → measurement and practice.</div>' +
+              '<div class="stats"><div><b>' + bookNodes.length + '</b>Topics</div><div><b>' + bookEdges.length + '</b>Topic links</div></div>' +
+              '<p><span class="relation-pill">foundation for</span><span class="relation-pill">coordinate framework</span><span class="relation-pill">seasonal context</span><span class="relation-pill">observing targets</span></p>' +
+              '<h3>Explore core topics</h3>' +
+              '<div class="connections">' + ['names','lines','navigation','planets','telescope','practice'].map(id => '<button class="topic-jump" data-topic="' + id + '">' + escapeHtml(lookup.get(id).label) + '</button>').join('') + '</div>';
+            bindTopicButtons();
+          }
+
+          function topicDetails(id) {
+            const node = lookup.get(id);
+            if (!node || !bookIds.has(id)) return;
+            const connected = bookEdges.filter(edge => edge.source === id || edge.target === id);
+            details.innerHTML = '<span class="tag">Book topic relationship</span>' +
+              '<h2>' + escapeHtml(node.label) + '</h2>' +
+              '<p>' + escapeHtml(node.body) + '</p>' +
+              (node.url ? '<a href="' + escapeHtml(node.url) + '" target="_blank" rel="noopener">Open book source ↗</a>' : '') +
+              '<h3>' + connected.length + ' book-topic connections</h3>' +
+              '<div class="connections">' + connected.map(edge => {
+                const other = edge.source === id ? edge.target : edge.source;
+                const direction = edge.source === id ? edge.relation : '← ' + edge.relation;
+                return '<button class="topic-jump" data-topic="' + escapeHtml(other) + '">' + escapeHtml(lookup.get(other).label) + '<small>' + escapeHtml(direction) + '</small></button>';
+              }).join('') + '</div>';
+            bindTopicButtons();
+          }
+
+          function bindTopicButtons() {
+            details.querySelectorAll('.topic-jump').forEach(button => {
+              button.addEventListener('click', () => {
+                const node = document.querySelector('.node[data-id="' + CSS.escape(button.dataset.topic) + '"]');
+                if (node) node.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+              });
+            });
+          }
+
+          function layoutBookTopics() {
+            const nodeElements = new Map([...document.querySelectorAll('#nodes .node')].map(element => [element.dataset.id, element]));
+            const edgeElements = [...document.querySelectorAll('#edges .edge')];
+            const positions = new Map();
+            const ordered = [...bookNodes].sort((a, b) => Number(a.chapter || 99) - Number(b.chapter || 99));
+            const cx = 500, cy = 360, radius = 255;
+
+            for (const [id, element] of nodeElements) element.style.display = bookIds.has(id) ? '' : 'none';
+
+            ordered.forEach((node, index) => {
+              const angle = -Math.PI / 2 + 2 * Math.PI * index / ordered.length;
+              const x = cx + Math.cos(angle) * radius;
+              const y = cy + Math.sin(angle) * radius;
+              positions.set(node.id, { x, y });
+              const element = nodeElements.get(node.id);
+              if (element) element.setAttribute('transform', 'translate(' + x + ',' + y + ')');
+            });
+
+            data.edges.forEach((edge, index) => {
+              const line = edgeElements[index];
+              if (!line) return;
+              const a = positions.get(edge.source);
+              const b = positions.get(edge.target);
+              if (!a || !b) {
+                line.style.display = 'none';
+                return;
+              }
+              line.style.display = '';
+              line.setAttribute('x1', a.x);
+              line.setAttribute('y1', a.y);
+              line.setAttribute('x2', b.x);
+              line.setAttribute('y2', b.y);
+            });
+          }
+
+          function updateTopicStatus() {
+            status.textContent = topicMatches() + ' matching book topics · ' + bookEdges.length + ' topic links';
+          }
+
+          function applyTopicMode() {
+            if (view.value !== 'topics') {
+              paper.disabled = false;
+              return;
+            }
+            if (paper.value !== 'all') paper.value = 'all';
+            paper.disabled = true;
+            layoutBookTopics();
+            topicOverview();
+            updateTopicStatus();
+          }
+
+          view.addEventListener('change', () => {
+            if (view.value === 'topics') setTimeout(applyTopicMode, 0);
+            else paper.disabled = false;
+          });
+          paper.addEventListener('change', () => { if (view.value === 'topics') setTimeout(applyTopicMode, 0); });
+          search.addEventListener('input', () => { if (view.value === 'topics') setTimeout(updateTopicStatus, 0); });
+          reset.addEventListener('click', () => { paper.disabled = false; });
+
+          document.getElementById('nodes').addEventListener('click', event => {
+            if (view.value !== 'topics') return;
+            const node = event.target.closest('.node');
+            if (node && bookIds.has(node.dataset.id)) setTimeout(() => topicDetails(node.dataset.id), 0);
+          });
+
+          if (bookButton) {
+            bookButton.addEventListener('click', () => {
+              paper.value = 'all';
+              view.value = 'topics';
+              view.dispatchEvent(new Event('change', { bubbles: true }));
+              graph.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+          }
+        })();`;
+        parsed.body.appendChild(enhancement);
+
+        const html = '<!doctype html>\n' + parsed.documentElement.outerHTML;
         document.open();
         document.write(html);
         document.close();
