@@ -23,7 +23,7 @@
         const doc=frame.contentDocument||frame.contentWindow.document;
         if(doc&&!doc.querySelector('script[data-astronomy-graph]')){
           const script=doc.createElement('script');
-          script.src='graph-engine-v3.js?v=20260916c';
+          script.src='graph-engine-v4.js?v=20260916d';
           script.dataset.astronomyGraph='true';
           doc.body.appendChild(script);
         }
