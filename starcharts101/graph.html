@@ -3,443 +3,355 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Star Maps 101 · Interactive Book & IOAA 2025 Observation Graph</title>
-  <meta name="description" content="Interactive companion to Star Charts 101 and Practices by Fahim Rajit Hossain Shwadhin, with the live book contents and an IOAA 2025 OM, OT and OP observation knowledge graph.">
+  <title>Star Charts 101 and Practices · Book Reading Guide and Knowledge Graph</title>
+  <meta name="description" content="Live interactive companion to Star Charts 101 and Practices, with book structure generated from the current table of contents and curated observation-training relationships.">
   <style>
-    :root { color-scheme: dark; }
-    body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #101319; color: #edf2fa; font: 16px/1.5 system-ui, sans-serif; }
-    .loading { max-width: 720px; padding: 36px; text-align: center; }
-    a { color: #85b7ff; }
+    :root{color-scheme:dark}
+    body{margin:0;min-height:100vh;display:grid;place-items:center;background:#101319;color:#edf2fa;font:16px/1.5 system-ui,sans-serif}
+    .loading{max-width:720px;padding:36px;text-align:center}
+    a{color:#85b7ff}
   </style>
 </head>
 <body>
-  <div id="status" class="loading">Loading the current Star Maps 101 book companion…</div>
+  <div id="status" class="loading">Loading the current Star Charts 101 book companion…</div>
   <script>
-    (async () => {
-      const repoBase = 'https://github.com/Rajit13/Star-Maps-101-and-Practices';
-      const rawBase = 'https://raw.githubusercontent.com/Rajit13/Star-Maps-101-and-Practices/master';
-      const sourceUrl = rawBase + '/star-maps-101-graph.html';
-      const tocUrl = rawBase + '/StarMaps101.toc';
-      const bookPdf = repoBase + '/releases/latest/download/StarMaps101.pdf';
-      const releasesUrl = repoBase + '/releases';
-      const releaseApi = 'https://api.github.com/repos/Rajit13/Star-Maps-101-and-Practices/releases/latest';
-      const licenseUrl = repoBase + '/blob/master/LICENSE.md';
-      const orcid = 'https://orcid.org/0009-0002-4699-8059';
-      const orionSvg = rawBase + '/images/ori_1.svg';
-      const orionEps = repoBase + '/blob/master/images/ori_1.eps';
+  (async()=>{
+    'use strict';
+    const stamp=Date.now();
+    const repoBase='https://github.com/Rajit13/Star-Maps-101-and-Practices';
+    const rawBase='https://raw.githubusercontent.com/Rajit13/Star-Maps-101-and-Practices/master';
+    const sourceUrl=rawBase+'/star-maps-101-graph.html?v='+stamp;
+    const tocUrl=rawBase+'/StarMaps101.toc?v='+stamp;
+    const bookPdf=rawBase+'/StarMaps101.pdf?v='+stamp;
+    const releasesUrl=repoBase+'/releases';
+    const releaseApi='https://api.github.com/repos/Rajit13/Star-Maps-101-and-Practices/releases/latest';
+    const licenseUrl=repoBase+'/blob/master/LICENSE.md';
+    const portfolio='https://rajit13.github.io/';
+    const orcid='https://orcid.org/0009-0002-4699-8059';
+    const orionSvg=rawBase+'/images/ori_1.svg?v='+stamp;
+    const orionEps=repoBase+'/blob/master/images/ori_1.eps';
 
-      const escapeHtml = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const escapeHtml=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
-      function texText(value) {
-        return value
-          .replace(/\\&/g, '&')
-          .replace(/\\texttt\{([^}]*)\}/g, '$1')
-          .replace(/\\emph\{([^}]*)\}/g, '$1')
-          .replace(/\\_/g, '_')
-          .trim();
+    function texText(value){
+      return String(value||'')
+        .replace(/\\&/g,'&')
+        .replace(/\\texttt\{([^}]*)\}/g,'$1')
+        .replace(/\\emph\{([^}]*)\}/g,'$1')
+        .replace(/\\textbf\{([^}]*)\}/g,'$1')
+        .replace(/\\textit\{([^}]*)\}/g,'$1')
+        .replace(/\\_/g,'_')
+        .trim();
+    }
+
+    function parseToc(text){
+      const items=[];
+      for(const line of String(text||'').split(/\r?\n/)){
+        if(!line.includes('\\contentsline')) continue;
+        const typeMatch=line.match(/^\\contentsline \{([^}]*)\}/);
+        const pageMatch=line.match(/\}\{([^{}]*)\}\{([^{}]*)\}%?$/);
+        if(!typeMatch||!pageMatch) continue;
+        const type=typeMatch[1];
+        const secondStart=line.indexOf('}{',line.indexOf('\\contentsline'))+2;
+        if(secondStart<2) continue;
+        const pageToken='}{'+pageMatch[1]+'}{'+pageMatch[2]+'}';
+        const pageIndex=line.lastIndexOf(pageToken);
+        if(pageIndex<=secondStart) continue;
+        let titleField=line.slice(secondStart,pageIndex);
+        let number='';
+        const num=titleField.match(/^\\numberline \{([^}]*)\}(.*)$/);
+        if(num){number=texText(num[1]);titleField=num[2];}
+        const title=texText(titleField);
+        if(!title) continue;
+        items.push({type,number,title,page:pageMatch[1],anchor:pageMatch[2]});
       }
+      return items;
+    }
 
-      function parseToc(text) {
-        const items = [];
-        for (const line of text.split(/\r?\n/)) {
-          if (!line.includes('\\contentsline')) continue;
-          const typeMatch = line.match(/^\\contentsline \{([^}]*)\}/);
-          const pageMatch = line.match(/\}\{([^{}]*)\}\{[^{}]*\}%?$/);
-          if (!typeMatch || !pageMatch) continue;
-          const type = typeMatch[1];
-          const secondStart = line.indexOf('}{', line.indexOf('\\contentsline')) + 2;
-          if (secondStart < 2) continue;
-          const pageToken = '}{' + pageMatch[1] + '}{';
-          const pageIndex = line.lastIndexOf(pageToken);
-          if (pageIndex <= secondStart) continue;
-          let titleField = line.slice(secondStart, pageIndex);
-          let number = '';
-          const num = titleField.match(/^\\numberline \{([^}]*)\}(.*)$/);
-          if (num) {
-            number = texText(num[1]);
-            titleField = num[2];
-          }
-          const title = texText(titleField);
-          if (!title) continue;
-          items.push({ type, number, title, page: pageMatch[1] });
-        }
-        return items;
-      }
+    function tocMarkup(items){
+      if(!items.length) return '<p class="toc-error">The live table of contents could not be parsed. Open the PDF for the current contents.</p>';
+      return items.map(item=>{
+        const depth=item.type==='section'?0:item.type==='subsection'?1:item.type==='subsubsection'?2:3;
+        const label=(item.number?item.number+' ':'')+item.title;
+        return `<a class="toc-item depth-${depth}" href="${bookPdf}#page=${encodeURIComponent(item.page)}" target="_blank" rel="noopener"><span>${escapeHtml(label)}</span><small>p. ${escapeHtml(item.page)}</small></a>`;
+      }).join('');
+    }
 
-      function tocMarkup(items) {
-        if (!items.length) return '<p class="toc-error">The live table of contents could not be parsed. Open the PDF for the current contents.</p>';
-        return items.map(item => {
-          const depth = item.type === 'section' ? 0 : item.type === 'subsection' ? 1 : item.type === 'subsubsection' ? 2 : 3;
-          const label = (item.number ? item.number + ' ' : '') + item.title;
-          return `<a class="toc-item depth-${depth}" href="${bookPdf}#page=${encodeURIComponent(item.page)}" target="_blank" rel="noopener"><span>${escapeHtml(label)}</span><small>p. ${escapeHtml(item.page)}</small></a>`;
-        }).join('');
-      }
+    function safeId(value){
+      return String(value||'').toLowerCase().replace(/[^a-z0-9._-]+/g,'-').replace(/^-+|-+$/g,'');
+    }
 
-      try {
-        const [graphResponse, tocResponse, releaseResponse] = await Promise.all([
-          fetch(sourceUrl, { cache: 'no-store' }),
-          fetch(tocUrl, { cache: 'no-store' }),
-          fetch(releaseApi, { cache: 'no-store', headers: { Accept: 'application/vnd.github+json' } }).catch(() => null)
-        ]);
-        if (!graphResponse.ok) throw new Error(`Graph HTTP ${graphResponse.status}`);
+    function liveNodeId(item){
+      const key=item.anchor||[item.type,item.number,item.title].filter(Boolean).join('-');
+      return 'live-'+safeId(key);
+    }
 
-        const [sourceHtml, tocText] = await Promise.all([
-          graphResponse.text(),
-          tocResponse.ok ? tocResponse.text() : Promise.resolve('')
-        ]);
-        let latestRelease = null;
-        if (releaseResponse && releaseResponse.ok) {
-          try { latestRelease = await releaseResponse.json(); } catch (_) {}
-        }
+    function semanticTarget(item){
+      const n=String(item.number||'');
+      if(/^1(?:\.|$)/.test(n)) return 'names';
+      if(/^2(?:\.|$)/.test(n)) return 'moon';
+      if(/^3(?:\.|$)/.test(n)) return 'dso';
+      if(/^4\.1(?:\.|$)/.test(n)) return 'coords';
+      if(/^4\.2(?:\.|$)/.test(n)) return 'projection';
+      if(/^4\.3(?:\.|$)/.test(n)) return 'poles';
+      if(/^4\.4(?:\.|$)/.test(n)) return 'mercator';
+      if(/^4\.5(?:\.|$)/.test(n)) return 'monthly';
+      if(n==='4') return 'projection';
+      if(/^5\.(?:1|2)(?:\.|$)/.test(n)||n==='5') return 'navigation';
+      if(/^5\.3(?:\.|$)/.test(n)) return 'planets';
+      if(/^5\.4(?:\.|$)/.test(n)) return 'telescope';
+      if(/^5\.5(?:\.|$)/.test(n)) return 'magnitude';
+      if(/^6\.(?:1|2)(?:\.|$)/.test(n)) return 'marking';
+      if(/^6(?:\.|$)/.test(n)) return 'practice';
+      return null;
+    }
 
-        const tocItems = parseToc(tocText);
-        const parsed = new DOMParser().parseFromString(sourceHtml, 'text/html');
-        parsed.title = 'Star Maps 101 · Interactive Book & IOAA 2025 Observation Graph';
+    function augmentGraphFromToc(data,tocItems){
+      const structural=tocItems.filter(item=>item.type==='section'||item.type==='subsection');
+      const existingIds=new Set(data.nodes.map(node=>node.id));
+      const edgeKey=edge=>`${edge.source}\u0000${edge.target}\u0000${edge.relation}`;
+      const knownEdges=new Set(data.edges.map(edgeKey));
+      const addedNodes=[];
+      const addEdge=(source,target,relation)=>{
+        if(!source||!target||source===target||!existingIds.has(source)||!existingIds.has(target)) return;
+        const edge={source,target,relation};
+        const key=edgeKey(edge);
+        if(!knownEdges.has(key)){data.edges.push(edge);knownEdges.add(key);}
+      };
 
-        const metaDescription = parsed.createElement('meta');
-        metaDescription.name = 'description';
-        metaDescription.content = 'Interactive companion to Star Charts 101 and Practices by Fahim Rajit Hossain Shwadhin. Includes the live book contents and mappings to the IOAA 2025 OM, OT and OP observation tasks.';
-        parsed.head.appendChild(metaDescription);
-
-        const extraStyle = parsed.createElement('style');
-        extraStyle.textContent = `
-          html{scroll-behavior:smooth}
-          .site-header{padding:0!important;border-bottom:1px solid var(--border)}
-          .author-bar{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:12px 30px;border-bottom:1px solid var(--border);background:#121720}
-          .author-id{display:flex;flex-direction:column;gap:1px;min-width:0}
-          .author-id small{color:var(--green);font-size:10px;letter-spacing:1.5px;text-transform:uppercase}
-          .author-id a{color:var(--text);text-decoration:none;font-weight:750;letter-spacing:.1px}
-          .author-id a:hover{text-decoration:underline}
-          .author-links{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
-          .promo-link{display:inline-flex;align-items:center;min-height:38px;padding:7px 12px;border:1px solid #485268;border-radius:7px;color:var(--text);text-decoration:none;background:#232b38;font-size:13px;font-weight:650}
-          .promo-link:hover{background:#344259}
-          .promo-link.primary{background:#d9e9ff;color:#101319;border-color:#d9e9ff}
-          .promo-link.primary:hover{background:#fff}
-          .book-hero{display:grid;grid-template-columns:minmax(180px,270px) minmax(0,1fr);gap:28px;align-items:center;padding:24px 30px 26px}
-          .book-art{margin:0;background:#fff;border:1px solid var(--border);border-radius:9px;overflow:hidden;align-self:stretch;min-height:205px;display:flex;flex-direction:column;justify-content:center}
-          .book-art img{display:block;width:100%;max-height:240px;object-fit:contain;background:#fff}
-          .book-art figcaption{padding:6px 9px;background:#171d27;color:var(--muted);font-size:10px;text-align:center}
-          .book-copy{min-width:0}
-          .book-copy h1{font-size:29px;font-weight:680;margin:4px 0 7px}
-          .book-copy p{color:var(--muted);margin:5px 0;max-width:980px}
-          .ioaa-note{margin-top:11px;padding:10px 12px;border:1px solid #3b526c;border-radius:7px;background:#151d28;color:#d8e2ef;font-size:13px}
-          .ioaa-note strong{color:#fff}
-          .book-callout{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:13px;padding:10px 12px;border-left:3px solid var(--blue);background:#171d27;border-radius:0 7px 7px 0}
-          .book-callout strong{color:var(--text)}
-          .book-callout span{color:var(--muted);font-size:13px;flex:1 1 320px}
-          .book-callout button{padding:7px 10px;font-size:13px}
-          .book-nav{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:10px 30px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:#151a23}
-          .book-nav a,.book-nav button{min-height:37px;padding:7px 11px;text-decoration:none;color:var(--text);background:#202733;border:1px solid #3c4658;border-radius:7px;font-size:13px;cursor:pointer}
-          .book-nav a:hover,.book-nav button:hover{background:#303c4e}
-          .book-nav .nav-spacer{flex:1 1 auto}
-          .live-status{color:var(--muted);font-size:11px}
-          .toc-panel{display:none;padding:18px 30px 22px;border-bottom:1px solid var(--border);background:#121720}
-          .toc-panel.open{display:block}
-          .toc-head{display:flex;align-items:flex-end;justify-content:space-between;gap:15px;flex-wrap:wrap;margin-bottom:12px}
-          .toc-head h2{font-size:19px;margin:0}
-          .toc-head p{margin:0;color:var(--muted);font-size:12px}
-          .toc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px 18px}
-          .toc-item{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:5px 8px;border-radius:5px;color:#d8e2ef;text-decoration:none;font-size:12px;min-width:0}
-          .toc-item:hover{background:#202936;color:#fff}
-          .toc-item span{min-width:0}
-          .toc-item small{white-space:nowrap;color:#8fa0b5}
-          .toc-item.depth-0{font-weight:750;font-size:13px;margin-top:5px;color:#fff;background:#191f29}
-          .toc-item.depth-1{padding-left:20px}
-          .toc-item.depth-2{padding-left:34px;color:#bcc8d8}
-          .toc-item.depth-3{padding-left:47px;color:#9fabbc;font-size:11px}
-          .toc-error{color:var(--muted)}
-          .topic-note{padding:10px 12px;margin:10px 0 14px;border:1px solid var(--border);border-radius:8px;background:#171d27;color:#cbd3e1;font-size:13px}
-          .relation-pill{display:inline-block;padding:3px 7px;border:1px solid var(--border);border-radius:999px;color:var(--muted);font-size:11px;margin:2px 4px 2px 0}
-          .license-foot{border-top:1px solid var(--border);padding:18px 30px;color:var(--muted);font-size:12px;background:#11161e}
-          .license-foot strong{color:var(--text)}
-          .license-foot a{color:var(--blue)}
-          @media(max-width:850px){
-            .author-bar{align-items:flex-start;flex-direction:column;padding-left:18px;padding-right:18px}
-            .author-links{justify-content:flex-start}
-            .book-hero{grid-template-columns:110px minmax(0,1fr);padding-left:18px;padding-right:18px;gap:16px}
-            .book-art{min-height:145px}
-            .book-art img{max-height:160px}
-            .book-copy h1{font-size:23px}
-            .book-nav,.toc-panel{padding-left:18px;padding-right:18px}
-            .toc-grid{grid-template-columns:1fr}
-          }
-          @media(max-width:540px){
-            .book-hero{grid-template-columns:1fr}
-            .book-art{max-height:220px}
-            .book-art img{height:180px}
-          }
-        `;
-        parsed.head.appendChild(extraStyle);
-
-        const header = parsed.querySelector('header');
-        if (!header) throw new Error('Graph header not found');
-        header.className = 'site-header';
-        const releaseName = latestRelease?.name || latestRelease?.tag_name || 'latest release';
-        header.innerHTML = `
-          <div class="author-bar">
-            <div class="author-id">
-              <small>Author</small>
-              <a href="${orcid}" target="_blank" rel="noopener">Fahim Rajit Hossain Shwadhin</a>
-            </div>
-            <nav class="author-links" aria-label="Book and author links">
-              <a class="promo-link primary" href="${bookPdf}" target="_blank" rel="noopener">Download latest book PDF ↗</a>
-              <a class="promo-link" href="${repoBase}" target="_blank" rel="noopener">Book repository ↗</a>
-              <a class="promo-link" href="${orcid}" target="_blank" rel="noopener">Author ORCID ↗</a>
-            </nav>
-          </div>
-          <div class="book-hero">
-            <figure class="book-art">
-              <a href="${orionEps}" target="_blank" rel="noopener" title="Open the original EPS source">
-                <img src="${orionSvg}" alt="Orion constellation diagram from ori_1.eps">
-              </a>
-              <figcaption>Orion diagram · web rendering of <code>ori_1.eps</code></figcaption>
-            </figure>
-            <div class="book-copy">
-              <div class="eyebrow">Interactive companion to the book</div>
-              <h1>Star Maps 101 · Book & observation knowledge graph</h1>
-              <p><strong>Star Charts 101 and Practices</strong> is an Olympiad-focused guide to star maps, constellations, lunar motion, deep-sky objects, coordinate systems, projections, celestial navigation, telescope observation, magnitude estimation and observation problems.</p>
-              <div class="ioaa-note"><strong>IOAA 2025 context:</strong> the graph’s <strong>OM</strong> (Sky Map), <strong>OT</strong> (Telescope), and <strong>OP</strong> (Planetarium) nodes and task mappings refer specifically to the <strong>IOAA 2025 Observation Round</strong>.</div>
-              <div class="book-callout">
-                <strong>Learn from the book, then explore the links.</strong>
-                <span>The graph shows how book topics support one another and how they connect to IOAA 2025 observation tasks.</span>
-                <button id="bookmap" type="button">Explore book topic connections</button>
-              </div>
-            </div>
-          </div>
-          <nav class="book-nav" aria-label="Star Maps 101 website navigation">
-            <button id="toc-toggle" type="button" aria-expanded="false" aria-controls="toc-panel">Book contents ▾</button>
-            <a href="#graph">Interactive graph</a>
-            <a href="${bookPdf}" target="_blank" rel="noopener">Latest PDF</a>
-            <a href="${releasesUrl}" target="_blank" rel="noopener">Releases</a>
-            <a href="${repoBase}" target="_blank" rel="noopener">Repository</a>
-            <span class="nav-spacer"></span>
-            <span class="live-status">Live sync · ${escapeHtml(releaseName)}</span>
-          </nav>
-          <section class="toc-panel" id="toc-panel" aria-label="Book table of contents">
-            <div class="toc-head"><div><h2>Contents of the current PDF</h2><p>Loaded directly from <code>StarMaps101.toc</code> on the repository’s <code>master</code> branch.</p></div><a href="${bookPdf}" target="_blank" rel="noopener">Open full PDF ↗</a></div>
-            <div class="toc-grid">${tocMarkup(tocItems)}</div>
-          </section>`;
-
-        const paper = parsed.querySelector('#paper');
-        if (paper) {
-          const labels = {
-            OM: 'IOAA 2025 · OM — Sky Map',
-            OT: 'IOAA 2025 · OT — Telescope',
-            OP: 'IOAA 2025 · OP — Planetarium'
+      let currentSection=null;
+      for(const item of structural){
+        const id=liveNodeId(item);
+        const chapter=(item.number||'').split('.')[0]||'99';
+        if(!existingIds.has(id)){
+          const node={
+            id,
+            label:(item.number?item.number+' ':'')+item.title,
+            kind:'book',
+            chapter,
+            live:true,
+            tocType:item.type,
+            tocNumber:item.number,
+            page:item.page,
+            body:`Live ${item.type} from the current StarMaps101.toc: ${item.title}. This structural node is regenerated from the committed book contents whenever the page loads. Curated teaching and IOAA relationships remain separate.`,
+            url:bookPdf+'#page='+encodeURIComponent(item.page)
           };
-          [...paper.options].forEach(option => {
-            if (labels[option.value]) option.textContent = labels[option.value];
-          });
+          data.nodes.push(node);
+          existingIds.add(id);
+          addedNodes.push(node);
         }
 
-        const view = parsed.querySelector('#view');
-        if (!view) throw new Error('View selector not found');
-        if (![...view.options].some(option => option.value === 'topics')) {
-          const option = parsed.createElement('option');
-          option.value = 'topics';
-          option.textContent = 'Book topic relationships';
-          view.insertBefore(option, view.options[1] || null);
+        if(item.type==='section'){
+          currentSection=id;
+          addEdge('repo',id,'contains current section');
+        }else if(item.type==='subsection'){
+          addEdge(currentSection,id,'contains subsection');
         }
 
-        const help = parsed.querySelector('.help');
-        if (help) help.textContent = 'Drag nodes or the background · Scroll to zoom · Select a node to highlight its neighbours · OM, OT and OP refer to IOAA 2025 · Choose “Book topic relationships” to isolate how book concepts build on one another';
-
-        const oldFooter = parsed.querySelector('.foot');
-        if (oldFooter) oldFooter.remove();
-        const licenseFooter = parsed.createElement('footer');
-        licenseFooter.className = 'license-foot';
-        licenseFooter.innerHTML = `<strong>Star Charts 101 and Practices</strong> · © Fahim Rajit Hossain Shwadhin.<br>This work is licensed under the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0)</a>. This license applies to original repository content unless otherwise stated; third-party content, if any, may be subject to separate licenses. <a href="${licenseUrl}" target="_blank" rel="noopener">Repository license ↗</a>`;
-        parsed.body.appendChild(licenseFooter);
-
-        const graphData = parsed.querySelector('#graph-data');
-        if (!graphData) throw new Error('Graph data not found');
-        const data = JSON.parse(graphData.textContent);
-        const examLabels = {
-          OM: ['IOAA 2025 · OM — Sky Map', 'IOAA 2025 Observation Round: Sky Map (OM). The categories below are preparation judgments, not official coverage ratings.'],
-          OT: ['IOAA 2025 · OT — Telescope', 'IOAA 2025 Observation Round: Telescope (OT). The categories below are preparation judgments, not official coverage ratings.'],
-          OP: ['IOAA 2025 · OP — Planetarium', 'IOAA 2025 Observation Round: Planetarium (OP). The categories below are preparation judgments, not official coverage ratings.']
-        };
-        data.nodes.forEach(node => {
-          if (examLabels[node.id]) {
-            node.label = examLabels[node.id][0];
-            node.body = examLabels[node.id][1];
-          }
-        });
-        const additions = [
-          ['coords','lines','coordinate framework'],
-          ['projection','lines','draws reference curves'],
-          ['projection','poles','changes map viewpoint'],
-          ['poles','navigation','orients the sky'],
-          ['monthly','navigation','adds seasonal context'],
-          ['coords','navigation','feeds coordinate transforms'],
-          ['lines','planets','provides ecliptic framework'],
-          ['navigation','planets','locates moving objects'],
-          ['mercator','planets','supports plotted positions'],
-          ['dso','telescope','provides observing targets'],
-          ['coords','telescope','supports chart-to-field location'],
-          ['magnitude','practice','feeds measurement practice'],
-          ['monthly','planets','supports seasonal placement'],
-          ['projection','navigation','connects map to sky geometry'],
-          ['dso','magnitude','connects targets to brightness comparison']
-        ];
-        const edgeKey = edge => `${edge.source}\u0000${edge.target}\u0000${edge.relation}`;
-        const knownEdges = new Set(data.edges.map(edgeKey));
-        for (const [sourceId, targetId, relation] of additions) {
-          const edge = { source: sourceId, target: targetId, relation };
-          if (!knownEdges.has(edgeKey(edge))) data.edges.push(edge);
-        }
-        graphData.textContent = JSON.stringify(data);
-
-        const enhancement = parsed.createElement('script');
-        enhancement.textContent = `(() => {
-          'use strict';
-          const data = JSON.parse(document.getElementById('graph-data').textContent);
-          const lookup = new Map(data.nodes.map(node => [node.id, node]));
-          const view = document.getElementById('view');
-          const paper = document.getElementById('paper');
-          const search = document.getElementById('search');
-          const reset = document.getElementById('reset');
-          const graph = document.getElementById('graph');
-          const details = document.getElementById('details');
-          const status = document.getElementById('status');
-          const bookButton = document.getElementById('bookmap');
-          const tocToggle = document.getElementById('toc-toggle');
-          const tocPanel = document.getElementById('toc-panel');
-          const bookNodes = data.nodes.filter(node => node.kind === 'book');
-          const bookIds = new Set(bookNodes.map(node => node.id));
-          const bookEdges = data.edges.filter(edge => bookIds.has(edge.source) && bookIds.has(edge.target));
-
-          function escapeHtml(value) {
-            return String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
-          }
-
-          function topicMatches() {
-            const query = search.value.trim().toLowerCase();
-            if (!query) return bookNodes.length;
-            return bookNodes.filter(node => (node.label + ' ' + node.body).toLowerCase().includes(query)).length;
-          }
-
-          function topicOverview() {
-            details.innerHTML = '<span class="tag">Book topic map</span>' +
-              '<h2>How the book fits together</h2>' +
-              '<p>This view isolates the book topics themselves. Each line shows a conceptual dependency, shared framework, or practical progression between sections.</p>' +
-              '<div class="topic-note"><strong>Suggested progression:</strong> constellation recognition → coordinate lines and projections → celestial navigation → moving objects → telescope work → measurement and practice.</div>' +
-              '<div class="stats"><div><b>' + bookNodes.length + '</b>Topics</div><div><b>' + bookEdges.length + '</b>Topic links</div></div>' +
-              '<p><span class="relation-pill">foundation for</span><span class="relation-pill">coordinate framework</span><span class="relation-pill">seasonal context</span><span class="relation-pill">observing targets</span></p>' +
-              '<h3>Explore core topics</h3>' +
-              '<div class="connections">' + ['names','lines','navigation','planets','telescope','practice'].map(id => '<button class="topic-jump" data-topic="' + id + '">' + escapeHtml(lookup.get(id).label) + '</button>').join('') + '</div>';
-            bindTopicButtons();
-          }
-
-          function topicDetails(id) {
-            const node = lookup.get(id);
-            if (!node || !bookIds.has(id)) return;
-            const connected = bookEdges.filter(edge => edge.source === id || edge.target === id);
-            details.innerHTML = '<span class="tag">Book topic relationship</span>' +
-              '<h2>' + escapeHtml(node.label) + '</h2>' +
-              '<p>' + escapeHtml(node.body) + '</p>' +
-              (node.url ? '<a href="' + escapeHtml(node.url) + '" target="_blank" rel="noopener">Open book source ↗</a>' : '') +
-              '<h3>' + connected.length + ' book-topic connections</h3>' +
-              '<div class="connections">' + connected.map(edge => {
-                const other = edge.source === id ? edge.target : edge.source;
-                const direction = edge.source === id ? edge.relation : '← ' + edge.relation;
-                return '<button class="topic-jump" data-topic="' + escapeHtml(other) + '">' + escapeHtml(lookup.get(other).label) + '<small>' + escapeHtml(direction) + '</small></button>';
-              }).join('') + '</div>';
-            bindTopicButtons();
-          }
-
-          function bindTopicButtons() {
-            details.querySelectorAll('.topic-jump').forEach(button => {
-              button.addEventListener('click', () => {
-                const id = button.dataset.topic;
-                const node = [...document.querySelectorAll('.node')].find(el => el.dataset.id === id);
-                if (node) node.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-              });
-            });
-          }
-
-          function layoutBookTopics() {
-            const nodeElements = new Map([...document.querySelectorAll('#nodes .node')].map(element => [element.dataset.id, element]));
-            const edgeElements = [...document.querySelectorAll('#edges .edge')];
-            const positions = new Map();
-            const ordered = [...bookNodes].sort((a, b) => Number(a.chapter || 99) - Number(b.chapter || 99));
-            const cx = 500, cy = 360, radius = 255;
-            for (const [id, element] of nodeElements) element.style.display = bookIds.has(id) ? '' : 'none';
-            ordered.forEach((node, index) => {
-              const angle = -Math.PI / 2 + 2 * Math.PI * index / ordered.length;
-              const x = cx + Math.cos(angle) * radius;
-              const y = cy + Math.sin(angle) * radius;
-              positions.set(node.id, { x, y });
-              const element = nodeElements.get(node.id);
-              if (element) element.setAttribute('transform', 'translate(' + x + ',' + y + ')');
-            });
-            data.edges.forEach((edge, index) => {
-              const line = edgeElements[index];
-              if (!line) return;
-              const a = positions.get(edge.source), b = positions.get(edge.target);
-              if (!a || !b) { line.style.display = 'none'; return; }
-              line.style.display = '';
-              line.setAttribute('x1', a.x); line.setAttribute('y1', a.y);
-              line.setAttribute('x2', b.x); line.setAttribute('y2', b.y);
-            });
-          }
-
-          function updateTopicStatus() {
-            status.textContent = topicMatches() + ' matching book topics · ' + bookEdges.length + ' topic links';
-          }
-
-          function applyTopicMode() {
-            if (view.value !== 'topics') { paper.disabled = false; return; }
-            if (paper.value !== 'all') paper.value = 'all';
-            paper.disabled = true;
-            layoutBookTopics();
-            topicOverview();
-            updateTopicStatus();
-          }
-
-          if (tocToggle && tocPanel) {
-            tocToggle.addEventListener('click', () => {
-              const open = tocPanel.classList.toggle('open');
-              tocToggle.setAttribute('aria-expanded', String(open));
-              tocToggle.textContent = open ? 'Book contents ▴' : 'Book contents ▾';
-            });
-          }
-
-          view.addEventListener('change', () => {
-            if (view.value === 'topics') setTimeout(applyTopicMode, 0);
-            else paper.disabled = false;
-          });
-          paper.addEventListener('change', () => { if (view.value === 'topics') setTimeout(applyTopicMode, 0); });
-          search.addEventListener('input', () => { if (view.value === 'topics') setTimeout(updateTopicStatus, 0); });
-          reset.addEventListener('click', () => { paper.disabled = false; });
-          document.getElementById('nodes').addEventListener('click', event => {
-            if (view.value !== 'topics') return;
-            const node = event.target.closest('.node');
-            if (node && bookIds.has(node.dataset.id)) setTimeout(() => topicDetails(node.dataset.id), 0);
-          });
-          if (bookButton) {
-            bookButton.addEventListener('click', () => {
-              paper.value = 'all';
-              view.value = 'topics';
-              view.dispatchEvent(new Event('change', { bubbles: true }));
-              graph.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
-          }
-        })();`;
-        parsed.body.appendChild(enhancement);
-
-        const html = '<!doctype html>\n' + parsed.documentElement.outerHTML;
-        document.open();
-        document.write(html);
-        document.close();
-      } catch (error) {
-        document.getElementById('status').innerHTML =
-          '<h1>Star Maps 101</h1>' +
-          '<p>The interactive companion could not load its live repository data.</p>' +
-          '<p><a href="https://github.com/Rajit13/Star-Maps-101-and-Practices">Open the Star Maps 101 repository</a></p>';
-        console.error(error);
+        const semantic=semanticTarget(item);
+        if(semantic&&existingIds.has(semantic)) addEdge(id,semantic,'maps to curated topic');
       }
-    })();
+      return {addedNodes,structuralCount:structural.length};
+    }
+
+    try{
+      const [graphResponse,tocResponse,releaseResponse]=await Promise.all([
+        fetch(sourceUrl,{cache:'no-store'}),
+        fetch(tocUrl,{cache:'no-store'}),
+        fetch(releaseApi,{cache:'no-store',headers:{Accept:'application/vnd.github+json'}}).catch(()=>null)
+      ]);
+      if(!graphResponse.ok) throw new Error(`Graph HTTP ${graphResponse.status}`);
+
+      const [sourceHtml,tocText]=await Promise.all([
+        graphResponse.text(),
+        tocResponse.ok?tocResponse.text():Promise.resolve('')
+      ]);
+      let latestRelease=null;
+      if(releaseResponse&&releaseResponse.ok){try{latestRelease=await releaseResponse.json();}catch(_){}}
+
+      const tocItems=parseToc(tocText);
+      const parsed=new DOMParser().parseFromString(sourceHtml,'text/html');
+      parsed.title='Star Charts 101 and Practices · Book Reading Guide and Knowledge Graph';
+
+      const metaDescription=parsed.createElement('meta');
+      metaDescription.name='description';
+      metaDescription.content='Live interactive companion to Star Charts 101 and Practices by Fahim Rajit Hossain Shwadhin. Book sections and subsections are regenerated from the current table of contents while curated IOAA observation relationships are preserved.';
+      parsed.head.appendChild(metaDescription);
+
+      const extraStyle=parsed.createElement('style');
+      extraStyle.textContent=`
+        html{scroll-behavior:smooth}
+        .site-header{padding:0!important;border-bottom:1px solid var(--border)}
+        .author-bar{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:12px 30px;border-bottom:1px solid var(--border);background:#121720}
+        .author-id{display:flex;flex-direction:column;gap:1px;min-width:0}
+        .author-id small{color:var(--green);font-size:10px;letter-spacing:1.5px;text-transform:uppercase}
+        .author-id a{color:#7ec8ff;text-decoration:none;font-weight:750;letter-spacing:.1px;font-size:1.35em}
+        .author-id a:hover{text-decoration:underline}
+        .author-links{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+        .promo-link{display:inline-flex;align-items:center;min-height:38px;padding:7px 12px;border:1px solid #485268;border-radius:7px;color:var(--text);text-decoration:none;background:#232b38;font-size:13px;font-weight:650}
+        .promo-link:hover{background:#344259}
+        .promo-link.primary{background:#d9e9ff;color:#101319;border-color:#d9e9ff}
+        .promo-link.primary:hover{background:#fff}
+        .book-hero{display:grid;grid-template-columns:minmax(180px,270px) minmax(0,1fr);gap:28px;align-items:center;padding:24px 30px 26px}
+        .book-art{margin:0;background:#07101b;border:1px solid var(--border);border-radius:9px;overflow:hidden;align-self:stretch;min-height:205px;display:flex;flex-direction:column;justify-content:center}
+        .book-art img{display:block;width:100%;max-height:240px;object-fit:contain;transform:rotate(180deg) scaleX(-1);transform-origin:center}
+        .book-art figcaption{padding:6px 9px;background:#171d27;color:var(--muted);font-size:10px;text-align:center}
+        .book-copy{min-width:0}
+        .book-copy h1{font-size:29px;font-weight:680;margin:4px 0 7px;line-height:1.15}
+        .book-copy h1 small{display:block;margin-top:5px;color:#cbd5e5;font-size:.72em;font-weight:620}
+        .book-copy p{color:var(--muted);margin:5px 0;max-width:980px}
+        .ioaa-note{margin-top:11px;padding:10px 12px;border:1px solid #3b526c;border-radius:7px;background:#151d28;color:#d8e2ef;font-size:13px}
+        .ioaa-note strong{color:#fff}
+        .book-callout{display:block;margin-top:13px;padding:10px 12px;border-left:3px solid var(--blue);background:#171d27;border-radius:0 7px 7px 0}
+        .book-callout strong{display:block;color:var(--text);margin-bottom:4px}
+        .book-callout span{display:block;color:var(--muted);font-size:13px;margin-bottom:10px}
+        .book-callout button{padding:7px 10px;font-size:13px}
+        .book-nav{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:10px 30px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:#151a23}
+        .book-nav a,.book-nav button{min-height:37px;padding:7px 11px;text-decoration:none;color:var(--text);background:#202733;border:1px solid #3c4658;border-radius:7px;font-size:13px;cursor:pointer}
+        .book-nav a:hover,.book-nav button:hover{background:#303c4e}
+        .book-nav .nav-spacer{flex:1 1 auto}
+        .live-status{color:var(--muted);font-size:11px}
+        .toc-panel{display:none;padding:18px 30px 22px;border-bottom:1px solid var(--border);background:#121720}
+        .toc-panel.open{display:block}
+        .toc-head{display:flex;align-items:flex-end;justify-content:space-between;gap:15px;flex-wrap:wrap;margin-bottom:12px}
+        .toc-head h2{font-size:19px;margin:0}
+        .toc-head p{margin:0;color:var(--muted);font-size:12px}
+        .toc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px 18px}
+        .toc-item{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:5px 8px;border-radius:5px;color:#d8e2ef;text-decoration:none;font-size:12px;min-width:0}
+        .toc-item:hover{background:#202936;color:#fff}
+        .toc-item span{min-width:0}
+        .toc-item small{white-space:nowrap;color:#8fa0b5}
+        .toc-item.depth-0{font-weight:750;font-size:13px;margin-top:5px;color:#fff;background:#191f29}
+        .toc-item.depth-1{padding-left:20px}
+        .toc-item.depth-2{padding-left:34px;color:#bcc8d8}
+        .toc-item.depth-3{padding-left:47px;color:#9fabbc;font-size:11px}
+        .toc-error{color:var(--muted)}
+        .topic-note{padding:10px 12px;margin:10px 0 14px;border:1px solid var(--border);border-radius:8px;background:#171d27;color:#cbd3e1;font-size:13px}
+        .relation-pill{display:inline-block;padding:3px 7px;border:1px solid var(--border);border-radius:999px;color:var(--muted);font-size:11px;margin:2px 4px 2px 0}
+        .license-foot{border-top:1px solid var(--border);padding:18px 30px;color:var(--muted);font-size:12px;background:#11161e}
+        .license-foot strong{color:var(--text)}
+        .license-foot a{color:var(--blue)}
+        @media(max-width:850px){.author-bar{align-items:flex-start;flex-direction:column;padding-left:18px;padding-right:18px}.author-links{justify-content:flex-start}.book-hero{grid-template-columns:110px minmax(0,1fr);padding-left:18px;padding-right:18px;gap:16px}.book-art{min-height:145px}.book-art img{max-height:160px}.book-copy h1{font-size:23px}.book-nav,.toc-panel{padding-left:18px;padding-right:18px}.toc-grid{grid-template-columns:1fr}}
+        @media(max-width:540px){.book-hero{grid-template-columns:1fr}.book-art{max-height:220px}.book-art img{height:180px}}
+      `;
+      parsed.head.appendChild(extraStyle);
+
+      const header=parsed.querySelector('header');
+      if(!header) throw new Error('Graph header not found');
+      header.className='site-header';
+      const releaseName=latestRelease?.name||latestRelease?.tag_name||'current master';
+      header.innerHTML=`
+        <div class="author-bar">
+          <div class="author-id"><small>Author</small><a href="${portfolio}" target="_blank" rel="noopener">Fahim Rajit Hossain Shwadhin</a></div>
+          <nav class="author-links" aria-label="Book and author links">
+            <a class="promo-link primary" href="${bookPdf}" target="_blank" rel="noopener">Open latest book PDF ↗</a>
+            <a class="promo-link" href="${repoBase}" target="_blank" rel="noopener">Book repository ↗</a>
+            <a class="promo-link" href="${orcid}" target="_blank" rel="noopener">Author ORCID ↗</a>
+          </nav>
+        </div>
+        <div class="book-hero">
+          <figure class="book-art"><a href="${orionEps}" target="_blank" rel="noopener" title="Open the original EPS source"><img src="${orionSvg}" alt="Orion constellation diagram from ori_1.eps"></a><figcaption>Orion diagram · web rendering of <code>ori_1.eps</code></figcaption></figure>
+          <div class="book-copy">
+            <div class="eyebrow">Interactive companion to the book</div>
+            <h1>Star Charts 101 and Practices<small>Book Reading Guide and Knowledge Graph</small></h1>
+            <p><strong>Star Charts 101 and Practices</strong> is a practice book dedicated to astronomy enthusiasts and students preparing for the Star Charts/Observational Round of Astronomy and Earth Science Olympiads. The live structural layer of this graph follows the current committed book contents.</p>
+            <div class="ioaa-note"><strong>IOAA 2025 context:</strong> the graph’s <strong>OM</strong> (Sky Map), <strong>OT</strong> (Telescope), and <strong>OP</strong> (Planetarium) mappings remain curated rather than being guessed from the book automatically.</div>
+            <div class="book-callout"><strong>Learn from the book, then explore the links.</strong><span>The graph shows how book topics support one another and how they connect to several IOAA observation tasks.</span><button id="bookmap" type="button">Explore book topic connections</button></div>
+          </div>
+        </div>
+        <nav class="book-nav" aria-label="Star Charts 101 website navigation">
+          <button id="toc-toggle" type="button" aria-expanded="false" aria-controls="toc-panel">Book contents ▾</button>
+          <a href="#graph">Interactive graph</a>
+          <a href="${bookPdf}" target="_blank" rel="noopener">Latest PDF</a>
+          <a href="${repoBase}" target="_blank" rel="noopener">Repository</a>
+          <a href="${releasesUrl}" target="_blank" rel="noopener">Releases</a>
+          <span class="nav-spacer"></span><span class="live-status">Live sync · ${escapeHtml(releaseName)}</span>
+        </nav>
+        <section class="toc-panel" id="toc-panel" aria-label="Book table of contents">
+          <div class="toc-head"><div><h2>Contents of the current PDF</h2><p>Loaded directly from <code>StarMaps101.toc</code> on the repository’s <code>master</code> branch.</p></div><a href="${bookPdf}" target="_blank" rel="noopener">Open full PDF ↗</a></div>
+          <div class="toc-grid">${tocMarkup(tocItems)}</div>
+        </section>`;
+
+      const paper=parsed.querySelector('#paper');
+      if(paper){const labels={OM:'IOAA 2025 · OM — Sky Map',OT:'IOAA 2025 · OT — Telescope',OP:'IOAA 2025 · OP — Planetarium'};[...paper.options].forEach(option=>{if(labels[option.value]) option.textContent=labels[option.value];});}
+
+      const view=parsed.querySelector('#view');
+      if(!view) throw new Error('View selector not found');
+      if(![...view.options].some(option=>option.value==='topics')){const option=parsed.createElement('option');option.value='topics';option.textContent='Book topic relationships';view.insertBefore(option,view.options[1]||null);}
+
+      const help=parsed.querySelector('.help');
+      if(help) help.textContent='Drag nodes or the background · Scroll to zoom · Select a node to highlight its neighbours · Live book sections/subsections are regenerated from the current TOC · Curated teaching and IOAA mappings are preserved';
+
+      const oldFooter=parsed.querySelector('.foot');
+      if(oldFooter) oldFooter.remove();
+      const licenseFooter=parsed.createElement('footer');
+      licenseFooter.className='license-foot';
+      licenseFooter.innerHTML=`<strong>Star Charts 101 and Practices</strong> · © Fahim Rajit Hossain Shwadhin.<br>This work is licensed under the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0)</a>. This license applies to original repository content unless otherwise stated; third-party content, if any, may be subject to separate licenses. <a href="${licenseUrl}" target="_blank" rel="noopener">Repository license ↗</a>`;
+      parsed.body.appendChild(licenseFooter);
+
+      const graphData=parsed.querySelector('#graph-data');
+      if(!graphData) throw new Error('Graph data not found');
+      const data=JSON.parse(graphData.textContent);
+
+      const examLabels={
+        OM:['IOAA 2025 · OM — Sky Map','IOAA 2025 Observation Round: Sky Map (OM). The categories below are preparation judgments, not official coverage ratings.'],
+        OT:['IOAA 2025 · OT — Telescope','IOAA 2025 Observation Round: Telescope (OT). The categories below are preparation judgments, not official coverage ratings.'],
+        OP:['IOAA 2025 · OP — Planetarium','IOAA 2025 Observation Round: Planetarium (OP). The categories below are preparation judgments, not official coverage ratings.']
+      };
+      data.nodes.forEach(node=>{if(examLabels[node.id]){node.label=examLabels[node.id][0];node.body=examLabels[node.id][1];}});
+
+      const additions=[
+        ['coords','lines','coordinate framework'],['projection','lines','draws reference curves'],['projection','poles','changes map viewpoint'],['poles','navigation','orients the sky'],['monthly','navigation','adds seasonal context'],['coords','navigation','feeds coordinate transforms'],['lines','planets','provides ecliptic framework'],['navigation','planets','locates moving objects'],['mercator','planets','supports plotted positions'],['dso','telescope','provides observing targets'],['coords','telescope','supports chart-to-field location'],['magnitude','practice','feeds measurement practice'],['monthly','planets','supports seasonal placement'],['projection','navigation','connects map to sky geometry'],['dso','magnitude','connects targets to brightness comparison']
+      ];
+      const edgeKey=edge=>`${edge.source}\u0000${edge.target}\u0000${edge.relation}`;
+      const knownEdges=new Set(data.edges.map(edgeKey));
+      for(const[sourceId,targetId,relation]of additions){const edge={source:sourceId,target:targetId,relation};if(!knownEdges.has(edgeKey(edge))){data.edges.push(edge);knownEdges.add(edgeKey(edge));}}
+
+      const live=augmentGraphFromToc(data,tocItems);
+      graphData.textContent=JSON.stringify(data);
+      const graphSvg=parsed.querySelector('#graph');
+      if(graphSvg) graphSvg.setAttribute('aria-label',`${data.nodes.length} connected nodes, including ${live.structuralCount} live book section/subsection nodes generated from the current table of contents.`);
+      const liveStatus=parsed.querySelector('.live-status');
+      if(liveStatus) liveStatus.textContent=`Live sync · ${live.structuralCount} book sections/subsections · ${releaseName}`;
+
+      const enhancement=parsed.createElement('script');
+      enhancement.textContent=`(()=>{
+        'use strict';
+        const data=JSON.parse(document.getElementById('graph-data').textContent);
+        const lookup=new Map(data.nodes.map(node=>[node.id,node]));
+        const view=document.getElementById('view'),paper=document.getElementById('paper'),search=document.getElementById('search'),reset=document.getElementById('reset'),graph=document.getElementById('graph'),details=document.getElementById('details'),status=document.getElementById('status'),bookButton=document.getElementById('bookmap'),tocToggle=document.getElementById('toc-toggle'),tocPanel=document.getElementById('toc-panel');
+        const bookNodes=data.nodes.filter(node=>node.kind==='book');
+        const bookIds=new Set(bookNodes.map(node=>node.id));
+        const bookEdges=data.edges.filter(edge=>bookIds.has(edge.source)&&bookIds.has(edge.target));
+        const liveNodes=bookNodes.filter(node=>node.live);
+        function escapeHtml(value){return String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[char]));}
+        function topicMatches(){const query=search.value.trim().toLowerCase();if(!query)return bookNodes.length;return bookNodes.filter(node=>(node.label+' '+node.body).toLowerCase().includes(query)).length;}
+        function topicOverview(){
+          details.innerHTML='<span class="tag">Book topic map</span><h2>How the current book fits together</h2><p>This view combines a live structural layer generated from the current table of contents with the hand-curated conceptual relationships and IOAA preparation mappings.</p><div class="topic-note"><strong>Automatic:</strong> section/subsection nodes and hierarchy. <strong>Curated:</strong> conceptual dependencies, preparation judgments and IOAA OM/OT/OP mappings.</div><div class="stats"><div><b>'+bookNodes.length+'</b>Book nodes</div><div><b>'+liveNodes.length+'</b>Live TOC nodes</div><div><b>'+bookEdges.length+'</b>Book links</div></div><p><span class="relation-pill">contains subsection</span><span class="relation-pill">maps to curated topic</span><span class="relation-pill">coordinate framework</span><span class="relation-pill">observing targets</span></p><h3>Explore core topics</h3><div class="connections">'+['names','lines','navigation','planets','telescope','practice'].filter(id=>lookup.has(id)).map(id=>'<button class="topic-jump" data-topic="'+id+'">'+escapeHtml(lookup.get(id).label)+'</button>').join('')+'</div>';
+          bindTopicButtons();
+        }
+        function topicDetails(id){const node=lookup.get(id);if(!node||!bookIds.has(id))return;const connected=bookEdges.filter(edge=>edge.source===id||edge.target===id);details.innerHTML='<span class="tag">'+(node.live?'Live book structure':'Curated book topic')+'</span><h2>'+escapeHtml(node.label)+'</h2><p>'+escapeHtml(node.body)+'</p>'+(node.url?'<a href="'+escapeHtml(node.url)+'" target="_blank" rel="noopener">Open book source ↗</a>':'')+'<h3>'+connected.length+' book-topic connections</h3><div class="connections">'+connected.map(edge=>{const other=edge.source===id?edge.target:edge.source;if(!lookup.has(other))return'';const direction=edge.source===id?edge.relation:'← '+edge.relation;return'<button class="topic-jump" data-topic="'+escapeHtml(other)+'">'+escapeHtml(lookup.get(other).label)+'<small>'+escapeHtml(direction)+'</small></button>';}).join('')+'</div>';bindTopicButtons();}
+        function bindTopicButtons(){details.querySelectorAll('.topic-jump').forEach(button=>button.addEventListener('click',()=>{const id=button.dataset.topic;const node=[...document.querySelectorAll('.node')].find(el=>el.dataset.id===id);if(node)node.dispatchEvent(new MouseEvent('click',{bubbles:true}));}));}
+        function layoutBookTopics(){const nodeElements=new Map([...document.querySelectorAll('#nodes .node')].map(element=>[element.dataset.id,element]));const edgeElements=[...document.querySelectorAll('#edges .edge')];const positions=new Map();const ordered=[...bookNodes].sort((a,b)=>Number(a.chapter||99)-Number(b.chapter||99)||(a.tocNumber||a.label).localeCompare(b.tocNumber||b.label,undefined,{numeric:true}));const cx=500,cy=360,radius=270;for(const[id,element]of nodeElements)element.style.display=bookIds.has(id)?'':'none';ordered.forEach((node,index)=>{const angle=-Math.PI/2+2*Math.PI*index/ordered.length;const ring=node.live?radius:radius-75;const x=cx+Math.cos(angle)*ring,y=cy+Math.sin(angle)*ring;positions.set(node.id,{x,y});const element=nodeElements.get(node.id);if(element)element.setAttribute('transform','translate('+x+','+y+')');});data.edges.forEach((edge,index)=>{const line=edgeElements[index];if(!line)return;const a=positions.get(edge.source),b=positions.get(edge.target);if(!a||!b){line.style.display='none';return;}line.style.display='';line.setAttribute('x1',a.x);line.setAttribute('y1',a.y);line.setAttribute('x2',b.x);line.setAttribute('y2',b.y);});}
+        function updateTopicStatus(){status.textContent=topicMatches()+' matching book nodes · '+liveNodes.length+' live TOC nodes · '+bookEdges.length+' book links';}
+        function applyTopicMode(){if(view.value!=='topics'){paper.disabled=false;return;}if(paper.value!=='all')paper.value='all';paper.disabled=true;layoutBookTopics();topicOverview();updateTopicStatus();}
+        if(tocToggle&&tocPanel)tocToggle.addEventListener('click',()=>{const open=tocPanel.classList.toggle('open');tocToggle.setAttribute('aria-expanded',String(open));tocToggle.textContent=open?'Book contents ▴':'Book contents ▾';});
+        view.addEventListener('change',()=>{if(view.value==='topics')setTimeout(applyTopicMode,0);else paper.disabled=false;});
+        paper.addEventListener('change',()=>{if(view.value==='topics')setTimeout(applyTopicMode,0);});
+        search.addEventListener('input',()=>{if(view.value==='topics')setTimeout(updateTopicStatus,0);});
+        reset.addEventListener('click',()=>{paper.disabled=false;});
+        document.getElementById('nodes').addEventListener('click',event=>{if(view.value!=='topics')return;const node=event.target.closest('.node');if(node&&bookIds.has(node.dataset.id))setTimeout(()=>topicDetails(node.dataset.id),0);});
+        if(bookButton)bookButton.addEventListener('click',()=>{paper.value='all';view.value='topics';view.dispatchEvent(new Event('change',{bubbles:true}));graph.scrollIntoView({behavior:'smooth',block:'start'});});
+      })();`;
+      parsed.body.appendChild(enhancement);
+
+      const html='<!doctype html>\n'+parsed.documentElement.outerHTML;
+      document.open();document.write(html);document.close();
+    }catch(error){
+      document.getElementById('status').innerHTML='<h1>Star Charts 101 and Practices</h1><p>The interactive companion could not load its live repository data.</p><p><a href="https://github.com/Rajit13/Star-Maps-101-and-Practices">Open the Star Charts 101 repository</a></p>';
+      console.error(error);
+    }
+  })();
   </script>
 </body>
 </html>
