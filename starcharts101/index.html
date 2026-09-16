@@ -34,6 +34,7 @@
           .additional-reading{font-size:16px}
           .additional-reading strong{font-size:22px}
           .additional-reading-links a{font-size:16px;line-height:1.6}
+          #net .edge.prerequisite{stroke:#ff6b6b!important}
           @media(max-width:900px){.student-core-finding{margin-left:18px;margin-right:18px}}
         `;
         doc.head.append(style);
@@ -86,11 +87,30 @@
         if(next!==html){details.innerHTML=next;typeset(details)}
       }
 
+      function applyTrainingColor(){
+        const red='#ff6b6b';
+        const legend=[...doc.querySelectorAll('.legend .key')].find(el=>el.textContent.trim()==='Additional training / prerequisite');
+        if(legend)legend.style.setProperty('--key',red);
+
+        const state=win.__SC101;
+        if(!state)return false;
+        const ids=new Set([
+          ...state.tasks.filter(t=>t.coverage==='additional').map(t=>t.id),
+          ...state.data.concepts.filter(c=>!c.frequency).map(c=>c.id)
+        ]);
+        for(const id of ids){
+          const node=doc.querySelector(`#net [data-node="${win.CSS.escape(id)}"] circle`);
+          if(node)node.style.setProperty('fill',red,'important');
+        }
+        return true;
+      }
+
       function enhance(){
         const student=doc.querySelector('.student-core-finding');
         if(student&&!student.querySelector('mjx-container'))typeset(student);
         prepareMethodMath();
         prepareDetailsMath();
+        applyTrainingColor();
       }
 
       enhance();
@@ -101,6 +121,13 @@
         win.requestAnimationFrame(()=>{queued=false;enhance()});
       });
       observer.observe(doc.body,{childList:true,subtree:true});
+
+      let attempts=0;
+      const waitForGraph=()=>{
+        if(applyTrainingColor()||attempts++>120)return;
+        win.requestAnimationFrame(waitForGraph);
+      };
+      waitForGraph();
     });
   </script>
 </body>
