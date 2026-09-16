@@ -23,7 +23,7 @@
         const doc=frame.contentDocument||frame.contentWindow.document;
         if(doc&&!doc.querySelector('script[data-reference-graph]')){
           const script=doc.createElement('script');
-          script.src='graph-engine-v6.js?v=20260916f';
+          script.src='graph-engine-v7.js?v=20260916g';
           script.dataset.referenceGraph='true';
           doc.body.appendChild(script);
         }
