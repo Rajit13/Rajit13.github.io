@@ -3,11 +3,160 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="refresh" content="0; url=graph.html">
-  <title>Star Maps 101 · Interactive Knowledge Graph</title>
-  <link rel="canonical" href="https://rajit13.github.io/starcharts101/graph.html">
+  <title>Star Maps 101 · Interactive Book & Observation Graph</title>
+  <meta name="description" content="Interactive companion to Star Charts 101 and Practices, including live book contents and the IOAA 2025 observation knowledge graph.">
+  <link rel="canonical" href="https://rajit13.github.io/starcharts101/">
+  <style>
+    html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #101319; }
+    #site { width: 100%; height: 100%; border: 0; display: block; background: #101319; }
+    #fallback { display: none; position: fixed; inset: 0; place-items: center; padding: 32px; box-sizing: border-box; color: #edf2fa; background: #101319; font: 16px/1.5 system-ui, sans-serif; text-align: center; }
+    #fallback a { color: #85b7ff; }
+  </style>
 </head>
 <body>
-  <p>Opening the <a href="graph.html">Star Maps 101 interactive knowledge graph</a>…</p>
+  <iframe id="site" src="graph.html" title="Star Maps 101 interactive companion"></iframe>
+  <div id="fallback">
+    <div>
+      <h1>Star Maps 101</h1>
+      <p>The interactive companion could not be loaded.</p>
+      <p><a href="graph.html">Open the graph directly</a></p>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      'use strict';
+      const frame = document.getElementById('site');
+      const fallback = document.getElementById('fallback');
+      let attempts = 0;
+
+      function patch() {
+        let doc;
+        try { doc = frame.contentDocument || frame.contentWindow.document; }
+        catch (_) { return false; }
+        if (!doc || !doc.body) return false;
+
+        const authorLinks = doc.querySelector('.author-links');
+        const bookArt = doc.querySelector('.book-art');
+        const nav = doc.querySelector('.book-nav');
+        const tocToggle = doc.getElementById('toc-toggle');
+        const tocPanel = doc.getElementById('toc-panel');
+        const footer = doc.querySelector('.license-foot');
+        if (!authorLinks || !bookArt || !nav || !tocToggle || !tocPanel || !footer) return false;
+        if (doc.documentElement.dataset.polished === 'true') return true;
+        doc.documentElement.dataset.polished = 'true';
+
+        const style = doc.createElement('style');
+        style.textContent = `
+          .author-bar{background:#0d131d!important}
+          .author-links .promo-link{display:none!important}
+          .author-links .promo-link[href*="orcid.org"]{display:inline-flex!important}
+
+          .book-art{
+            background:#07101b!important;
+            border-color:#34465d!important;
+            min-height:225px!important;
+            padding:14px!important;
+            box-shadow:inset 0 0 42px rgba(79,132,184,.08);
+          }
+          .book-art a{display:flex;align-items:center;justify-content:center;width:100%;height:100%;}
+          .book-art img{
+            width:100%!important;
+            max-height:255px!important;
+            object-fit:contain!important;
+            background:transparent!important;
+            filter:invert(1)!important;
+            transform:scaleY(-1)!important;
+            transform-origin:center!important;
+          }
+          .book-art figcaption{display:none!important}
+
+          .book-nav #toc-toggle{
+            background:#d9e9ff!important;
+            color:#101319!important;
+            border-color:#d9e9ff!important;
+            font-weight:800!important;
+            box-shadow:0 0 0 1px rgba(255,255,255,.08),0 5px 18px rgba(83,146,214,.18);
+          }
+          .book-nav #toc-toggle:hover{background:#fff!important}
+          .toc-panel{display:block!important}
+          .toc-head h2{font-size:21px!important}
+          .toc-head h2::before{content:'★ ';color:var(--blue)}
+
+          .license-foot{
+            display:flex!important;
+            align-items:center!important;
+            justify-content:space-between!important;
+            gap:20px!important;
+            flex-wrap:wrap!important;
+          }
+          .footer-license-copy{flex:1 1 620px}
+          .page-counter{display:flex;align-items:center;gap:8px;white-space:nowrap;padding:6px 10px;border:1px solid var(--border);border-radius:7px;background:#171d27}
+          .page-counter span{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.8px}
+          .page-counter img{display:block;height:20px;max-width:160px}
+
+          @media(max-width:540px){
+            .book-art{min-height:190px!important}
+            .book-art img{height:180px!important}
+            .license-foot{align-items:flex-start!important}
+          }
+        `;
+        doc.head.appendChild(style);
+
+        // Keep only the ORCID action in the top author bar. PDF/repository links live once in the main nav.
+        [...authorLinks.querySelectorAll('.promo-link')].forEach(link => {
+          if (!link.href.includes('orcid.org')) link.remove();
+        });
+
+        // Remove the banner caption entirely.
+        const caption = bookArt.querySelector('figcaption');
+        if (caption) caption.remove();
+
+        // Book contents is the primary entry point and is open by default.
+        tocPanel.classList.add('open');
+        tocToggle.setAttribute('aria-expanded', 'true');
+        tocToggle.textContent = 'Book contents ▴';
+
+        // Reorder nav so the important reading path is obvious and links occur only once.
+        const order = ['toc-toggle', 'Interactive graph', 'Latest PDF', 'Repository', 'Releases'];
+        const navItems = [...nav.children];
+        const findItem = key => key === 'toc-toggle'
+          ? doc.getElementById('toc-toggle')
+          : navItems.find(el => el.tagName === 'A' && el.textContent.trim() === key);
+        const spacer = nav.querySelector('.nav-spacer');
+        order.forEach(key => {
+          const el = findItem(key);
+          if (el) nav.insertBefore(el, spacer || null);
+        });
+
+        // Add a visible page-load counter to the footer. GitHub Pages itself has no writeable counter,
+        // so this uses a small external counter badge while leaving the page completely static.
+        const originalFooterHtml = footer.innerHTML;
+        footer.innerHTML = '';
+        const copy = doc.createElement('div');
+        copy.className = 'footer-license-copy';
+        copy.innerHTML = originalFooterHtml;
+        const counter = doc.createElement('div');
+        counter.className = 'page-counter';
+        counter.setAttribute('aria-label', 'Star Maps 101 page views');
+        counter.innerHTML = '<span>Page views</span><img src="https://visitor-badge.laobi.icu/badge?page_id=Rajit13.StarMaps101.Interactive" alt="Star Maps 101 page view counter">';
+        footer.append(copy, counter);
+
+        return true;
+      }
+
+      frame.addEventListener('load', () => {
+        const timer = setInterval(() => {
+          attempts += 1;
+          if (patch() || attempts > 80) clearInterval(timer);
+        }, 150);
+      });
+
+      frame.addEventListener('error', () => {
+        frame.style.display = 'none';
+        fallback.style.display = 'grid';
+      });
+    })();
+  </script>
 </body>
 </html>
