@@ -65,9 +65,6 @@
             max-height:255px!important;
             object-fit:contain!important;
             background:transparent!important;
-            filter:invert(1)!important;
-            transform:scaleY(-1)!important;
-            transform-origin:center!important;
           }
           .book-art figcaption{display:none!important}
 
@@ -103,21 +100,17 @@
         `;
         doc.head.appendChild(style);
 
-        // Keep only the ORCID action in the top author bar. PDF/repository links live once in the main nav.
         [...authorLinks.querySelectorAll('.promo-link')].forEach(link => {
           if (!link.href.includes('orcid.org')) link.remove();
         });
 
-        // Remove the banner caption entirely.
         const caption = bookArt.querySelector('figcaption');
         if (caption) caption.remove();
 
-        // Book contents is the primary entry point and is open by default.
         tocPanel.classList.add('open');
         tocToggle.setAttribute('aria-expanded', 'true');
         tocToggle.textContent = 'Book contents ▴';
 
-        // Reorder nav so the important reading path is obvious and links occur only once.
         const order = ['toc-toggle', 'Interactive graph', 'Latest PDF', 'Repository', 'Releases'];
         const navItems = [...nav.children];
         const findItem = key => key === 'toc-toggle'
@@ -129,8 +122,6 @@
           if (el) nav.insertBefore(el, spacer || null);
         });
 
-        // Add a visible page-load counter to the footer. GitHub Pages itself has no writeable counter,
-        // so this uses a small external counter badge while leaving the page completely static.
         const originalFooterHtml = footer.innerHTML;
         footer.innerHTML = '';
         const copy = doc.createElement('div');
