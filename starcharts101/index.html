@@ -28,7 +28,10 @@
       'use strict';
       const frame = document.getElementById('site');
       const fallback = document.getElementById('fallback');
-      const pdfPreview = 'https://github.com/Rajit13/Star-Maps-101-and-Practices/blob/master/StarMaps101.pdf';
+      const pdfPreview = 'https://raw.githubusercontent.com/Rajit13/Star-Maps-101-and-Practices/master/StarMaps101.pdf';
+      const portfolioUrl = 'https://rajit13.github.io/';
+      const astroPotdUrl = 'https://rajit13.github.io/website_docs/Astro_POTD.pdf';
+      const bengaliBookUrl = 'https://www.rokomari.com/book/471442/jyotirbigganer-jotokichu';
       let attempts = 0;
 
       function patch() {
@@ -72,7 +75,7 @@
             letter-spacing:.08em;
             font-family:"Palatino Linotype","Book Antiqua",Georgia,serif;
           }
-          .author-id a:hover{text-decoration:none!important}
+          .author-id a:hover{text-decoration:underline!important}
 
           .book-art{
             background:#07101b!important;
@@ -96,7 +99,7 @@
             object-fit:contain!important;
             background:transparent!important;
             filter:none!important;
-            transform:rotate(180deg)!important;
+            transform:rotate(180deg) scaleX(-1)!important;
             transform-origin:center!important;
           }
           .book-art figcaption{display:none!important}
@@ -156,6 +159,31 @@
             flex-wrap:wrap!important;
           }
           .footer-license-copy{flex:1 1 620px}
+          .additional-reading{
+            flex:1 0 100%;
+            border-top:1px solid var(--border);
+            padding-top:14px;
+            margin-top:2px;
+          }
+          .additional-reading strong{
+            display:block;
+            margin-bottom:7px;
+            color:var(--text)!important;
+            font-size:13px;
+          }
+          .additional-reading-links{
+            display:flex;
+            flex-wrap:wrap;
+            gap:8px 16px;
+          }
+          .additional-reading a{
+            display:inline-flex;
+            align-items:center;
+            gap:5px;
+            color:var(--blue)!important;
+            text-decoration:none;
+          }
+          .additional-reading a:hover{text-decoration:underline}
           .page-counter{
             display:flex;
             align-items:center;
@@ -199,7 +227,13 @@
         if (caption) caption.remove();
 
         const authorName = doc.querySelector('.author-id a');
-        if (authorName) authorName.textContent = 'Fahim Rajit Hossain Shwadhin';
+        if (authorName) {
+          authorName.textContent = 'Fahim Rajit Hossain Shwadhin';
+          authorName.href = portfolioUrl;
+          authorName.target = '_blank';
+          authorName.rel = 'noopener';
+          authorName.title = 'Open portfolio website';
+        }
 
         const eyebrow = doc.querySelector('.book-copy .eyebrow');
         if (eyebrow) eyebrow.textContent = 'INTERACTIVE COMPANION TO THE BOOK';
@@ -211,7 +245,7 @@
 
         const intro = doc.querySelector('.book-copy p');
         if (intro) {
-          intro.innerHTML = '<strong>Star Charts 101 and Practices</strong> is a practice book dedicated to astronomy enthusiasts and students preparing for the Star Charts/Observational Round of Astronomy and Earth Science Olympiads. It is not a full star atlas; rather, it is intended as a practical problem-solving companion. The book draws on the author’s experience as a participant in two international Olympiads, an IOAA team leader since 2018, a stargazer, and an amateur astronomer.';
+          intro.innerHTML = '<strong>Star Charts 101 and Practices</strong> is a practice book dedicated to astronomy enthusiasts and students preparing for the Star Charts/Observational Round of Astronomy and Earth Science Olympiads. It is not a full star atlas; rather, it is intended as a practical problem-solving companion. The book draws on the author’s experience as a participant in two international Olympiads, an IOAA team leader since 2018, a stargazer, and an observational astronomer.';
         }
 
         const ioaaNote = doc.querySelector('.ioaa-note');
@@ -249,7 +283,8 @@
             text === 'Latest PDF' ||
             /Download latest book PDF/i.test(text) ||
             /Open full PDF/i.test(text) ||
-            link.href.includes('/releases/latest/download/StarMaps101.pdf')
+            link.href.includes('/releases/latest/download/StarMaps101.pdf') ||
+            link.href.includes('/blob/master/StarMaps101.pdf')
           ) {
             link.href = pdfPreview;
             link.target = '_blank';
@@ -262,11 +297,21 @@
         const copy = doc.createElement('div');
         copy.className = 'footer-license-copy';
         copy.innerHTML = originalFooterHtml;
+
+        const reading = doc.createElement('div');
+        reading.className = 'additional-reading';
+        reading.innerHTML = `
+          <strong>Additional reading for Astronomy Olympiad preparation by Fahim Rajit Hossain Shwadhin</strong>
+          <div class="additional-reading-links">
+            <a href="${astroPotdUrl}" target="_blank" rel="noopener">Astronomy Problem of the Day — problem collection PDF ↗</a>
+            <a href="${bengaliBookUrl}" target="_blank" rel="noopener"><span lang="bn">জ্যোতির্বিজ্ঞানের যতকিছু — অলিম্পিয়াড ও অন্যান্য</span> ↗</a>
+          </div>`;
+
         const counter = doc.createElement('div');
         counter.className = 'page-counter';
         counter.setAttribute('aria-label', 'Star Charts 101 and Practices page views');
         counter.innerHTML = '<span>Page views</span><img src="https://visitor-badge.laobi.icu/badge?page_id=Rajit13.StarMaps101.Interactive" alt="Star Charts 101 and Practices page view counter">';
-        footer.append(copy, counter);
+        footer.append(copy, counter, reading);
 
         return true;
       }
