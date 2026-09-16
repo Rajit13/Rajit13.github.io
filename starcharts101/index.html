@@ -4,279 +4,360 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Star Charts 101 and Practices · Book Reading Guide and Knowledge Graph</title>
-  <meta name="description" content="Interactive companion to Star Charts 101 and Practices, including a book reading guide and the IOAA observation knowledge graph.">
+  <meta name="description" content="Interactive companion to Star Charts 101 and Practices, including a live book reading guide and the IOAA observation knowledge graph.">
   <link rel="canonical" href="https://rajit13.github.io/starcharts101/">
   <style>
-    html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #101319; }
-    #site { width: 100%; height: 100%; border: 0; display: block; background: #101319; }
-    #fallback { display: none; position: fixed; inset: 0; place-items: center; padding: 32px; box-sizing: border-box; color: #edf2fa; background: #101319; font: 16px/1.5 system-ui, sans-serif; text-align: center; }
-    #fallback a { color: #85b7ff; }
+    html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#101319}
+    #site{width:100%;height:100%;border:0;display:block;background:#101319}
+    #fallback{display:none;position:fixed;inset:0;place-items:center;padding:32px;box-sizing:border-box;color:#edf2fa;background:#101319;font:16px/1.5 system-ui,sans-serif;text-align:center}
+    #fallback a{color:#85b7ff}
   </style>
 </head>
 <body>
   <iframe id="site" src="graph.html" title="Star Charts 101 and Practices interactive companion"></iframe>
-  <div id="fallback">
-    <div>
-      <h1>Star Charts 101 and Practices</h1>
-      <p>The interactive companion could not be loaded.</p>
-      <p><a href="graph.html">Open the graph directly</a></p>
-    </div>
-  </div>
+  <div id="fallback"><div><h1>Star Charts 101 and Practices</h1><p>The interactive companion could not be loaded.</p><p><a href="graph.html">Open the graph directly</a></p></div></div>
 
   <script>
-    (() => {
-      'use strict';
-      const frame = document.getElementById('site');
-      const fallback = document.getElementById('fallback');
-      const pdfPreview = 'https://raw.githubusercontent.com/Rajit13/Star-Maps-101-and-Practices/master/StarMaps101.pdf';
-      const portfolioUrl = 'https://rajit13.github.io/';
-      const astroPotdUrl = 'https://rajit13.github.io/website_docs/Astro_POTD.pdf';
-      const bengaliBookUrl = 'https://www.rokomari.com/book/471442/jyotirbigganer-jotokichu';
-      let attempts = 0;
+  (()=>{
+    'use strict';
+    const frame=document.getElementById('site');
+    const fallback=document.getElementById('fallback');
+    const liveStamp=Date.now();
+    const rawBase='https://raw.githubusercontent.com/Rajit13/Star-Maps-101-and-Practices/master';
+    const pdfPreview=rawBase+'/StarMaps101.pdf?v='+liveStamp;
+    const tocUrl=rawBase+'/StarMaps101.toc?v='+liveStamp;
+    const texUrl=rawBase+'/StarMaps101.tex?v='+liveStamp;
+    const portfolioUrl='https://rajit13.github.io/';
+    const astroPotdUrl='https://rajit13.github.io/website_docs/Astro_POTD.pdf';
+    const bengaliBookUrl='https://www.rokomari.com/book/471442/jyotirbigganer-jotokichu';
+    let attempts=0;
 
-      function buildTocAccordion(doc, tocPanel) {
-        const grid = tocPanel.querySelector('.toc-grid');
-        if (!grid || grid.dataset.accordion === 'true') return;
+    function texText(value){
+      return String(value||'')
+        .replace(/\\&/g,'&')
+        .replace(/\\textbf\{([^{}]*)\}/g,'$1')
+        .replace(/\\textit\{([^{}]*)\}/g,'$1')
+        .replace(/\\texttt\{([^{}]*)\}/g,'$1')
+        .replace(/\\emph\{([^{}]*)\}/g,'$1')
+        .replace(/\\_/g,'_')
+        .replace(/\{([^{}]*)\}/g,'$1')
+        .replace(/\\\\/g,' ')
+        .replace(/\s+/g,' ')
+        .trim();
+    }
 
-        const items = [...grid.querySelectorAll('.toc-item')];
-        if (!items.length) return;
-
-        const accordion = doc.createElement('div');
-        accordion.className = 'toc-accordion';
-        let current = null;
-
-        for (const item of items) {
-          const isSection = item.classList.contains('depth-0');
-          const label = item.querySelector('span')?.textContent?.trim() || item.textContent.trim();
-          const page = item.querySelector('small')?.textContent?.trim() || '';
-
-          if (isSection) {
-            const section = doc.createElement('section');
-            section.className = 'toc-section';
-
-            const button = doc.createElement('button');
-            button.type = 'button';
-            button.className = 'toc-section-toggle';
-            button.setAttribute('aria-expanded', 'false');
-            button.innerHTML = `<span>${label}</span><small>${page}</small><b aria-hidden="true">▾</b>`;
-
-            const body = doc.createElement('div');
-            body.className = 'toc-section-body';
-            body.hidden = true;
-
-            button.addEventListener('click', () => {
-              const open = button.getAttribute('aria-expanded') === 'true';
-              button.setAttribute('aria-expanded', String(!open));
-              body.hidden = open;
-              button.querySelector('b').textContent = open ? '▾' : '▴';
-              section.classList.toggle('open', !open);
-            });
-
-            section.append(button, body);
-            accordion.appendChild(section);
-            current = body;
-          } else if (current) {
-            const row = doc.createElement('div');
-            const depth = item.classList.contains('depth-3') ? 3 : item.classList.contains('depth-2') ? 2 : 1;
-            row.className = `toc-subitem depth-${depth}`;
-            row.innerHTML = `<span>${label}</span><small>${page}</small>`;
-            current.appendChild(row);
-          }
-        }
-
-        grid.replaceWith(accordion);
-        accordion.dataset.accordion = 'true';
+    function parseToc(text){
+      const items=[];
+      for(const line of String(text||'').split(/\r?\n/)){
+        if(!line.includes('\\contentsline')) continue;
+        const typeMatch=line.match(/^\\contentsline \{([^}]*)\}/);
+        const pageMatch=line.match(/\}\{([^{}]*)\}\{[^{}]*\}%?$/);
+        if(!typeMatch||!pageMatch) continue;
+        const type=typeMatch[1];
+        if(!['section','subsection','subsubsection','paragraph'].includes(type)) continue;
+        const secondStart=line.indexOf('}{',line.indexOf('\\contentsline'))+2;
+        if(secondStart<2) continue;
+        const pageToken='}{'+pageMatch[1]+'}{';
+        const pageIndex=line.lastIndexOf(pageToken);
+        if(pageIndex<=secondStart) continue;
+        let titleField=line.slice(secondStart,pageIndex);
+        let number='';
+        const num=titleField.match(/^\\numberline \{([^}]*)\}(.*)$/);
+        if(num){number=texText(num[1]);titleField=num[2];}
+        const title=texText(titleField);
+        if(title) items.push({type,number,title,page:pageMatch[1]});
       }
+      return items;
+    }
 
-      function patch() {
-        let doc;
-        try { doc = frame.contentDocument || frame.contentWindow.document; }
-        catch (_) { return false; }
-        if (!doc || !doc.body) return false;
+    function normalizeSourceUrl(url){
+      let value=String(url||'').trim();
+      if(!value) return '';
+      if(!/^[a-z][a-z0-9+.-]*:\/\//i.test(value)) value='https://'+value.replace(/^\/+/, '');
+      return value;
+    }
 
-        const authorLinks = doc.querySelector('.author-links');
-        const bookArt = doc.querySelector('.book-art');
-        const nav = doc.querySelector('.book-nav');
-        const oldTocToggle = doc.getElementById('toc-toggle');
-        const tocPanel = doc.getElementById('toc-panel');
-        const footer = doc.querySelector('.license-foot');
-        const workspace = doc.querySelector('main.workspace');
-        if (!authorLinks || !bookArt || !nav || !oldTocToggle || !tocPanel || !footer || !workspace) return false;
-        if (doc.documentElement.dataset.polished === 'true') return true;
-        doc.documentElement.dataset.polished = 'true';
-        doc.title = 'Star Charts 101 and Practices · Book Reading Guide and Knowledge Graph';
+    function parseSources(tex){
+      const text=String(tex||'');
+      const sourceIndex=text.search(/\\section\{Sources\}/i);
+      if(sourceIndex<0) return [];
+      const tail=text.slice(sourceIndex);
+      const begin=tail.indexOf('\\begin{enumerate}');
+      const end=tail.indexOf('\\end{enumerate}',begin);
+      if(begin<0||end<0) return [];
+      const body=tail.slice(begin+'\\begin{enumerate}'.length,end);
+      return body.split(/\\item\s+/).slice(1).map(raw=>{
+        const urlMatch=raw.match(/\\url\{([^}]+)\}/i);
+        const url=urlMatch?normalizeSourceUrl(urlMatch[1]):'';
+        const withoutUrl=raw.replace(/\\url\{[^}]+\}/gi,'');
+        const parts=withoutUrl.split(/\\\\|\r?\n/).map(texText).filter(Boolean);
+        let name=(parts.shift()||'').replace(/\s*--\s*$/,'').trim();
+        const description=parts.join(' ').trim();
+        return {name,url,description};
+      }).filter(item=>item.name);
+    }
 
-        const style = doc.createElement('style');
-        style.textContent = `
-          .author-bar{background:#0d131d!important}
-          .author-links .promo-link{display:none!important}
-          .author-links .promo-link[href*="orcid.org"]{display:inline-flex!important}
-          .author-id small{color:var(--green);font-size:10px;letter-spacing:1.5px;text-transform:uppercase}
-          .author-id a{color:#7ec8ff!important;text-decoration:none!important;font-weight:700!important;font-size:2em!important;line-height:1.1!important;font-variant:small-caps;font-variant-caps:small-caps;letter-spacing:.08em;font-family:"Palatino Linotype","Book Antiqua",Georgia,serif}
-          .author-id a:hover{text-decoration:underline!important}
+    function makeSection(doc,label,page){
+      const section=doc.createElement('section');
+      section.className='toc-section';
+      const button=doc.createElement('button');
+      button.type='button';
+      button.className='toc-section-toggle';
+      button.setAttribute('aria-expanded','false');
+      const title=doc.createElement('span'); title.textContent=label;
+      const pageEl=doc.createElement('small'); pageEl.textContent=page||'';
+      const caret=doc.createElement('b'); caret.setAttribute('aria-hidden','true'); caret.textContent='▾';
+      button.append(title,pageEl,caret);
+      const body=doc.createElement('div');
+      body.className='toc-section-body';
+      body.hidden=true;
+      button.addEventListener('click',()=>{
+        const open=button.getAttribute('aria-expanded')==='true';
+        button.setAttribute('aria-expanded',String(!open));
+        body.hidden=open;
+        caret.textContent=open?'▾':'▴';
+        section.classList.toggle('open',!open);
+      });
+      section.append(button,body);
+      return {section,body};
+    }
 
-          .book-art{background:#07101b!important;border-color:#34465d!important;min-height:225px!important;padding:14px!important;box-shadow:inset 0 0 42px rgba(79,132,184,.08)}
-          .book-art a{display:flex;align-items:center;justify-content:center;width:100%;height:100%;pointer-events:none!important;cursor:default!important}
-          .book-art img{width:100%!important;max-height:255px!important;object-fit:contain!important;background:transparent!important;filter:none!important;transform:rotate(180deg) scaleX(-1)!important;transform-origin:center!important}
-          .book-art figcaption{display:none!important}
+    function addTocRow(doc,body,label,page,depth=1){
+      const row=doc.createElement('div');
+      row.className='toc-subitem depth-'+depth;
+      const text=doc.createElement('span'); text.textContent=label;
+      const pageEl=doc.createElement('small'); pageEl.textContent=page||'';
+      row.append(text,pageEl);
+      body.appendChild(row);
+    }
 
-          .book-copy h1{line-height:1.12!important}
-          .book-copy h1 .graph-subtitle{display:inline-block;margin-top:6px;font-size:.76em;font-weight:620;color:#cbd5e5}
-
-          .book-callout{display:block!important}
-          .book-callout strong{display:block!important;margin-bottom:5px!important}
-          .book-callout span{display:block!important;max-width:none!important;margin-bottom:10px!important}
-          .book-callout button{display:inline-block!important;margin-top:2px!important}
-
-          .book-nav #toc-toggle{background:#d9e9ff!important;color:#101319!important;border-color:#d9e9ff!important;font-weight:800!important;box-shadow:0 0 0 1px rgba(255,255,255,.08),0 5px 18px rgba(83,146,214,.18)}
-          .book-nav #toc-toggle:hover{background:#fff!important}
-          .toc-panel{display:none!important}
-          .toc-panel.open{display:block!important}
-          .toc-head h2{font-size:21px!important}
-          .toc-head h2::before{content:'★ ';color:var(--blue)}
-
-          .toc-accordion{display:grid;gap:7px}
-          .toc-section{border:1px solid #30394a;border-radius:7px;background:#151b24;overflow:hidden}
-          .toc-section-toggle{width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:10px;text-align:left;padding:10px 12px!important;border:0!important;border-radius:0!important;background:#191f29!important;color:#fff!important;font-weight:750!important;cursor:pointer!important}
-          .toc-section-toggle:hover{background:#222b38!important}
-          .toc-section-toggle small{color:#8fa0b5;font-weight:400;white-space:nowrap}
-          .toc-section-toggle b{color:var(--blue);font-size:13px}
-          .toc-section-body{padding:5px 8px 9px;background:#121720}
-          .toc-section-body[hidden]{display:none!important}
-          .toc-subitem{display:flex;justify-content:space-between;gap:12px;padding:5px 8px;color:#d8e2ef;font-size:12px;cursor:default;pointer-events:none}
-          .toc-subitem small{color:#8fa0b5;white-space:nowrap}
-          .toc-subitem.depth-2{padding-left:25px;color:#bcc8d8}
-          .toc-subitem.depth-3{padding-left:42px;color:#9fabbc;font-size:11px}
-
-          .ioaa-context-footnote{margin:18px 30px 20px!important;padding:13px 15px!important;border:1px solid #34465d!important;border-left:3px solid var(--green)!important;border-radius:7px!important;background:#151b24!important;color:#cbd5e5!important;font-size:12px!important}
-          .ioaa-context-footnote strong{display:block;margin-bottom:4px;color:#eef4ff!important;font-size:13px!important}
-
-          .license-foot{display:block!important;padding-top:22px!important}
-          .additional-reading{margin:0 0 18px;padding:0 0 18px;border-bottom:1px solid var(--border)}
-          .additional-reading strong{display:block;margin-bottom:10px;color:var(--text)!important;font-size:20px!important;line-height:1.25}
-          .additional-reading-links{display:grid;gap:8px}
-          .additional-reading a{display:inline-flex;align-items:center;gap:6px;width:max-content;max-width:100%;color:var(--blue)!important;text-decoration:none;font-size:15px!important;font-weight:650}
-          .additional-reading a:hover{text-decoration:underline}
-          .page-counter{display:flex;align-items:center;gap:8px;width:max-content;white-space:nowrap;padding:6px 10px;border:1px solid var(--border);border-radius:7px;background:#171d27;margin-bottom:16px}
-          .page-counter span{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.8px}
-          .page-counter img{display:block;height:20px;max-width:160px}
-          .footer-license-copy{display:block!important;border-top:1px solid var(--border);padding-top:14px!important;margin-top:0!important;color:var(--muted)!important;font-size:12px!important}
-
-          @media(max-width:850px){.author-id a{font-size:1.7em!important}.ioaa-context-footnote{margin-left:18px!important;margin-right:18px!important}}
-          @media(max-width:540px){.book-art{min-height:190px!important}.book-art img{height:180px!important}.author-id a{font-size:1.55em!important}.additional-reading strong{font-size:18px!important}}
-        `;
-        doc.head.appendChild(style);
-
-        [...authorLinks.querySelectorAll('.promo-link')].forEach(link => {
-          if (!link.href.includes('orcid.org')) link.remove();
-        });
-
-        const caption = bookArt.querySelector('figcaption');
-        if (caption) caption.remove();
-
-        const authorName = doc.querySelector('.author-id a');
-        if (authorName) {
-          authorName.textContent = 'Fahim Rajit Hossain Shwadhin';
-          authorName.href = portfolioUrl;
-          authorName.target = '_blank';
-          authorName.rel = 'noopener';
-          authorName.title = 'Open portfolio website';
-        }
-
-        const eyebrow = doc.querySelector('.book-copy .eyebrow');
-        if (eyebrow) eyebrow.textContent = 'INTERACTIVE COMPANION TO THE BOOK';
-
-        const title = doc.querySelector('.book-copy h1');
-        if (title) title.innerHTML = 'Star Charts 101 and Practices<br><span class="graph-subtitle">Book Reading Guide and Knowledge Graph</span>';
-
-        const intro = doc.querySelector('.book-copy p');
-        if (intro) intro.innerHTML = '<strong>Star Charts 101 and Practices</strong> is a practice book dedicated to astronomy enthusiasts and students preparing for the Star Charts/Observational Round of Astronomy and Earth Science Olympiads. It is not a full star atlas; rather, it is intended as a practical problem-solving companion. The book draws on the author’s experience as a participant in two international Olympiads, an IOAA team leader since 2018, a stargazer, and an observational astronomer.';
-
-        const callout = doc.querySelector('.book-callout');
-        if (callout) {
-          const strong = callout.querySelector('strong');
-          const span = callout.querySelector('span');
-          if (strong) strong.textContent = 'Learn from the book, then explore the links.';
-          if (span) span.textContent = 'The graph shows how book topics support one another and how they connect to several IOAA observation tasks.';
-        }
-
-        const ioaaNote = doc.querySelector('.ioaa-note');
-        if (ioaaNote) {
-          ioaaNote.classList.add('ioaa-context-footnote');
-          ioaaNote.innerHTML = '<strong>IOAA 2025 context</strong>The graph’s OM (Sky Map), OT (Telescope), and OP (Planetarium) nodes and task mappings refer specifically to the IOAA 2025 Observation Round.';
-          workspace.insertAdjacentElement('afterend', ioaaNote);
-        }
-
-        buildTocAccordion(doc, tocPanel);
-
-        const tocToggle = oldTocToggle.cloneNode(true);
-        oldTocToggle.replaceWith(tocToggle);
-        tocPanel.classList.remove('open');
-        tocToggle.setAttribute('aria-expanded', 'false');
-        tocToggle.textContent = 'Book contents ▾';
-        tocToggle.addEventListener('click', () => {
-          const open = tocPanel.classList.toggle('open');
-          tocToggle.setAttribute('aria-expanded', String(open));
-          tocToggle.textContent = open ? 'Book contents ▴' : 'Book contents ▾';
-        });
-
-        const order = ['toc-toggle', 'Interactive graph', 'Latest PDF', 'Repository', 'Releases'];
-        const navItems = [...nav.children];
-        const findItem = key => key === 'toc-toggle'
-          ? doc.getElementById('toc-toggle')
-          : navItems.find(el => el.tagName === 'A' && el.textContent.trim() === key);
-        const spacer = nav.querySelector('.nav-spacer');
-        order.forEach(key => {
-          const el = findItem(key);
-          if (el) nav.insertBefore(el, spacer || null);
-        });
-
-        [...doc.querySelectorAll('a')].forEach(link => {
-          const text = link.textContent.trim();
-          if (text === 'Latest PDF' || /Download latest book PDF/i.test(text) || /Open full PDF/i.test(text) || link.href.includes('/releases/latest/download/StarMaps101.pdf') || link.href.includes('/blob/master/StarMaps101.pdf')) {
-            link.href = pdfPreview;
-            link.target = '_blank';
-            link.rel = 'noopener';
-          }
-        });
-
-        const originalFooterHtml = footer.innerHTML;
-        footer.innerHTML = '';
-
-        const reading = doc.createElement('div');
-        reading.className = 'additional-reading';
-        reading.innerHTML = `
-          <strong>Additional reading for Astronomy Olympiad preparation</strong>
-          <div class="additional-reading-links">
-            <a href="${astroPotdUrl}" target="_blank" rel="noopener">Astronomy Problem of the Day — problem collection PDF ↗</a>
-            <a href="${bengaliBookUrl}" target="_blank" rel="noopener"><span lang="bn">জ্যোতির্বিজ্ঞানের যতকিছু — অলিম্পিয়াড ও অন্যান্য</span> ↗</a>
-          </div>`;
-
-        const counter = doc.createElement('div');
-        counter.className = 'page-counter';
-        counter.setAttribute('aria-label', 'Star Charts 101 and Practices page views');
-        counter.innerHTML = '<span>Page views</span><img src="https://visitor-badge.laobi.icu/badge?page_id=Rajit13.StarMaps101.Interactive" alt="Star Charts 101 and Practices page view counter">';
-
-        const copy = doc.createElement('div');
-        copy.className = 'footer-license-copy';
-        copy.innerHTML = originalFooterHtml;
-
-        footer.append(reading, counter, copy);
-        return true;
+    function addSourceRow(doc,body,source){
+      const row=doc.createElement(source.url?'a':'div');
+      row.className='source-entry';
+      if(source.url){row.href=source.url;row.target='_blank';row.rel='noopener';}
+      const name=doc.createElement('span');
+      name.className='source-name';
+      name.textContent=source.name+(source.url?' ↗':'');
+      row.appendChild(name);
+      if(source.description){
+        const description=doc.createElement('small');
+        description.className='source-description';
+        description.textContent=source.description;
+        row.appendChild(description);
       }
+      body.appendChild(row);
+    }
 
-      frame.addEventListener('load', () => {
-        const timer = setInterval(() => {
-          attempts += 1;
-          if (patch() || attempts > 80) clearInterval(timer);
-        }, 150);
+    function renderAccordionFromData(doc,tocPanel,items,sources){
+      const accordion=doc.createElement('div');
+      accordion.className='toc-accordion';
+      accordion.dataset.accordion='true';
+      let current=null;
+      let currentSectionTitle='';
+      for(const item of items){
+        if(item.type==='section'){
+          const label=(item.number?item.number+' ':'')+item.title;
+          const made=makeSection(doc,label,'p. '+item.page);
+          accordion.appendChild(made.section);
+          current=made.body;
+          currentSectionTitle=item.title;
+          if(/^Sources$/i.test(item.title)){
+            for(const source of sources) addSourceRow(doc,current,source);
+            if(!sources.length){
+              const empty=doc.createElement('div');
+              empty.className='source-status';
+              empty.textContent='No source entries were found in the current StarMaps101.tex.';
+              current.appendChild(empty);
+            }
+          }
+        }else if(current){
+          const depth=item.type==='subsection'?1:item.type==='subsubsection'?2:3;
+          const label=(item.number?item.number+' ':'')+item.title;
+          addTocRow(doc,current,label,'p. '+item.page,depth);
+        }
+      }
+      if(!items.some(item=>item.type==='section'&&/^Sources$/i.test(item.title))){
+        const made=makeSection(doc,'Sources','');
+        for(const source of sources) addSourceRow(doc,made.body,source);
+        accordion.appendChild(made.section);
+      }
+      const old=tocPanel.querySelector('.toc-grid,.toc-accordion');
+      if(old) old.replaceWith(accordion); else tocPanel.appendChild(accordion);
+    }
+
+    function buildInitialAccordion(doc,tocPanel){
+      const grid=tocPanel.querySelector('.toc-grid');
+      if(!grid) return;
+      const items=[...grid.querySelectorAll('.toc-item')];
+      if(!items.length) return;
+      const accordion=doc.createElement('div');
+      accordion.className='toc-accordion';
+      let current=null;
+      for(const item of items){
+        const isSection=item.classList.contains('depth-0');
+        const label=item.querySelector('span')?.textContent?.trim()||item.textContent.trim();
+        const page=item.querySelector('small')?.textContent?.trim()||'';
+        if(isSection){
+          const made=makeSection(doc,label,page);
+          accordion.appendChild(made.section);
+          current=made.body;
+        }else if(current){
+          const depth=item.classList.contains('depth-3')?3:item.classList.contains('depth-2')?2:1;
+          addTocRow(doc,current,label,page,depth);
+        }
+      }
+      grid.replaceWith(accordion);
+    }
+
+    async function refreshLiveBookGuide(doc,tocPanel){
+      const headNote=tocPanel.querySelector('.toc-head p');
+      if(headNote) headNote.textContent='Loading the latest contents and Sources directly from the book repository…';
+      try{
+        const [tocResponse,texResponse]=await Promise.all([
+          fetch(tocUrl,{cache:'no-store'}),
+          fetch(texUrl,{cache:'no-store'})
+        ]);
+        if(!tocResponse.ok) throw new Error('TOC HTTP '+tocResponse.status);
+        if(!texResponse.ok) throw new Error('TeX HTTP '+texResponse.status);
+        const [tocText,texTextRaw]=await Promise.all([tocResponse.text(),texResponse.text()]);
+        const items=parseToc(tocText);
+        const sources=parseSources(texTextRaw);
+        renderAccordionFromData(doc,tocPanel,items,sources);
+        if(headNote) headNote.textContent='Live from StarMaps101.toc and the Sources section of StarMaps101.tex on master. Reloading this page checks the newest committed book files.';
+      }catch(error){
+        if(headNote) headNote.textContent='The live repository refresh failed; showing the contents already loaded with the page.';
+        console.error('Live book guide refresh failed:',error);
+      }
+    }
+
+    function patch(){
+      let doc;
+      try{doc=frame.contentDocument||frame.contentWindow.document;}catch(_){return false;}
+      if(!doc||!doc.body) return false;
+      const authorLinks=doc.querySelector('.author-links');
+      const bookArt=doc.querySelector('.book-art');
+      const nav=doc.querySelector('.book-nav');
+      const oldTocToggle=doc.getElementById('toc-toggle');
+      const tocPanel=doc.getElementById('toc-panel');
+      const footer=doc.querySelector('.license-foot');
+      const workspace=doc.querySelector('main.workspace');
+      if(!authorLinks||!bookArt||!nav||!oldTocToggle||!tocPanel||!footer||!workspace) return false;
+      if(doc.documentElement.dataset.polished==='true') return true;
+      doc.documentElement.dataset.polished='true';
+      doc.title='Star Charts 101 and Practices · Book Reading Guide and Knowledge Graph';
+
+      const style=doc.createElement('style');
+      style.textContent=`
+        .author-bar{background:#0d131d!important}
+        .author-links .promo-link{display:none!important}
+        .author-links .promo-link[href*="orcid.org"]{display:inline-flex!important}
+        .author-id small{color:var(--green);font-size:10px;letter-spacing:1.5px;text-transform:uppercase}
+        .author-id a{color:#7ec8ff!important;text-decoration:none!important;font-weight:700!important;font-size:2em!important;line-height:1.1!important;font-variant:small-caps;font-variant-caps:small-caps;letter-spacing:.08em;font-family:"Palatino Linotype","Book Antiqua",Georgia,serif}
+        .author-id a:hover{text-decoration:underline!important}
+        .book-art{background:#07101b!important;border-color:#34465d!important;min-height:225px!important;padding:14px!important;box-shadow:inset 0 0 42px rgba(79,132,184,.08)}
+        .book-art a{display:flex;align-items:center;justify-content:center;width:100%;height:100%;pointer-events:none!important;cursor:default!important}
+        .book-art img{width:100%!important;max-height:255px!important;object-fit:contain!important;background:transparent!important;filter:none!important;transform:rotate(180deg) scaleX(-1)!important;transform-origin:center!important}
+        .book-art figcaption{display:none!important}
+        .book-copy h1{line-height:1.12!important}
+        .book-copy h1 .graph-subtitle{display:inline-block;margin-top:6px;font-size:.76em;font-weight:620;color:#cbd5e5}
+        .book-callout{display:block!important}
+        .book-callout strong{display:block!important;margin-bottom:5px!important}
+        .book-callout span{display:block!important;max-width:none!important;margin-bottom:10px!important}
+        .book-callout button{display:inline-block!important;margin-top:2px!important}
+        .book-nav #toc-toggle{background:#d9e9ff!important;color:#101319!important;border-color:#d9e9ff!important;font-weight:800!important;box-shadow:0 0 0 1px rgba(255,255,255,.08),0 5px 18px rgba(83,146,214,.18)}
+        .book-nav #toc-toggle:hover{background:#fff!important}
+        .toc-panel{display:none!important}
+        .toc-panel.open{display:block!important}
+        .toc-head h2{font-size:21px!important}
+        .toc-head h2::before{content:'★ ';color:var(--blue)}
+        .toc-accordion{display:grid;gap:7px}
+        .toc-section{border:1px solid #30394a;border-radius:7px;background:#151b24;overflow:hidden}
+        .toc-section-toggle{width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:10px;text-align:left;padding:10px 12px!important;border:0!important;border-radius:0!important;background:#191f29!important;color:#fff!important;font-weight:750!important;cursor:pointer!important}
+        .toc-section-toggle:hover{background:#222b38!important}
+        .toc-section-toggle small{color:#8fa0b5;font-weight:400;white-space:nowrap}
+        .toc-section-toggle b{color:var(--blue);font-size:13px}
+        .toc-section-body{padding:5px 8px 9px;background:#121720}
+        .toc-section-body[hidden]{display:none!important}
+        .toc-subitem{display:flex;justify-content:space-between;gap:12px;padding:5px 8px;color:#d8e2ef;font-size:12px;cursor:default;pointer-events:none}
+        .toc-subitem small{color:#8fa0b5;white-space:nowrap}
+        .toc-subitem.depth-2{padding-left:25px;color:#bcc8d8}
+        .toc-subitem.depth-3{padding-left:42px;color:#9fabbc;font-size:11px}
+        .source-entry{display:block!important;padding:9px 10px!important;margin:4px 0!important;border-radius:6px!important;background:#171e29!important;color:#dfe8f5!important;text-decoration:none!important;pointer-events:auto!important;cursor:pointer!important}
+        .source-entry:hover{background:#222d3b!important}
+        .source-name{display:block;font-size:13px;font-weight:700;color:#85b7ff}
+        .source-description{display:block;margin-top:3px;color:#aebacd!important;font-size:11px;line-height:1.45;white-space:normal!important}
+        div.source-entry{cursor:default!important}
+        div.source-entry .source-name{color:#dfe8f5}
+        .source-status{padding:9px;color:#aebacd;font-size:12px}
+        .ioaa-context-footnote{margin:18px 30px 20px!important;padding:13px 15px!important;border:1px solid #34465d!important;border-left:3px solid var(--green)!important;border-radius:7px!important;background:#151b24!important;color:#cbd5e5!important;font-size:12px!important}
+        .ioaa-context-footnote strong{display:block;margin-bottom:4px;color:#eef4ff!important;font-size:13px!important}
+        .license-foot{display:block!important;padding-top:22px!important}
+        .additional-reading{margin:0 0 18px;padding:0 0 18px;border-bottom:1px solid var(--border)}
+        .additional-reading strong{display:block;margin-bottom:10px;color:var(--text)!important;font-size:20px!important;line-height:1.25}
+        .additional-reading-links{display:grid;gap:8px}
+        .additional-reading a{display:inline-flex;align-items:center;gap:6px;width:max-content;max-width:100%;color:var(--blue)!important;text-decoration:none;font-size:15px!important;font-weight:650}
+        .additional-reading a:hover{text-decoration:underline}
+        .page-counter{display:flex;align-items:center;gap:8px;width:max-content;white-space:nowrap;padding:6px 10px;border:1px solid var(--border);border-radius:7px;background:#171d27;margin-bottom:16px}
+        .page-counter span{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.8px}
+        .page-counter img{display:block;height:20px;max-width:160px}
+        .footer-license-copy{display:block!important;border-top:1px solid var(--border);padding-top:14px!important;margin-top:0!important;color:var(--muted)!important;font-size:12px!important}
+        @media(max-width:850px){.author-id a{font-size:1.7em!important}.ioaa-context-footnote{margin-left:18px!important;margin-right:18px!important}}
+        @media(max-width:540px){.book-art{min-height:190px!important}.book-art img{height:180px!important}.author-id a{font-size:1.55em!important}.additional-reading strong{font-size:18px!important}}
+      `;
+      doc.head.appendChild(style);
+
+      [...authorLinks.querySelectorAll('.promo-link')].forEach(link=>{if(!link.href.includes('orcid.org')) link.remove();});
+      const caption=bookArt.querySelector('figcaption'); if(caption) caption.remove();
+      const authorName=doc.querySelector('.author-id a');
+      if(authorName){authorName.textContent='Fahim Rajit Hossain Shwadhin';authorName.href=portfolioUrl;authorName.target='_blank';authorName.rel='noopener';authorName.title='Open portfolio website';}
+      const eyebrow=doc.querySelector('.book-copy .eyebrow'); if(eyebrow) eyebrow.textContent='INTERACTIVE COMPANION TO THE BOOK';
+      const title=doc.querySelector('.book-copy h1'); if(title) title.innerHTML='Star Charts 101 and Practices<br><span class="graph-subtitle">Book Reading Guide and Knowledge Graph</span>';
+      const intro=doc.querySelector('.book-copy p'); if(intro) intro.innerHTML='<strong>Star Charts 101 and Practices</strong> is a practice book dedicated to astronomy enthusiasts and students preparing for the Star Charts/Observational Round of Astronomy and Earth Science Olympiads. It is not a full star atlas; rather, it is intended as a practical problem-solving companion. The book draws on the author’s experience as a participant in two international Olympiads, an IOAA team leader since 2018, a stargazer, and an observational astronomer.';
+      const callout=doc.querySelector('.book-callout');
+      if(callout){const strong=callout.querySelector('strong');const span=callout.querySelector('span');if(strong) strong.textContent='Learn from the book, then explore the links.';if(span) span.textContent='The graph shows how book topics support one another and how they connect to several IOAA observation tasks.';}
+      const ioaaNote=doc.querySelector('.ioaa-note');
+      if(ioaaNote){ioaaNote.classList.add('ioaa-context-footnote');ioaaNote.innerHTML='<strong>IOAA 2025 context</strong>The graph’s OM (Sky Map), OT (Telescope), and OP (Planetarium) nodes and task mappings refer specifically to the IOAA 2025 Observation Round.';workspace.insertAdjacentElement('afterend',ioaaNote);}
+
+      buildInitialAccordion(doc,tocPanel);
+      refreshLiveBookGuide(doc,tocPanel);
+
+      const tocToggle=oldTocToggle.cloneNode(true);
+      oldTocToggle.replaceWith(tocToggle);
+      tocPanel.classList.remove('open');
+      tocToggle.setAttribute('aria-expanded','false');
+      tocToggle.textContent='Book contents ▾';
+      tocToggle.addEventListener('click',()=>{const open=tocPanel.classList.toggle('open');tocToggle.setAttribute('aria-expanded',String(open));tocToggle.textContent=open?'Book contents ▴':'Book contents ▾';});
+
+      const order=['toc-toggle','Interactive graph','Latest PDF','Repository','Releases'];
+      const navItems=[...nav.children];
+      const findItem=key=>key==='toc-toggle'?doc.getElementById('toc-toggle'):navItems.find(el=>el.tagName==='A'&&el.textContent.trim()===key);
+      const spacer=nav.querySelector('.nav-spacer');
+      order.forEach(key=>{const el=findItem(key);if(el) nav.insertBefore(el,spacer||null);});
+
+      [...doc.querySelectorAll('a')].forEach(link=>{
+        const text=link.textContent.trim();
+        if(text==='Latest PDF'||/Download latest book PDF/i.test(text)||/Open full PDF/i.test(text)||link.href.includes('/releases/latest/download/StarMaps101.pdf')||link.href.includes('/blob/master/StarMaps101.pdf')){link.href=pdfPreview;link.target='_blank';link.rel='noopener';}
       });
 
-      frame.addEventListener('error', () => {
-        frame.style.display = 'none';
-        fallback.style.display = 'grid';
-      });
-    })();
+      const originalFooterHtml=footer.innerHTML;
+      footer.innerHTML='';
+      const reading=doc.createElement('div');
+      reading.className='additional-reading';
+      reading.innerHTML=`<strong>Additional reading for Astronomy Olympiad preparation</strong><div class="additional-reading-links"><a href="${astroPotdUrl}" target="_blank" rel="noopener">Astronomy Problem of the Day — problem collection PDF ↗</a><a href="${bengaliBookUrl}" target="_blank" rel="noopener"><span lang="bn">জ্যোতির্বিজ্ঞানের যতকিছু — অলিম্পিয়াড ও অন্যান্য</span> ↗</a></div>`;
+      const counter=doc.createElement('div');
+      counter.className='page-counter';
+      counter.setAttribute('aria-label','Star Charts 101 and Practices page views');
+      counter.innerHTML='<span>Page views</span><img src="https://visitor-badge.laobi.icu/badge?page_id=Rajit13.StarMaps101.Interactive" alt="Star Charts 101 and Practices page view counter">';
+      const copy=doc.createElement('div'); copy.className='footer-license-copy'; copy.innerHTML=originalFooterHtml;
+      footer.append(reading,counter,copy);
+      return true;
+    }
+
+    frame.addEventListener('load',()=>{
+      const timer=setInterval(()=>{attempts+=1;if(patch()||attempts>80) clearInterval(timer);},150);
+    });
+    frame.addEventListener('error',()=>{frame.style.display='none';fallback.style.display='grid';});
+  })();
   </script>
 </body>
 </html>
