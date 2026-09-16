@@ -228,6 +228,24 @@
       }
     }
 
+    function installGraphMethodCopy(doc){
+      const details=doc.getElementById('details');
+      if(!details) return;
+      const render=()=>{
+        const text=details.textContent||'';
+        if(!/How to read this graph|This replaces only the old radial node arrangement|Serat Saad’s IOAA map/i.test(text)) return;
+        const nodeCount=details.querySelector('.stats div:nth-child(1) b')?.textContent||'';
+        const linkCount=details.querySelector('.stats div:nth-child(2) b')?.textContent||'';
+        const liveCount=details.querySelector('.stats div:nth-child(3) b')?.textContent||'';
+        details.innerHTML='<span class="tag">Knowledge map</span><h2>How we build this</h2><p>Most concept maps are drawn by hand. I wanted this one to stay connected to the book itself, so it is built in two layers. The structural layer is read directly from the current <code>StarMaps101.toc</code>: when the book changes, its sections and subsections change here as well. The conceptual links, practice links, and IOAA observation mappings are curated by hand so the map does not invent relationships that are not actually part of the teaching structure.</p><p>Each topic is a node and each meaningful relationship is a link. The layout then arranges the network by interaction: connected ideas pull toward one another, unrelated nodes push apart, and stronger relationships pull more strongly. That is why topics that support the same observing skill naturally settle into clusters. The horizontal and vertical positions are not coordinates; what matters is connectivity, neighbourhood, and cluster membership.</p><div class="stats"><div><b>'+nodeCount+'</b>nodes</div><div><b>'+linkCount+'</b>links</div><div><b>'+liveCount+'</b>live TOC nodes</div></div><h3>Reading the map</h3><p>Hollow blue nodes are live structural entries generated from the current book contents. Filled conceptual, practice, and IOAA nodes are curated. Select any node to see what it connects to, then drag or zoom to explore the surrounding cluster.</p>';
+      };
+      render();
+      const observer=new MutationObserver(()=>render());
+      observer.observe(details,{childList:true,subtree:true,characterData:true});
+      const help=doc.querySelector('.help');
+      if(help) help.textContent='Drag nodes or the background · Scroll to zoom · Select a node to inspect its connections';
+    }
+
     function patch(){
       let doc;
       try{doc=frame.contentDocument||frame.contentWindow.document;}catch(_){return false;}
@@ -260,8 +278,8 @@
         .author-social:hover{background:#303c4e!important;transform:translateY(-1px)!important}
         .author-social.linkedin:hover{color:#7ec8ff!important}.author-social.facebook:hover{color:#9bbcff!important}.author-social.instagram:hover{color:#ff9fce!important}.author-social.github:hover{color:#fff!important}.author-social.youtube:hover{color:#ff8c8c!important}
         .author-id small{color:var(--green);font-size:10px;letter-spacing:1.5px;text-transform:uppercase}
-        .author-id a{color:#7ec8ff!important;text-decoration:none!important;font-weight:700!important;font-size:2em!important;line-height:1.1!important;font-variant:small-caps;font-variant-caps:small-caps;letter-spacing:.08em;font-family:"Palatino Linotype","Book Antiqua",Georgia,serif}
-        .author-id a:hover{text-decoration:underline!important}
+        .author-id a{color:#7ec8ff!important;text-decoration:none!important;font-weight:700!important;font-size:2em!important;line-height:1.1!important;font-variant:small-caps!important;font-variant-caps:small-caps!important;font-feature-settings:"smcp" 1;letter-spacing:.08em!important;font-family:"Palatino Linotype","Book Antiqua",Georgia,serif!important;text-transform:none!important}
+        .author-id a:hover{text-decoration:none!important}
         .book-art{background:#07101b!important;border-color:#34465d!important;min-height:225px!important;padding:14px!important;box-shadow:inset 0 0 42px rgba(79,132,184,.08)}
         .book-art a{display:flex;align-items:center;justify-content:center;width:100%;height:100%;pointer-events:none!important;cursor:default!important}
         .book-art img{width:100%!important;max-height:255px!important;object-fit:contain!important;background:transparent!important;filter:none!important;transform:rotate(180deg) scaleX(-1)!important;transform-origin:center!important}
@@ -339,6 +357,7 @@
 
       buildInitialAccordion(doc,tocPanel);
       refreshLiveBookGuide(doc,tocPanel);
+      installGraphMethodCopy(doc);
 
       const tocToggle=oldTocToggle.cloneNode(true);
       oldTocToggle.replaceWith(tocToggle);
