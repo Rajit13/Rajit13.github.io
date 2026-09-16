@@ -1,357 +1,86 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Star Charts 101 and Practices · Book Reading Guide and Knowledge Graph</title>
-  <meta name="description" content="Live interactive companion to Star Charts 101 and Practices, with book structure generated from the current table of contents and curated observation-training relationships.">
-  <style>
-    :root{color-scheme:dark}
-    body{margin:0;min-height:100vh;display:grid;place-items:center;background:#101319;color:#edf2fa;font:16px/1.5 system-ui,sans-serif}
-    .loading{max-width:720px;padding:36px;text-align:center}
-    a{color:#85b7ff}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#07111f">
+<title>Star Charts 101 and Practices · Knowledge Graph</title>
+<meta name="description" content="Interactive ForceAtlas2 knowledge graph for Star Charts 101 and Practices, live-synced with the current book structure and connected to curated IOAA 2025 observation mappings.">
+<script src="https://cdn.jsdelivr.net/npm/graphology@0.26.0/dist/graphology.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/graphology-library/dist/graphology-library.min.js"></script>
+<style>
+:root{color-scheme:dark;--bg:#07101b;--panel:#0d1827;--panel2:#111f31;--ink:#edf5ff;--ink2:#cad7e7;--muted:#91a1b6;--rule:#28384c;--rule2:#3a526d;--blue:#7ec8ff;--cyan:#6ce5df;--green:#8de2bd;--amber:#ffd38a;--red:#ff8f8f;--violet:#b7a5ff;--plot:#081421;--edge:#7890aa;--sans:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--mono:"SFMono-Regular",Consolas,"Liberation Mono",monospace}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 20% 4%,rgba(57,111,193,.13),transparent 26rem),linear-gradient(180deg,#050b13,#08121e 45%,#050b13);color:var(--ink);font:14px/1.55 var(--sans)}a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}button,input,select{font:inherit}button{cursor:pointer}.wrap{max-width:1280px;margin:0 auto;padding:0 20px}
+#bar{border-bottom:1px solid var(--rule);background:rgba(6,13,23,.92);backdrop-filter:blur(16px);position:sticky;top:0;z-index:50}#bar .wrap{display:flex;align-items:center;gap:12px;padding-top:10px;padding-bottom:10px;flex-wrap:wrap}.mark{color:var(--cyan);font-weight:800;letter-spacing:.03em}.crumbs{font-size:12px;color:var(--muted)}.bar-links{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}.bar-links a,.bar-links button{border:1px solid var(--rule2);border-radius:8px;background:#101e30;color:var(--ink2);padding:6px 9px;font-size:12px}.bar-links a:hover,.bar-links button:hover{background:#182a40;text-decoration:none}
+#title{padding:28px 0 16px}.eyebrow{color:var(--green);font-weight:800;font-size:11px;letter-spacing:.14em;text-transform:uppercase}h1{font-size:clamp(27px,4vw,43px);letter-spacing:-.035em;line-height:1.12;margin:5px 0 9px}#title .sub{max-width:92ch;color:var(--ink2);font-size:14px;margin:0}#title .byline{margin-top:9px;color:var(--muted);font-size:12px}
+#bookguide{display:none;border:1px solid var(--rule);border-left:3px solid var(--blue);background:#0c1929;margin:0 0 14px;padding:13px}#bookguide.open{display:block}.guide-head{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;margin-bottom:10px}.guide-head strong{font-size:15px}.guide-head small{display:block;color:var(--muted);margin-top:2px}.guide-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 12px}.guide-section{border:1px solid var(--rule);border-radius:8px;overflow:hidden;background:#0a1523}.guide-section>button{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;border:0;background:#101e30;color:var(--ink);padding:8px 10px;text-align:left;font-weight:700}.guide-section>button small{color:var(--muted);font-weight:400}.guide-body{display:none;padding:5px 8px 8px}.guide-section.open .guide-body{display:block}.guide-row{display:flex;justify-content:space-between;gap:10px;color:var(--ink2);padding:4px 6px;font-size:12px}.guide-row.depth2{padding-left:18px}.guide-row.depth3{padding-left:31px;color:#aebed1}.source-row{display:block;padding:7px 8px;margin:4px 0;border-radius:6px;background:#101d2c;color:var(--ink2);font-size:12px}.source-row b{display:block;color:var(--blue)}.source-row small{display:block;color:var(--muted);line-height:1.4;margin-top:2px}
+#controls{border:1px solid var(--rule);border-left:3px solid var(--cyan);background:#0d1a2a;padding:10px 12px;margin-bottom:14px}.ctrl-row{display:flex;flex-wrap:wrap;align-items:center;gap:7px 17px;padding:3px 0}.ctrl-row+.ctrl-row{border-top:1px solid var(--rule);margin-top:6px;padding-top:8px}.ctrl-lab{font-size:10.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);width:67px;flex:none}.control{display:inline-flex;align-items:center;gap:6px;color:var(--ink2);font-size:12.5px}.control select,.control input{border:1px solid var(--rule2);background:#091522;color:var(--ink);border-radius:6px;padding:5px 7px}.control input{width:220px}.control input:focus,.control select:focus{outline:2px solid rgba(126,200,255,.48);outline-offset:1px}.ctrl-spacer{flex:1}.linkbtn{border:0;background:none;color:var(--blue);padding:0}.linkbtn:hover{text-decoration:underline}.status{color:var(--muted);font:11.5px var(--mono)}
+figure{margin:0 0 22px}.plot{display:flex;border:1px solid var(--rule2);background:var(--plot);min-height:650px}.stage{position:relative;flex:1;min-width:0;height:650px;overflow:hidden;background:radial-gradient(circle at 50% 45%,rgba(40,84,126,.12),transparent 62%),linear-gradient(#081421,#07111d)}canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}canvas.grabbing{cursor:grabbing}.plot-note{position:absolute;left:12px;bottom:10px;padding:5px 7px;border-radius:6px;background:rgba(5,12,21,.72);color:#7f90a5;font-size:10.5px;pointer-events:none;backdrop-filter:blur(6px)}#tip{position:fixed;z-index:90;pointer-events:none;max-width:270px;padding:6px 8px;background:#101d2c;border:1px solid var(--rule2);box-shadow:0 5px 20px rgba(0,0,0,.35);font-size:11.5px;color:var(--ink2)}#tip[hidden]{display:none}.tip-title{color:#fff;font-weight:700}.tip-meta{display:block;color:var(--muted);font:10.5px var(--mono);margin-top:2px}
+#side{width:300px;flex:none;border-left:1px solid var(--rule);padding:12px;height:650px;overflow:auto;background:#0a1522;font-size:12px}#side h2{font-size:10.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin:0 0 6px}#side hr{border:0;border-top:1px solid var(--rule);margin:11px 0}.legend{display:grid;gap:2px}.legend button{display:flex;align-items:center;gap:7px;width:100%;border:0;background:none;color:var(--ink2);padding:4px 3px;text-align:left;font-size:12px}.legend button:hover{background:#101e30}.legend button.dim{opacity:.35}.sw{width:9px;height:9px;border-radius:50%;flex:none}.legend .nm{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.legend .ct{color:var(--muted);font:10.5px var(--mono)}.side-note{color:var(--muted);font-size:11px;line-height:1.45}.detail[hidden]{display:none}.detail .kicker{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:10.5px;text-transform:uppercase;letter-spacing:.07em}.detail h3{font-size:16px;line-height:1.25;margin:5px 0 4px}.detail p{color:#bccadb;margin:6px 0}.detail .meta{font:10.5px var(--mono);color:var(--muted)}.stats{display:flex;gap:7px;margin:10px 0}.stat{flex:1;background:#101e30;border-radius:7px;padding:7px}.stat b{display:block;color:#fff;font-size:16px}.stat span{color:var(--muted);font-size:9.5px;text-transform:uppercase;letter-spacing:.05em}.connections{display:grid;gap:4px}.connections button{border:1px solid transparent;background:#0e1c2b;color:var(--ink2);padding:6px 7px;border-radius:6px;text-align:left;font-size:11.5px}.connections button:hover{border-color:var(--rule2);background:#14253a}.connections small{display:block;color:var(--muted);font-size:10px}.detail-link{display:inline-block;margin-top:4px}.close-detail{float:right;border:0;background:none;color:var(--muted);font-size:16px;padding:0}.close-detail:hover{color:#fff}
+figcaption{color:var(--muted);font-size:11.5px;padding:8px 1px 0;line-height:1.55}figcaption strong{color:var(--ink2);font-weight:600}.method{border-top:1px solid var(--rule);padding:18px 0 4px;max-width:92ch}.method h2{font-size:17px;margin:0 0 7px}.method p{color:var(--ink2);margin:0 0 9px}.method code{font:12px var(--mono);color:#cde7ff}.footer{border-top:1px solid var(--rule);margin-top:24px;padding:22px 0 32px;color:var(--muted);font-size:11.5px}.footer strong{color:var(--ink2)}.reading{display:flex;gap:9px;flex-wrap:wrap;margin:9px 0}.reading a{border:1px solid var(--rule);border-radius:7px;padding:6px 8px;background:#0c1826}
+@media(max-width:900px){.plot{display:block}.stage{height:580px}.plot #side{width:auto;height:auto;max-height:none;border-left:0;border-top:1px solid var(--rule)}.guide-grid{grid-template-columns:1fr}.bar-links{margin-left:0}.ctrl-lab{width:auto}.ctrl-spacer{display:none}}
+@media(max-width:560px){.wrap{padding:0 12px}.stage{height:520px}.control input{width:170px}#title{padding-top:20px}.guide-head{display:block}.guide-head a{display:inline-block;margin-top:5px}}
+</style>
 </head>
 <body>
-  <div id="status" class="loading">Loading the current Star Charts 101 book companion…</div>
-  <script>
-  (async()=>{
-    'use strict';
-    const stamp=Date.now();
-    const repoBase='https://github.com/Rajit13/Star-Maps-101-and-Practices';
-    const rawBase='https://raw.githubusercontent.com/Rajit13/Star-Maps-101-and-Practices/master';
-    const sourceUrl=rawBase+'/star-maps-101-graph.html?v='+stamp;
-    const tocUrl=rawBase+'/StarMaps101.toc?v='+stamp;
-    const bookPdf=rawBase+'/StarMaps101.pdf?v='+stamp;
-    const releasesUrl=repoBase+'/releases';
-    const releaseApi='https://api.github.com/repos/Rajit13/Star-Maps-101-and-Practices/releases/latest';
-    const licenseUrl=repoBase+'/blob/master/LICENSE.md';
-    const portfolio='https://rajit13.github.io/';
-    const orcid='https://orcid.org/0009-0002-4699-8059';
-    const orionSvg=rawBase+'/images/ori_1.svg?v='+stamp;
-    const orionEps=repoBase+'/blob/master/images/ori_1.eps';
-
-    const escapeHtml=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-
-    function texText(value){
-      return String(value||'')
-        .replace(/\\&/g,'&')
-        .replace(/\\texttt\{([^}]*)\}/g,'$1')
-        .replace(/\\emph\{([^}]*)\}/g,'$1')
-        .replace(/\\textbf\{([^}]*)\}/g,'$1')
-        .replace(/\\textit\{([^}]*)\}/g,'$1')
-        .replace(/\\_/g,'_')
-        .trim();
-    }
-
-    function parseToc(text){
-      const items=[];
-      for(const line of String(text||'').split(/\r?\n/)){
-        if(!line.includes('\\contentsline')) continue;
-        const typeMatch=line.match(/^\\contentsline \{([^}]*)\}/);
-        const pageMatch=line.match(/\}\{([^{}]*)\}\{([^{}]*)\}%?$/);
-        if(!typeMatch||!pageMatch) continue;
-        const type=typeMatch[1];
-        const secondStart=line.indexOf('}{',line.indexOf('\\contentsline'))+2;
-        if(secondStart<2) continue;
-        const pageToken='}{'+pageMatch[1]+'}{'+pageMatch[2]+'}';
-        const pageIndex=line.lastIndexOf(pageToken);
-        if(pageIndex<=secondStart) continue;
-        let titleField=line.slice(secondStart,pageIndex);
-        let number='';
-        const num=titleField.match(/^\\numberline \{([^}]*)\}(.*)$/);
-        if(num){number=texText(num[1]);titleField=num[2];}
-        const title=texText(titleField);
-        if(!title) continue;
-        items.push({type,number,title,page:pageMatch[1],anchor:pageMatch[2]});
-      }
-      return items;
-    }
-
-    function tocMarkup(items){
-      if(!items.length) return '<p class="toc-error">The live table of contents could not be parsed. Open the PDF for the current contents.</p>';
-      return items.map(item=>{
-        const depth=item.type==='section'?0:item.type==='subsection'?1:item.type==='subsubsection'?2:3;
-        const label=(item.number?item.number+' ':'')+item.title;
-        return `<a class="toc-item depth-${depth}" href="${bookPdf}#page=${encodeURIComponent(item.page)}" target="_blank" rel="noopener"><span>${escapeHtml(label)}</span><small>p. ${escapeHtml(item.page)}</small></a>`;
-      }).join('');
-    }
-
-    function safeId(value){
-      return String(value||'').toLowerCase().replace(/[^a-z0-9._-]+/g,'-').replace(/^-+|-+$/g,'');
-    }
-
-    function liveNodeId(item){
-      const key=item.anchor||[item.type,item.number,item.title].filter(Boolean).join('-');
-      return 'live-'+safeId(key);
-    }
-
-    function semanticTarget(item){
-      const n=String(item.number||'');
-      if(/^1(?:\.|$)/.test(n)) return 'names';
-      if(/^2(?:\.|$)/.test(n)) return 'moon';
-      if(/^3(?:\.|$)/.test(n)) return 'dso';
-      if(/^4\.1(?:\.|$)/.test(n)) return 'coords';
-      if(/^4\.2(?:\.|$)/.test(n)) return 'projection';
-      if(/^4\.3(?:\.|$)/.test(n)) return 'poles';
-      if(/^4\.4(?:\.|$)/.test(n)) return 'mercator';
-      if(/^4\.5(?:\.|$)/.test(n)) return 'monthly';
-      if(n==='4') return 'projection';
-      if(/^5\.(?:1|2)(?:\.|$)/.test(n)||n==='5') return 'navigation';
-      if(/^5\.3(?:\.|$)/.test(n)) return 'planets';
-      if(/^5\.4(?:\.|$)/.test(n)) return 'telescope';
-      if(/^5\.5(?:\.|$)/.test(n)) return 'magnitude';
-      if(/^6\.(?:1|2)(?:\.|$)/.test(n)) return 'marking';
-      if(/^6(?:\.|$)/.test(n)) return 'practice';
-      return null;
-    }
-
-    function augmentGraphFromToc(data,tocItems){
-      const structural=tocItems.filter(item=>item.type==='section'||item.type==='subsection');
-      const existingIds=new Set(data.nodes.map(node=>node.id));
-      const edgeKey=edge=>`${edge.source}\u0000${edge.target}\u0000${edge.relation}`;
-      const knownEdges=new Set(data.edges.map(edgeKey));
-      const addedNodes=[];
-      const addEdge=(source,target,relation)=>{
-        if(!source||!target||source===target||!existingIds.has(source)||!existingIds.has(target)) return;
-        const edge={source,target,relation};
-        const key=edgeKey(edge);
-        if(!knownEdges.has(key)){data.edges.push(edge);knownEdges.add(key);}
-      };
-
-      let currentSection=null;
-      for(const item of structural){
-        const id=liveNodeId(item);
-        const chapter=(item.number||'').split('.')[0]||'99';
-        if(!existingIds.has(id)){
-          const node={
-            id,
-            label:(item.number?item.number+' ':'')+item.title,
-            kind:'book',
-            chapter,
-            live:true,
-            tocType:item.type,
-            tocNumber:item.number,
-            page:item.page,
-            body:`Live ${item.type} from the current StarMaps101.toc: ${item.title}. This structural node is regenerated from the committed book contents whenever the page loads. Curated teaching and IOAA relationships remain separate.`,
-            url:bookPdf+'#page='+encodeURIComponent(item.page)
-          };
-          data.nodes.push(node);
-          existingIds.add(id);
-          addedNodes.push(node);
-        }
-
-        if(item.type==='section'){
-          currentSection=id;
-          addEdge('repo',id,'contains current section');
-        }else if(item.type==='subsection'){
-          addEdge(currentSection,id,'contains subsection');
-        }
-
-        const semantic=semanticTarget(item);
-        if(semantic&&existingIds.has(semantic)) addEdge(id,semantic,'maps to curated topic');
-      }
-      return {addedNodes,structuralCount:structural.length};
-    }
-
-    try{
-      const [graphResponse,tocResponse,releaseResponse]=await Promise.all([
-        fetch(sourceUrl,{cache:'no-store'}),
-        fetch(tocUrl,{cache:'no-store'}),
-        fetch(releaseApi,{cache:'no-store',headers:{Accept:'application/vnd.github+json'}}).catch(()=>null)
-      ]);
-      if(!graphResponse.ok) throw new Error(`Graph HTTP ${graphResponse.status}`);
-
-      const [sourceHtml,tocText]=await Promise.all([
-        graphResponse.text(),
-        tocResponse.ok?tocResponse.text():Promise.resolve('')
-      ]);
-      let latestRelease=null;
-      if(releaseResponse&&releaseResponse.ok){try{latestRelease=await releaseResponse.json();}catch(_){}}
-
-      const tocItems=parseToc(tocText);
-      const parsed=new DOMParser().parseFromString(sourceHtml,'text/html');
-      parsed.title='Star Charts 101 and Practices · Book Reading Guide and Knowledge Graph';
-
-      const metaDescription=parsed.createElement('meta');
-      metaDescription.name='description';
-      metaDescription.content='Live interactive companion to Star Charts 101 and Practices by Fahim Rajit Hossain Shwadhin. Book sections and subsections are regenerated from the current table of contents while curated IOAA observation relationships are preserved.';
-      parsed.head.appendChild(metaDescription);
-
-      const extraStyle=parsed.createElement('style');
-      extraStyle.textContent=`
-        html{scroll-behavior:smooth}
-        .site-header{padding:0!important;border-bottom:1px solid var(--border)}
-        .author-bar{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:12px 30px;border-bottom:1px solid var(--border);background:#121720}
-        .author-id{display:flex;flex-direction:column;gap:1px;min-width:0}
-        .author-id small{color:var(--green);font-size:10px;letter-spacing:1.5px;text-transform:uppercase}
-        .author-id a{color:#7ec8ff;text-decoration:none;font-weight:750;letter-spacing:.1px;font-size:1.35em}
-        .author-id a:hover{text-decoration:underline}
-        .author-links{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
-        .promo-link{display:inline-flex;align-items:center;min-height:38px;padding:7px 12px;border:1px solid #485268;border-radius:7px;color:var(--text);text-decoration:none;background:#232b38;font-size:13px;font-weight:650}
-        .promo-link:hover{background:#344259}
-        .promo-link.primary{background:#d9e9ff;color:#101319;border-color:#d9e9ff}
-        .promo-link.primary:hover{background:#fff}
-        .book-hero{display:grid;grid-template-columns:minmax(180px,270px) minmax(0,1fr);gap:28px;align-items:center;padding:24px 30px 26px}
-        .book-art{margin:0;background:#07101b;border:1px solid var(--border);border-radius:9px;overflow:hidden;align-self:stretch;min-height:205px;display:flex;flex-direction:column;justify-content:center}
-        .book-art img{display:block;width:100%;max-height:240px;object-fit:contain;transform:rotate(180deg) scaleX(-1);transform-origin:center}
-        .book-art figcaption{padding:6px 9px;background:#171d27;color:var(--muted);font-size:10px;text-align:center}
-        .book-copy{min-width:0}
-        .book-copy h1{font-size:29px;font-weight:680;margin:4px 0 7px;line-height:1.15}
-        .book-copy h1 small{display:block;margin-top:5px;color:#cbd5e5;font-size:.72em;font-weight:620}
-        .book-copy p{color:var(--muted);margin:5px 0;max-width:980px}
-        .ioaa-note{margin-top:11px;padding:10px 12px;border:1px solid #3b526c;border-radius:7px;background:#151d28;color:#d8e2ef;font-size:13px}
-        .ioaa-note strong{color:#fff}
-        .book-callout{display:block;margin-top:13px;padding:10px 12px;border-left:3px solid var(--blue);background:#171d27;border-radius:0 7px 7px 0}
-        .book-callout strong{display:block;color:var(--text);margin-bottom:4px}
-        .book-callout span{display:block;color:var(--muted);font-size:13px;margin-bottom:10px}
-        .book-callout button{padding:7px 10px;font-size:13px}
-        .book-nav{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:10px 30px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:#151a23}
-        .book-nav a,.book-nav button{min-height:37px;padding:7px 11px;text-decoration:none;color:var(--text);background:#202733;border:1px solid #3c4658;border-radius:7px;font-size:13px;cursor:pointer}
-        .book-nav a:hover,.book-nav button:hover{background:#303c4e}
-        .book-nav .nav-spacer{flex:1 1 auto}
-        .live-status{color:var(--muted);font-size:11px}
-        .toc-panel{display:none;padding:18px 30px 22px;border-bottom:1px solid var(--border);background:#121720}
-        .toc-panel.open{display:block}
-        .toc-head{display:flex;align-items:flex-end;justify-content:space-between;gap:15px;flex-wrap:wrap;margin-bottom:12px}
-        .toc-head h2{font-size:19px;margin:0}
-        .toc-head p{margin:0;color:var(--muted);font-size:12px}
-        .toc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px 18px}
-        .toc-item{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:5px 8px;border-radius:5px;color:#d8e2ef;text-decoration:none;font-size:12px;min-width:0}
-        .toc-item:hover{background:#202936;color:#fff}
-        .toc-item span{min-width:0}
-        .toc-item small{white-space:nowrap;color:#8fa0b5}
-        .toc-item.depth-0{font-weight:750;font-size:13px;margin-top:5px;color:#fff;background:#191f29}
-        .toc-item.depth-1{padding-left:20px}
-        .toc-item.depth-2{padding-left:34px;color:#bcc8d8}
-        .toc-item.depth-3{padding-left:47px;color:#9fabbc;font-size:11px}
-        .toc-error{color:var(--muted)}
-        .topic-note{padding:10px 12px;margin:10px 0 14px;border:1px solid var(--border);border-radius:8px;background:#171d27;color:#cbd3e1;font-size:13px}
-        .relation-pill{display:inline-block;padding:3px 7px;border:1px solid var(--border);border-radius:999px;color:var(--muted);font-size:11px;margin:2px 4px 2px 0}
-        .license-foot{border-top:1px solid var(--border);padding:18px 30px;color:var(--muted);font-size:12px;background:#11161e}
-        .license-foot strong{color:var(--text)}
-        .license-foot a{color:var(--blue)}
-        @media(max-width:850px){.author-bar{align-items:flex-start;flex-direction:column;padding-left:18px;padding-right:18px}.author-links{justify-content:flex-start}.book-hero{grid-template-columns:110px minmax(0,1fr);padding-left:18px;padding-right:18px;gap:16px}.book-art{min-height:145px}.book-art img{max-height:160px}.book-copy h1{font-size:23px}.book-nav,.toc-panel{padding-left:18px;padding-right:18px}.toc-grid{grid-template-columns:1fr}}
-        @media(max-width:540px){.book-hero{grid-template-columns:1fr}.book-art{max-height:220px}.book-art img{height:180px}}
-      `;
-      parsed.head.appendChild(extraStyle);
-
-      const header=parsed.querySelector('header');
-      if(!header) throw new Error('Graph header not found');
-      header.className='site-header';
-      const releaseName=latestRelease?.name||latestRelease?.tag_name||'current master';
-      header.innerHTML=`
-        <div class="author-bar">
-          <div class="author-id"><small>Author</small><a href="${portfolio}" target="_blank" rel="noopener">Fahim Rajit Hossain Shwadhin</a></div>
-          <nav class="author-links" aria-label="Book and author links">
-            <a class="promo-link primary" href="${bookPdf}" target="_blank" rel="noopener">Open latest book PDF ↗</a>
-            <a class="promo-link" href="${repoBase}" target="_blank" rel="noopener">Book repository ↗</a>
-            <a class="promo-link" href="${orcid}" target="_blank" rel="noopener">Author ORCID ↗</a>
-          </nav>
-        </div>
-        <div class="book-hero">
-          <figure class="book-art"><a href="${orionEps}" target="_blank" rel="noopener" title="Open the original EPS source"><img src="${orionSvg}" alt="Orion constellation diagram from ori_1.eps"></a><figcaption>Orion diagram · web rendering of <code>ori_1.eps</code></figcaption></figure>
-          <div class="book-copy">
-            <div class="eyebrow">Interactive companion to the book</div>
-            <h1>Star Charts 101 and Practices<small>Book Reading Guide and Knowledge Graph</small></h1>
-            <p><strong>Star Charts 101 and Practices</strong> is a practice book dedicated to astronomy enthusiasts and students preparing for the Star Charts/Observational Round of Astronomy and Earth Science Olympiads. The live structural layer of this graph follows the current committed book contents.</p>
-            <div class="ioaa-note"><strong>IOAA 2025 context:</strong> the graph’s <strong>OM</strong> (Sky Map), <strong>OT</strong> (Telescope), and <strong>OP</strong> (Planetarium) mappings remain curated rather than being guessed from the book automatically.</div>
-            <div class="book-callout"><strong>Learn from the book, then explore the links.</strong><span>The graph shows how book topics support one another and how they connect to several IOAA observation tasks.</span><button id="bookmap" type="button">Explore book topic connections</button></div>
-          </div>
-        </div>
-        <nav class="book-nav" aria-label="Star Charts 101 website navigation">
-          <button id="toc-toggle" type="button" aria-expanded="false" aria-controls="toc-panel">Book contents ▾</button>
-          <a href="#graph">Interactive graph</a>
-          <a href="${bookPdf}" target="_blank" rel="noopener">Latest PDF</a>
-          <a href="${repoBase}" target="_blank" rel="noopener">Repository</a>
-          <a href="${releasesUrl}" target="_blank" rel="noopener">Releases</a>
-          <span class="nav-spacer"></span><span class="live-status">Live sync · ${escapeHtml(releaseName)}</span>
-        </nav>
-        <section class="toc-panel" id="toc-panel" aria-label="Book table of contents">
-          <div class="toc-head"><div><h2>Contents of the current PDF</h2><p>Loaded directly from <code>StarMaps101.toc</code> on the repository’s <code>master</code> branch.</p></div><a href="${bookPdf}" target="_blank" rel="noopener">Open full PDF ↗</a></div>
-          <div class="toc-grid">${tocMarkup(tocItems)}</div>
-        </section>`;
-
-      const paper=parsed.querySelector('#paper');
-      if(paper){const labels={OM:'IOAA 2025 · OM — Sky Map',OT:'IOAA 2025 · OT — Telescope',OP:'IOAA 2025 · OP — Planetarium'};[...paper.options].forEach(option=>{if(labels[option.value]) option.textContent=labels[option.value];});}
-
-      const view=parsed.querySelector('#view');
-      if(!view) throw new Error('View selector not found');
-      if(![...view.options].some(option=>option.value==='topics')){const option=parsed.createElement('option');option.value='topics';option.textContent='Book topic relationships';view.insertBefore(option,view.options[1]||null);}
-
-      const help=parsed.querySelector('.help');
-      if(help) help.textContent='Drag nodes or the background · Scroll to zoom · Select a node to highlight its neighbours · Live book sections/subsections are regenerated from the current TOC · Curated teaching and IOAA mappings are preserved';
-
-      const oldFooter=parsed.querySelector('.foot');
-      if(oldFooter) oldFooter.remove();
-      const licenseFooter=parsed.createElement('footer');
-      licenseFooter.className='license-foot';
-      licenseFooter.innerHTML=`<strong>Star Charts 101 and Practices</strong> · © Fahim Rajit Hossain Shwadhin.<br>This work is licensed under the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0)</a>. This license applies to original repository content unless otherwise stated; third-party content, if any, may be subject to separate licenses. <a href="${licenseUrl}" target="_blank" rel="noopener">Repository license ↗</a>`;
-      parsed.body.appendChild(licenseFooter);
-
-      const graphData=parsed.querySelector('#graph-data');
-      if(!graphData) throw new Error('Graph data not found');
-      const data=JSON.parse(graphData.textContent);
-
-      const examLabels={
-        OM:['IOAA 2025 · OM — Sky Map','IOAA 2025 Observation Round: Sky Map (OM). The categories below are preparation judgments, not official coverage ratings.'],
-        OT:['IOAA 2025 · OT — Telescope','IOAA 2025 Observation Round: Telescope (OT). The categories below are preparation judgments, not official coverage ratings.'],
-        OP:['IOAA 2025 · OP — Planetarium','IOAA 2025 Observation Round: Planetarium (OP). The categories below are preparation judgments, not official coverage ratings.']
-      };
-      data.nodes.forEach(node=>{if(examLabels[node.id]){node.label=examLabels[node.id][0];node.body=examLabels[node.id][1];}});
-
-      const additions=[
-        ['coords','lines','coordinate framework'],['projection','lines','draws reference curves'],['projection','poles','changes map viewpoint'],['poles','navigation','orients the sky'],['monthly','navigation','adds seasonal context'],['coords','navigation','feeds coordinate transforms'],['lines','planets','provides ecliptic framework'],['navigation','planets','locates moving objects'],['mercator','planets','supports plotted positions'],['dso','telescope','provides observing targets'],['coords','telescope','supports chart-to-field location'],['magnitude','practice','feeds measurement practice'],['monthly','planets','supports seasonal placement'],['projection','navigation','connects map to sky geometry'],['dso','magnitude','connects targets to brightness comparison']
-      ];
-      const edgeKey=edge=>`${edge.source}\u0000${edge.target}\u0000${edge.relation}`;
-      const knownEdges=new Set(data.edges.map(edgeKey));
-      for(const[sourceId,targetId,relation]of additions){const edge={source:sourceId,target:targetId,relation};if(!knownEdges.has(edgeKey(edge))){data.edges.push(edge);knownEdges.add(edgeKey(edge));}}
-
-      const live=augmentGraphFromToc(data,tocItems);
-      graphData.textContent=JSON.stringify(data);
-      const graphSvg=parsed.querySelector('#graph');
-      if(graphSvg) graphSvg.setAttribute('aria-label',`${data.nodes.length} connected nodes, including ${live.structuralCount} live book section/subsection nodes generated from the current table of contents.`);
-      const liveStatus=parsed.querySelector('.live-status');
-      if(liveStatus) liveStatus.textContent=`Live sync · ${live.structuralCount} book sections/subsections · ${releaseName}`;
-
-      const enhancement=parsed.createElement('script');
-      enhancement.textContent=`(()=>{
-        'use strict';
-        const data=JSON.parse(document.getElementById('graph-data').textContent);
-        const lookup=new Map(data.nodes.map(node=>[node.id,node]));
-        const view=document.getElementById('view'),paper=document.getElementById('paper'),search=document.getElementById('search'),reset=document.getElementById('reset'),graph=document.getElementById('graph'),details=document.getElementById('details'),status=document.getElementById('status'),bookButton=document.getElementById('bookmap'),tocToggle=document.getElementById('toc-toggle'),tocPanel=document.getElementById('toc-panel');
-        const bookNodes=data.nodes.filter(node=>node.kind==='book');
-        const bookIds=new Set(bookNodes.map(node=>node.id));
-        const bookEdges=data.edges.filter(edge=>bookIds.has(edge.source)&&bookIds.has(edge.target));
-        const liveNodes=bookNodes.filter(node=>node.live);
-        function escapeHtml(value){return String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[char]));}
-        function topicMatches(){const query=search.value.trim().toLowerCase();if(!query)return bookNodes.length;return bookNodes.filter(node=>(node.label+' '+node.body).toLowerCase().includes(query)).length;}
-        function topicOverview(){
-          details.innerHTML='<span class="tag">Book topic map</span><h2>How the current book fits together</h2><p>This view combines a live structural layer generated from the current table of contents with the hand-curated conceptual relationships and IOAA preparation mappings.</p><div class="topic-note"><strong>Automatic:</strong> section/subsection nodes and hierarchy. <strong>Curated:</strong> conceptual dependencies, preparation judgments and IOAA OM/OT/OP mappings.</div><div class="stats"><div><b>'+bookNodes.length+'</b>Book nodes</div><div><b>'+liveNodes.length+'</b>Live TOC nodes</div><div><b>'+bookEdges.length+'</b>Book links</div></div><p><span class="relation-pill">contains subsection</span><span class="relation-pill">maps to curated topic</span><span class="relation-pill">coordinate framework</span><span class="relation-pill">observing targets</span></p><h3>Explore core topics</h3><div class="connections">'+['names','lines','navigation','planets','telescope','practice'].filter(id=>lookup.has(id)).map(id=>'<button class="topic-jump" data-topic="'+id+'">'+escapeHtml(lookup.get(id).label)+'</button>').join('')+'</div>';
-          bindTopicButtons();
-        }
-        function topicDetails(id){const node=lookup.get(id);if(!node||!bookIds.has(id))return;const connected=bookEdges.filter(edge=>edge.source===id||edge.target===id);details.innerHTML='<span class="tag">'+(node.live?'Live book structure':'Curated book topic')+'</span><h2>'+escapeHtml(node.label)+'</h2><p>'+escapeHtml(node.body)+'</p>'+(node.url?'<a href="'+escapeHtml(node.url)+'" target="_blank" rel="noopener">Open book source ↗</a>':'')+'<h3>'+connected.length+' book-topic connections</h3><div class="connections">'+connected.map(edge=>{const other=edge.source===id?edge.target:edge.source;if(!lookup.has(other))return'';const direction=edge.source===id?edge.relation:'← '+edge.relation;return'<button class="topic-jump" data-topic="'+escapeHtml(other)+'">'+escapeHtml(lookup.get(other).label)+'<small>'+escapeHtml(direction)+'</small></button>';}).join('')+'</div>';bindTopicButtons();}
-        function bindTopicButtons(){details.querySelectorAll('.topic-jump').forEach(button=>button.addEventListener('click',()=>{const id=button.dataset.topic;const node=[...document.querySelectorAll('.node')].find(el=>el.dataset.id===id);if(node)node.dispatchEvent(new MouseEvent('click',{bubbles:true}));}));}
-        function layoutBookTopics(){const nodeElements=new Map([...document.querySelectorAll('#nodes .node')].map(element=>[element.dataset.id,element]));const edgeElements=[...document.querySelectorAll('#edges .edge')];const positions=new Map();const ordered=[...bookNodes].sort((a,b)=>Number(a.chapter||99)-Number(b.chapter||99)||(a.tocNumber||a.label).localeCompare(b.tocNumber||b.label,undefined,{numeric:true}));const cx=500,cy=360,radius=270;for(const[id,element]of nodeElements)element.style.display=bookIds.has(id)?'':'none';ordered.forEach((node,index)=>{const angle=-Math.PI/2+2*Math.PI*index/ordered.length;const ring=node.live?radius:radius-75;const x=cx+Math.cos(angle)*ring,y=cy+Math.sin(angle)*ring;positions.set(node.id,{x,y});const element=nodeElements.get(node.id);if(element)element.setAttribute('transform','translate('+x+','+y+')');});data.edges.forEach((edge,index)=>{const line=edgeElements[index];if(!line)return;const a=positions.get(edge.source),b=positions.get(edge.target);if(!a||!b){line.style.display='none';return;}line.style.display='';line.setAttribute('x1',a.x);line.setAttribute('y1',a.y);line.setAttribute('x2',b.x);line.setAttribute('y2',b.y);});}
-        function updateTopicStatus(){status.textContent=topicMatches()+' matching book nodes · '+liveNodes.length+' live TOC nodes · '+bookEdges.length+' book links';}
-        function applyTopicMode(){if(view.value!=='topics'){paper.disabled=false;return;}if(paper.value!=='all')paper.value='all';paper.disabled=true;layoutBookTopics();topicOverview();updateTopicStatus();}
-        if(tocToggle&&tocPanel)tocToggle.addEventListener('click',()=>{const open=tocPanel.classList.toggle('open');tocToggle.setAttribute('aria-expanded',String(open));tocToggle.textContent=open?'Book contents ▴':'Book contents ▾';});
-        view.addEventListener('change',()=>{if(view.value==='topics')setTimeout(applyTopicMode,0);else paper.disabled=false;});
-        paper.addEventListener('change',()=>{if(view.value==='topics')setTimeout(applyTopicMode,0);});
-        search.addEventListener('input',()=>{if(view.value==='topics')setTimeout(updateTopicStatus,0);});
-        reset.addEventListener('click',()=>{paper.disabled=false;});
-        document.getElementById('nodes').addEventListener('click',event=>{if(view.value!=='topics')return;const node=event.target.closest('.node');if(node&&bookIds.has(node.dataset.id))setTimeout(()=>topicDetails(node.dataset.id),0);});
-        if(bookButton)bookButton.addEventListener('click',()=>{paper.value='all';view.value='topics';view.dispatchEvent(new Event('change',{bubbles:true}));graph.scrollIntoView({behavior:'smooth',block:'start'});});
-      })();`;
-      parsed.body.appendChild(enhancement);
-
-      const html='<!doctype html>\n'+parsed.documentElement.outerHTML;
-      document.open();document.write(html);document.close();
-    }catch(error){
-      document.getElementById('status').innerHTML='<h1>Star Charts 101 and Practices</h1><p>The interactive companion could not load its live repository data.</p><p><a href="https://github.com/Rajit13/Star-Maps-101-and-Practices">Open the Star Charts 101 repository</a></p>';
-      console.error(error);
-    }
-  })();
-  </script>
+<header id="bar"><div class="wrap"><a class="mark" href="https://rajit13.github.io/">Fahim Rajit Hossain Shwadhin</a><span class="crumbs">/ Star Charts 101 / knowledge graph</span><nav class="bar-links"><button id="guideToggle" type="button">Book contents ▾</button><a id="pdfTop" href="#" target="_blank" rel="noopener">Latest PDF ↗</a><a href="https://github.com/Rajit13/Star-Maps-101-and-Practices" target="_blank" rel="noopener">Repository ↗</a><a href="https://orcid.org/0009-0002-4699-8059" target="_blank" rel="noopener">ORCID ↗</a></nav></div></header>
+<div class="wrap">
+<section id="title"><div class="eyebrow">Book reading guide · conceptual map · IOAA observation evidence</div><h1>Star Charts 101 and Practices · Knowledge Graph</h1><p class="sub">The book is laid out as a real network: closely connected ideas pull together, weakly connected ideas drift apart, and the current book structure is regenerated from the latest committed table of contents. Curated teaching links and the IOAA 2025 OM, OT and OP mappings remain separate from the automatically generated hierarchy.</p><p class="byline">By Fahim Rajit Hossain Shwadhin · live companion to <em>Star Charts 101 and Practices</em></p></section>
+<section id="bookguide" aria-label="Current book contents"><div class="guide-head"><div><strong>Current book contents and sources</strong><small id="guideStatus">Loading from StarMaps101.toc and StarMaps101.tex…</small></div><a id="pdfGuide" href="#" target="_blank" rel="noopener">Open PDF ↗</a></div><div id="guideGrid" class="guide-grid"></div></section>
+<section id="controls" aria-label="Knowledge graph controls"><div class="ctrl-row"><span class="ctrl-lab">Explore</span><label class="control">Search <input id="q" type="search" placeholder="Try telescope, projection or OM" autocomplete="off"></label><label class="control">Layer <select id="layer"><option value="all">All relationships</option><option value="book">Book structure + topics</option><option value="ioaa">IOAA 2025 tasks</option><option value="practice">Past practice</option><option value="gap">Additional training</option></select></label><label class="control">Paper <select id="paper"><option value="all">All papers</option><option value="OM">OM · Sky Map</option><option value="OT">OT · Telescope</option><option value="OP">OP · Planetarium</option></select></label><span class="ctrl-spacer"></span><button class="linkbtn" id="reset" type="button">reset view</button></div><div class="ctrl-row"><span class="ctrl-lab">Map</span><label class="control">Labels <select id="labels"><option value="smart">Smart</option><option value="all">All</option><option value="selected">Selected only</option></select></label><span id="status" class="status">Loading graph…</span></div></section>
+<figure><div class="plot"><div class="stage" id="stage"><canvas id="net" aria-label="Interactive Star Charts 101 knowledge graph"></canvas><div class="plot-note">drag background to pan · scroll to zoom · drag a node to reposition · click a node to inspect</div></div><aside id="side"><h2>Groups</h2><div id="legend" class="legend"></div><p class="side-note">Filled circles are curated topics/tasks. Hollow circles are live book-structure nodes regenerated from the current TOC. Square nodes mark additional training.</p><hr><section id="detail" class="detail" hidden></section><section id="introDetail"><h2>How to read the map</h2><p class="side-note">Node area follows connection centrality. Edge strength affects the ForceAtlas2 placement. There are no axes or units: <strong>only nearness and connectivity matter.</strong></p><p class="side-note">Select any topic to isolate its immediate neighbourhood and inspect the teaching relationship.</p></section></aside></div><figcaption><strong>Layout:</strong> ForceAtlas2 with LinLog attraction, following the same layout principle used by Serat Saad’s IOAA Knowledge Graph. Book hierarchy edges are weaker than curated semantic links so chapter structure guides the map without overpowering the conceptual network.</figcaption></figure>
+<section class="method"><h2>How this Star Charts map is built</h2><p>The current <code>StarMaps101.toc</code> supplies section and subsection nodes on every page load. Those nodes are merged with the hand-curated Star Charts 101 topic graph and the IOAA 2025 OM/OT/OP evidence mapping. The graph is then laid out in the browser using Graphology’s ForceAtlas2 implementation in <code>linLogMode</code>.</p><p>This keeps the useful division of labour from the previous version: <strong>book structure updates automatically</strong>, while conceptual claims and IOAA mappings are not invented by automation.</p></section>
+<footer class="footer"><strong>Star Charts 101 and Practices</strong> · © Fahim Rajit Hossain Shwadhin.<div class="reading"><a href="https://rajit13.github.io/website_docs/Astro_POTD.pdf" target="_blank" rel="noopener">Astronomy Problem of the Day ↗</a><a href="https://www.rokomari.com/book/471442/jyotirbigganer-jotokichu" target="_blank" rel="noopener">জ্যোতির্বিজ্ঞানের যতকিছু — অলিম্পিয়াড ও অন্যান্য ↗</a></div><div>Network-layout approach inspired by <a href="https://seratsaad.github.io/ioaa-knowledge-graph/" target="_blank" rel="noopener">Serat Saad’s IOAA Knowledge Graph</a>. Graphology’s ForceAtlas2 implementation is used for placement; the Star Charts dataset, hierarchy and teaching links are independent.</div></footer>
+</div>
+<div id="tip" hidden></div>
+<script>
+(()=>{'use strict';
+const stamp=Date.now();
+const rawBase='https://raw.githubusercontent.com/Rajit13/Star-Maps-101-and-Practices/master';
+const graphSource=rawBase+'/star-maps-101-graph.html?v='+stamp;
+const tocUrl=rawBase+'/StarMaps101.toc?v='+stamp;
+const texUrl=rawBase+'/StarMaps101.tex?v='+stamp;
+const pdfUrl=rawBase+'/StarMaps101.pdf?v='+stamp;
+document.getElementById('pdfTop').href=pdfUrl;document.getElementById('pdfGuide').href=pdfUrl;
+const COLORS={'Chapter 1':'#77bdf7','Chapter 2':'#7fd1aa','Chapter 3':'#c39bf2','Chapter 4':'#f1b66d','Chapter 5':'#58d0dc','Chapter 6':'#ef88ad','Repository':'#9aabbf','Past practice':'#ab9be8','IOAA 2025':'#f5d06f','Additional training':'#ff917b','Files':'#8092a8','Other':'#a8b5c5'};
+const $=s=>document.querySelector(s),escapeHtml=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function texText(v){return String(v||'').replace(/\\&/g,'&').replace(/\\text(?:bf|it|tt)\{([^{}]*)\}/g,'$1').replace(/\\emph\{([^{}]*)\}/g,'$1').replace(/\\_/g,'_').replace(/\{([^{}]*)\}/g,'$1').replace(/\\\\/g,' ').replace(/\s+/g,' ').trim()}
+function parseToc(text){const out=[];for(const line of String(text||'').split(/\r?\n/)){if(!line.includes('\\contentsline'))continue;const t=line.match(/^\\contentsline \{([^}]*)\}/),p=line.match(/\}\{([^{}]*)\}\{([^{}]*)\}%?$/);if(!t||!p)continue;const type=t[1];if(!['section','subsection','subsubsection','paragraph'].includes(type))continue;const start=line.indexOf('}{',line.indexOf('\\contentsline'))+2,token='}{'+p[1]+'}{'+p[2]+'}',end=line.lastIndexOf(token);if(start<2||end<=start)continue;let f=line.slice(start,end),number='';const n=f.match(/^\\numberline \{([^}]*)\}(.*)$/);if(n){number=texText(n[1]);f=n[2]}const title=texText(f);if(title)out.push({type,number,title,page:p[1],anchor:p[2]})}return out}
+function sourceUrl(u){let s=String(u||'').trim();if(!s)return'';return/^[a-z][a-z0-9+.-]*:\/\//i.test(s)?s:'https://'+s.replace(/^\/+/, '')}
+function parseSources(tex){const text=String(tex||''),i=text.search(/\\section\{Sources\}/i);if(i<0)return[];const tail=text.slice(i),b=tail.indexOf('\\begin{enumerate}'),e=tail.indexOf('\\end{enumerate}',b);if(b<0||e<0)return[];return tail.slice(b+17,e).split(/\\item\s+/).slice(1).map(raw=>{const m=raw.match(/\\url\{([^}]+)\}/i),url=m?sourceUrl(m[1]):'',parts=raw.replace(/\\url\{[^}]+\}/gi,'').split(/\\\\|\r?\n/).map(texText).filter(Boolean);return{name:(parts.shift()||'').replace(/\s*--\s*$/,'').trim(),url,description:parts.join(' ')}}).filter(x=>x.name)}
+function safeId(v){return String(v||'').toLowerCase().replace(/[^a-z0-9._-]+/g,'-').replace(/^-+|-+$/g,'')}
+function liveId(item){return'live-'+safeId(item.anchor||[item.type,item.number,item.title].filter(Boolean).join('-'))}
+function semanticTarget(n){n=String(n||'');if(/^1(?:\.|$)/.test(n))return'names';if(/^2(?:\.|$)/.test(n))return'moon';if(/^3(?:\.|$)/.test(n))return'dso';if(/^4\.1/.test(n))return'coords';if(/^4\.2/.test(n)||n==='4')return'projection';if(/^4\.3/.test(n))return'poles';if(/^4\.4/.test(n))return'mercator';if(/^4\.5/.test(n))return'monthly';if(/^5\.(1|2)/.test(n)||n==='5')return'navigation';if(/^5\.3/.test(n))return'planets';if(/^5\.4/.test(n))return'telescope';if(/^5\.5/.test(n))return'magnitude';if(/^6\.(1|2)/.test(n))return'marking';if(/^6(?:\.|$)/.test(n))return'practice';return null}
+function renderGuide(items,sources){const grid=$('#guideGrid');grid.innerHTML='';let current=null;for(const item of items){if(item.type==='section'){const sec=document.createElement('section');sec.className='guide-section';const btn=document.createElement('button');btn.type='button';btn.innerHTML='<span>'+escapeHtml((item.number?item.number+' ':'')+item.title)+'</span><small>p. '+escapeHtml(item.page)+' ▾</small>';const body=document.createElement('div');body.className='guide-body';btn.onclick=()=>{sec.classList.toggle('open');btn.querySelector('small').textContent='p. '+item.page+(sec.classList.contains('open')?' ▴':' ▾')};sec.append(btn,body);grid.appendChild(sec);current=body;if(/^Sources$/i.test(item.title)){sources.forEach(s=>{const el=document.createElement(s.url?'a':'div');el.className='source-row';if(s.url){el.href=s.url;el.target='_blank';el.rel='noopener'}el.innerHTML='<b>'+escapeHtml(s.name)+(s.url?' ↗':'')+'</b>'+(s.description?'<small>'+escapeHtml(s.description)+'</small>':'');body.appendChild(el)})}}else if(current){const row=document.createElement('div');row.className='guide-row '+(item.type==='subsubsection'?'depth2':item.type==='paragraph'?'depth3':'');row.innerHTML='<span>'+escapeHtml((item.number?item.number+' ':'')+item.title)+'</span><small>p. '+escapeHtml(item.page)+'</small>';current.appendChild(row)}}}
+function nodeGroup(n){if(n.live||n.kind==='book'){const ch=String(n.chapter||n.tocNumber||'').split('.')[0];if(/[1-6]/.test(ch))return'Chapter '+ch;return'Other'}if(n.kind==='repository')return'Repository';if(n.kind==='practice')return'Past practice';if(n.kind==='task')return'IOAA 2025';if(n.kind==='gap')return'Additional training';if(n.kind==='file')return'Files';return'Other'}
+function inferPaper(n){const s=(String(n.paper||'')+' '+String(n.id||'')+' '+String(n.label||'')).toUpperCase();if(/(^|\W)OM\d|(^|\W)OM(\W|$)/.test(s))return'OM';if(/(^|\W)OT\d|(^|\W)OT(\W|$)/.test(s))return'OT';if(/(^|\W)OP\d|(^|\W)OP(\W|$)/.test(s))return'OP';return''}
+function edgeWeight(e){const r=String(e.relation||'').toLowerCase();if(r.includes('contains'))return.42;if(r.includes('maps to'))return1.05;if(r.includes('direct'))return1.45;if(r.includes('partial'))return1.08;if(r.includes('gap'))return.76;if(r.includes('supports'))return1.15;return1}
+function augment(data,toc){const ids=new Set(data.nodes.map(n=>n.id)),keys=new Set(data.edges.map(e=>e.source+'\0'+e.target+'\0'+e.relation));let sec=null;const addEdge=(source,target,relation)=>{if(!ids.has(source)||!ids.has(target)||source===target)return;const k=source+'\0'+target+'\0'+relation;if(!keys.has(k)){data.edges.push({source,target,relation,live:true});keys.add(k)}};toc.filter(x=>x.type==='section'||x.type==='subsection').forEach(item=>{const id=liveId(item),chapter=(item.number||'').split('.')[0]||'99';if(!ids.has(id)){data.nodes.push({id,label:(item.number?item.number+' ':'')+item.title,kind:'book',live:true,chapter,tocType:item.type,tocNumber:item.number,page:item.page,body:'Live '+item.type+' generated from the current StarMaps101.toc. This node updates with the committed book structure.',url:pdfUrl+'#page='+encodeURIComponent(item.page)});ids.add(id)}if(item.type==='section'){sec=id;addEdge('repo',id,'contains current section')}else addEdge(sec,id,'contains subsection');const target=semanticTarget(item.number);if(target)addEdge(id,target,'maps to curated topic')});return data}
+function buildGraph(data){const g=new graphology.UndirectedGraph({allowSelfLoops:false});const degree=new Map();data.nodes.forEach((n,i)=>{const a=2*Math.PI*i/Math.max(1,data.nodes.length),j=((hash(n.id)%1000)/1000-.5)*.32;g.addNode(n.id,{x:Math.cos(a)*(1+j),y:Math.sin(a)*(1+j)})});data.edges.forEach(e=>{if(!g.hasNode(e.source)||!g.hasNode(e.target)||e.source===e.target)return;const w=edgeWeight(e);if(g.hasEdge(e.source,e.target)){const k=g.edge(e.source,e.target);g.setEdgeAttribute(k,'weight',(g.getEdgeAttribute(k,'weight')||1)+w)}else g.addEdge(e.source,e.target,{weight:w});degree.set(e.source,(degree.get(e.source)||0)+w);degree.set(e.target,(degree.get(e.target)||0)+w)});const settings=graphologyLibrary.layoutForceAtlas2.inferSettings(g);Object.assign(settings,{linLogMode:true,edgeWeightInfluence:1,gravity:.75,scalingRatio:Math.max(3,Math.sqrt(g.order)*.72),strongGravityMode:false,barnesHutOptimize:g.order>130,barnesHutTheta:.55,slowDown:2.2});graphologyLibrary.layoutForceAtlas2.assign(g,{iterations:g.order>130?420:520,getEdgeWeight:'weight',settings});const xs=[],ys=[];g.forEachNode((id,a)=>{xs.push(a.x);ys.push(a.y)});const minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys),dx=maxX-minX||1,dy=maxY-minY||1;const pos=new Map();g.forEachNode((id,a)=>pos.set(id,{x:55+(a.x-minX)/dx*890,y:48+(a.y-minY)/dy*584}));return{g,pos,degree}}
+function hash(s){let h=2166136261;for(let i=0;i<String(s).length;i++){h^=String(s).charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
+let DATA=null,POS=null,DEG=null,lookup=null,adj=null,groupsHidden=new Set(),selected=null,hovered=null,searchHits=new Set();
+const canvas=$('#net'),stage=$('#stage'),ctx=canvas.getContext('2d'),tip=$('#tip');let DPR=Math.min(devicePixelRatio||1,2),W=0,H=0,view={k:1,x:0,y:0},drag={mode:null,startX:0,startY:0,vx:0,vy:0,node:null,moved:false};
+function fit(){view.k=Math.min(W/1000,H/680)*.95;view.x=(W-1000*view.k)/2;view.y=(H-680*view.k)/2;draw()}
+function resize(){const r=stage.getBoundingClientRect();W=Math.max(1,r.width);H=Math.max(1,r.height);canvas.width=W*DPR;canvas.height=H*DPR;canvas.style.width=W+'px';canvas.style.height=H+'px';fit()}
+function screenToGraph(x,y){return{x:(x-view.x)/view.k,y:(y-view.y)/view.k}}
+function graphToScreen(x,y){return{x:x*view.k+view.x,y:y*view.k+view.y}}
+function nodeRadius(n){const d=DEG?.get(n.id)||.4;let r=3.5+Math.min(9,Math.sqrt(d)*2.05);if(n.kind==='repository')r+=3;if(n.kind==='task')r+=1.5;return r}
+function visibleNode(n){if(groupsHidden.has(nodeGroup(n)))return false;const layer=$('#layer').value,paper=$('#paper').value;if(layer==='book'&&!(n.live||n.kind==='book'||n.kind==='repository'||n.kind==='file'))return false;if(layer==='ioaa'&&n.kind!=='task')return false;if(layer==='practice'&&n.kind!=='practice')return false;if(layer==='gap'&&n.kind!=='gap')return false;if(paper!=='all'&&n.kind==='task'&&inferPaper(n)!==paper)return false;return true}
+function visibleEdge(e){const a=lookup.get(e.source),b=lookup.get(e.target);return a&&b&&visibleNode(a)&&visibleNode(b)}
+function draw(){if(!DATA||!POS)return;ctx.setTransform(DPR,0,0,DPR,0,0);ctx.clearRect(0,0,W,H);ctx.save();ctx.translate(view.x,view.y);ctx.scale(view.k,view.k);const hasSearch=searchHits.size>0,focus=selected||hovered,neighbors=focus?adj.get(focus)||new Set():null;DATA.edges.forEach(e=>{if(!visibleEdge(e))return;const a=POS.get(e.source),b=POS.get(e.target);if(!a||!b)return;const active=focus&&(e.source===focus||e.target===focus),dim=(focus&&!active)||(hasSearch&&!searchHits.has(e.source)&&!searchHits.has(e.target));ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle=active?'rgba(225,239,255,.9)':e.live?'rgba(112,155,197,.22)':'rgba(119,144,170,.28)';ctx.lineWidth=active?1.6:Math.min(1.2,.45+edgeWeight(e)*.38);ctx.globalAlpha=dim?.08:1;if(String(e.relation||'').includes('contains'))ctx.setLineDash([3,4]);else if(String(e.relation||'').includes('maps to'))ctx.setLineDash([1.5,3]);else ctx.setLineDash([]);ctx.stroke()});ctx.setLineDash([]);const labels=$('#labels').value;DATA.nodes.forEach(n=>{if(!visibleNode(n))return;const p=POS.get(n.id);if(!p)return;const group=nodeGroup(n),color=COLORS[group]||COLORS.Other,r=nodeRadius(n),active=n.id===selected||n.id===hovered,near=focus&&(n.id===focus||neighbors?.has(n.id)),dim=(focus&&!near)||(hasSearch&&!searchHits.has(n.id));ctx.globalAlpha=dim?.12:1;ctx.beginPath();if(n.kind==='gap'){ctx.rect(p.x-r,p.y-r,r*2,r*2)}else ctx.arc(p.x,p.y,r,0,Math.PI*2);ctx.fillStyle=n.live?'rgba(7,16,27,.88)':color;ctx.fill();ctx.strokeStyle=active?'#fff':color;ctx.lineWidth=active?2.4:n.live?1.8:.8;ctx.stroke();const smart=(r>=6.2||n.kind==='task'||n.kind==='repository'||active||near),show=labels==='all'||(labels==='smart'&&smart)||(labels==='selected'&&near);if(show){ctx.font=(active?'600 ':'')+'10.5px '+getComputedStyle(document.body).fontFamily;ctx.textBaseline='middle';ctx.lineWidth=3.2;ctx.strokeStyle='#07101b';ctx.fillStyle='#dbe7f5';ctx.strokeText(n.label,p.x+r+4,p.y);ctx.fillText(n.label,p.x+r+4,p.y)}});ctx.restore();ctx.globalAlpha=1}
+function hit(x,y){const g=screenToGraph(x,y);let best=null,bd=Infinity;for(const n of DATA.nodes){if(!visibleNode(n))continue;const p=POS.get(n.id),r=nodeRadius(n)+5/view.k,d=Math.hypot(g.x-p.x,g.y-p.y);if(d<r&&d<bd){best=n;bd=d}}return best}
+function pointerXY(e){const r=canvas.getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top}}
+canvas.addEventListener('pointerdown',e=>{canvas.setPointerCapture(e.pointerId);const m=pointerXY(e),n=hit(m.x,m.y);drag={mode:n?'node':'pan',startX:m.x,startY:m.y,vx:view.x,vy:view.y,node:n?.id||null,moved:false};canvas.classList.add('grabbing')});canvas.addEventListener('pointermove',e=>{const m=pointerXY(e);if(drag.mode){const dx=m.x-drag.startX,dy=m.y-drag.startY;if(Math.hypot(dx,dy)>3)drag.moved=true;if(drag.mode==='pan'){view.x=drag.vx+dx;view.y=drag.vy+dy}else{const p=POS.get(drag.node);p.x+=e.movementX/view.k;p.y+=e.movementY/view.k}draw();return}const n=hit(m.x,m.y),id=n?.id||null;if(id!==hovered){hovered=id;draw()}if(n){tip.hidden=false;tip.innerHTML='<span class="tip-title">'+escapeHtml(n.label)+'</span><span class="tip-meta">'+escapeHtml(nodeGroup(n))+' · '+escapeHtml(n.live?'live book structure':n.kind||'topic')+'</span>';tip.style.left=(e.clientX+13)+'px';tip.style.top=(e.clientY+13)+'px'}else tip.hidden=true});canvas.addEventListener('pointerup',e=>{const m=pointerXY(e),n=hit(m.x,m.y);if(!drag.moved&&n)selectNode(n.id);else if(!drag.moved&&!n){selected=null;showIntro()}drag.mode=null;canvas.classList.remove('grabbing');draw()});canvas.addEventListener('pointerleave',()=>{hovered=null;tip.hidden=true;draw()});canvas.addEventListener('wheel',e=>{e.preventDefault();const m=pointerXY(e),g=screenToGraph(m.x,m.y),factor=Math.exp(-e.deltaY*.0012),nk=Math.max(.18,Math.min(6,view.k*factor));view.x=m.x-g.x*nk;view.y=m.y-g.y*nk;view.k=nk;draw()},{passive:false});
+function buildAdj(){adj=new Map(DATA.nodes.map(n=>[n.id,new Set()]));DATA.edges.forEach(e=>{adj.get(e.source)?.add(e.target);adj.get(e.target)?.add(e.source)})}
+function selectNode(id){selected=id;const n=lookup.get(id);if(!n)return;const edges=DATA.edges.filter(e=>e.source===id||e.target===id).sort((a,b)=>edgeWeight(b)-edgeWeight(a));$('#introDetail').hidden=true;const d=$('#detail');d.hidden=false;d.innerHTML='<button class="close-detail" aria-label="Close">×</button><div class="kicker"><span class="sw" style="background:'+(COLORS[nodeGroup(n)]||COLORS.Other)+'"></span>'+escapeHtml(nodeGroup(n))+'</div><h3>'+escapeHtml(n.label)+'</h3><div class="meta">'+escapeHtml(n.live?'live from current TOC':n.kind||'topic')+(n.page?' · p. '+escapeHtml(n.page):'')+'</div><p>'+escapeHtml(n.body||'')+'</p><div class="stats"><div class="stat"><b>'+edges.length+'</b><span>connections</span></div><div class="stat"><b>'+((DEG.get(id)||0).toFixed(1))+'</b><span>weighted degree</span></div></div>'+(n.url?'<a class="detail-link" href="'+escapeHtml(n.url)+'" target="_blank" rel="noopener">Open source ↗</a>':'')+'<hr><h2>Connected nodes</h2><div class="connections">'+edges.slice(0,18).map(e=>{const other=e.source===id?e.target:e.source,o=lookup.get(other);return o?'<button data-node="'+escapeHtml(other)+'">'+escapeHtml(o.label)+'<small>'+escapeHtml(e.relation||'related')+'</small></button>':''}).join('')+'</div>';d.querySelector('.close-detail').onclick=()=>{selected=null;showIntro();draw()};d.querySelectorAll('[data-node]').forEach(b=>b.onclick=()=>selectNode(b.dataset.node));draw()}
+function showIntro(){$('#detail').hidden=true;$('#introDetail').hidden=false;draw()}
+function legend(){const counts={};DATA.nodes.forEach(n=>counts[nodeGroup(n)]=(counts[nodeGroup(n)]||0)+1);const box=$('#legend');box.innerHTML='';Object.keys(counts).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true})).forEach(group=>{const b=document.createElement('button');b.innerHTML='<span class="sw" style="background:'+(COLORS[group]||COLORS.Other)+'"></span><span class="nm">'+escapeHtml(group)+'</span><span class="ct">'+counts[group]+'</span>';b.onclick=()=>{if(groupsHidden.has(group))groupsHidden.delete(group);else groupsHidden.add(group);b.classList.toggle('dim',groupsHidden.has(group));updateStatus();draw()};box.appendChild(b)})}
+function updateSearch(){const q=$('#q').value.trim().toLowerCase();searchHits.clear();if(q)DATA.nodes.forEach(n=>{if((n.label+' '+(n.body||'')+' '+(n.id||'')).toLowerCase().includes(q))searchHits.add(n.id)});updateStatus();draw()}
+function updateStatus(){const visible=DATA.nodes.filter(visibleNode).length,edges=DATA.edges.filter(visibleEdge).length;$('#status').textContent=visible+' nodes · '+edges+' links'+(searchHits.size?' · '+searchHits.size+' search matches':'')}
+$('#q').addEventListener('input',updateSearch);$('#q').addEventListener('keydown',e=>{if(e.key==='Enter'&&searchHits.size){e.preventDefault();selectNode([...searchHits][0])}});['layer','paper','labels'].forEach(id=>$('#'+id).addEventListener('change',()=>{updateStatus();draw()}));$('#reset').onclick=()=>{selected=null;hovered=null;searchHits.clear();$('#q').value='';$('#layer').value='all';$('#paper').value='all';groupsHidden.clear();[...$('#legend').children].forEach(x=>x.classList.remove('dim'));showIntro();fit();updateStatus()};$('#guideToggle').onclick=()=>{const p=$('#bookguide'),open=p.classList.toggle('open');$('#guideToggle').textContent=open?'Book contents ▴':'Book contents ▾'};
+async function boot(){try{const [gh,tr,tx]=await Promise.all([fetch(graphSource,{cache:'no-store'}),fetch(tocUrl,{cache:'no-store'}),fetch(texUrl,{cache:'no-store'})]);if(!gh.ok)throw new Error('graph source '+gh.status);const [html,tocText,tex]=await Promise.all([gh.text(),tr.ok?tr.text():Promise.resolve(''),tx.ok?tx.text():Promise.resolve('')]);const doc=new DOMParser().parseFromString(html,'text/html'),script=doc.getElementById('graph-data');if(!script)throw new Error('graph-data not found');const toc=parseToc(tocText),sources=parseSources(tex);renderGuide(toc,sources);$('#guideStatus').textContent='Live from StarMaps101.toc and the Sources section of StarMaps101.tex on master.';DATA=augment(JSON.parse(script.textContent),toc);lookup=new Map(DATA.nodes.map(n=>[n.id,n]));buildAdj();$('#status').textContent='Computing ForceAtlas2 layout…';await new Promise(r=>requestAnimationFrame(r));if(window.graphology&&window.graphologyLibrary){const built=buildGraph(DATA);POS=built.pos;DEG=built.degree}else{DEG=new Map();POS=new Map();DATA.nodes.forEach((n,i)=>{const a=2*Math.PI*i/DATA.nodes.length;POS.set(n.id,{x:500+Math.cos(a)*330,y:340+Math.sin(a)*250})});DATA.edges.forEach(e=>{DEG.set(e.source,(DEG.get(e.source)||0)+1);DEG.set(e.target,(DEG.get(e.target)||0)+1)})}legend();resize();updateStatus();showIntro()}catch(err){console.error(err);$('#status').textContent='Graph could not load';$('#stage').innerHTML='<div style="padding:35px;color:#cad7e7">The live graph data could not be loaded. <a href="https://github.com/Rajit13/Star-Maps-101-and-Practices">Open the repository ↗</a></div>';$('#guideStatus').textContent='Live refresh failed.'}}
+new ResizeObserver(()=>{if(DATA&&POS)resize()}).observe(stage);boot();
+})();
+</script>
 </body>
 </html>
