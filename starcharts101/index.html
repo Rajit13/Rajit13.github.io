@@ -18,6 +18,17 @@
   <div id="fallback"><div><h1>Star Charts 101 and Practices</h1><p>The interactive companion could not be loaded.</p><p><a href="graph.html">Open the graph directly</a></p></div></div>
   <script>
     const frame=document.getElementById('site'),fallback=document.getElementById('fallback');
+    frame.addEventListener('load',()=>{
+      try{
+        const doc=frame.contentDocument||frame.contentWindow.document;
+        if(doc&&!doc.querySelector('script[data-book-first-graph]')){
+          const script=doc.createElement('script');
+          script.src='book-first-graph.js?v=20260916b';
+          script.dataset.bookFirstGraph='true';
+          doc.body.appendChild(script);
+        }
+      }catch(error){console.error('Could not install book-first graph layer:',error)}
+    });
     frame.addEventListener('error',()=>{frame.style.display='none';fallback.style.display='grid';});
   </script>
 </body>
