@@ -40,18 +40,28 @@
         doc.head.append(style);
       }
 
+      const settledIntro='<strong>Star Charts 101 and Practices</strong> is a practice book dedicated to astronomy enthusiasts and students preparing for the Star Charts/Observational Round of Astronomy and Earth Science Olympiads. It is not a full star atlas; rather, it is intended as a practical problem-solving companion. The book draws on the author’s experience as a participant in two international Olympiads, an IOAA team leader since 2018, a stargazer, and an observational astronomer.';
+      function applySettledIntro(){
+        const intro=doc.querySelector('.book-copy p');
+        if(!intro)return false;
+        if(intro.innerHTML!==settledIntro)intro.innerHTML=settledIntro;
+        return true;
+      }
+      applySettledIntro();
+
       const graph=doc.querySelector('main#graph');
       if(graph&&!doc.querySelector('.student-core-finding')){
         const section=doc.createElement('section');
         section.className='student-core-finding';
-        section.setAttribute('aria-label','Core finding in simple terms');
-        section.innerHTML=`<div class="eyebrow">For a high-school reader</div><h2>What is the main idea of this graph?</h2><p>Think of this as a study map of <strong>Star Charts 101 and Practices</strong>. If a topic appears in \(f\) of the \(N\) indexed book units, its occurrence fraction is \(f/N\); a larger book node therefore means that topic appears in more parts of the book, not that it is automatically more important in an exam.</p><p>For two book topics \(A\) and \(B\), the displayed relationship strength is \(w(A,B)\in[0,1]\). A larger \(w\) means the topics are more strongly connected across the book's reference neighbourhoods. Green IOAA links show shared skills with 2025 observation tasks, but they do <strong>not</strong> predict marks or readiness. The screen position has no physical axis, so use the displayed \(w\) value—not visual distance—for the numerical relationship.</p>`;
+        section.setAttribute('aria-label','Core finding for Olympiad and astronomy students');
+        section.innerHTML=`<div class="eyebrow">For an Olympiad/Astronomy Student</div><h2>What is the main idea of this graph?</h2><p>Think of this as a study map of <strong>Star Charts 101 and Practices</strong>. If a topic appears in \\(f\\) of the \\(N\\) indexed book units, its occurrence fraction is \\(f/N\\); a larger book node therefore means that topic appears in more parts of the book, not that it is automatically more important in an exam.</p><p>For two book topics \\(A\\) and \\(B\\), the displayed relationship strength is \\(w(A,B)\\in[0,1]\\). A larger \\(w\\) means the topics are more strongly connected across the book's reference neighbourhoods. Green IOAA links show shared skills with 2025 observation tasks, but they do <strong>not</strong> predict marks or readiness. The screen position has no physical axis, so use the displayed \\(w\\) value—not visual distance—for the numerical relationship.</p>`;
         graph.insertAdjacentElement('afterend',section);
       }
 
       function typeset(root){
-        if(!root||!win.MathJax||typeof win.MathJax.typesetPromise!=='function')return;
+        if(!root||!win.MathJax||typeof win.MathJax.typesetPromise!=='function')return false;
         win.MathJax.typesetPromise([root]).catch(()=>{});
+        return true;
       }
 
       function prepareMethodMath(){
@@ -106,6 +116,7 @@
       }
 
       function enhance(){
+        applySettledIntro();
         const student=doc.querySelector('.student-core-finding');
         if(student&&!student.querySelector('mjx-container'))typeset(student);
         prepareMethodMath();
@@ -128,6 +139,15 @@
         win.requestAnimationFrame(waitForGraph);
       };
       waitForGraph();
+
+      let mathAttempts=0;
+      const waitForMathJax=()=>{
+        const student=doc.querySelector('.student-core-finding');
+        if(student&&student.querySelector('mjx-container'))return;
+        if(student&&typeset(student))return;
+        if(mathAttempts++<240)win.requestAnimationFrame(waitForMathJax);
+      };
+      waitForMathJax();
     });
   </script>
 </body>
