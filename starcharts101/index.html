@@ -153,12 +153,14 @@
       accordion.className='toc-accordion';
       accordion.dataset.accordion='true';
       let current=null;
+      let currentSectionTitle='';
       for(const item of items){
         if(item.type==='section'){
           const label=(item.number?item.number+' ':'')+item.title;
           const made=makeSection(doc,label,'p. '+item.page);
           accordion.appendChild(made.section);
           current=made.body;
+          currentSectionTitle=item.title;
           if(/^Sources$/i.test(item.title)){
             for(const source of sources) addSourceRow(doc,current,source);
             if(!sources.length){
@@ -244,21 +246,11 @@
       doc.documentElement.dataset.polished='true';
       doc.title='Star Charts 101 and Practices · Book Reading Guide and Knowledge Graph';
 
-      const fa=doc.createElement('link');
-      fa.rel='stylesheet';
-      fa.href='../assets/css/fontawesome-all.min.css';
-      fa.dataset.socialIcons='true';
-      doc.head.appendChild(fa);
-
       const style=doc.createElement('style');
       style.textContent=`
         .author-bar{background:#0d131d!important}
-        .author-links{display:flex!important;align-items:center!important;gap:7px!important;flex-wrap:wrap!important;justify-content:flex-end!important}
         .author-links .promo-link{display:none!important}
-        .author-links .promo-link[href*="orcid.org"]{display:inline-flex!important;align-items:center!important;min-height:34px!important;height:34px!important;padding:0 10px!important;border-radius:9px!important;font-size:12px!important;line-height:1!important}
-        .author-social{display:inline-flex!important;align-items:center!important;justify-content:center!important;width:34px!important;height:34px!important;min-height:34px!important;padding:0!important;border:1px solid #485268!important;border-radius:9px!important;background:#202733!important;color:#dce8f6!important;text-decoration:none!important;font-size:14px!important;transition:.18s ease!important}
-        .author-social:hover{background:#303c4e!important;transform:translateY(-1px)!important}
-        .author-social.linkedin:hover{color:#7ec8ff!important}.author-social.facebook:hover{color:#9bbcff!important}.author-social.instagram:hover{color:#ff9fce!important}.author-social.github:hover{color:#fff!important}.author-social.youtube:hover{color:#ff8c8c!important}
+        .author-links .promo-link[href*="orcid.org"]{display:inline-flex!important}
         .author-id small{color:var(--green);font-size:10px;letter-spacing:1.5px;text-transform:uppercase}
         .author-id a{color:#7ec8ff!important;text-decoration:none!important;font-weight:700!important;font-size:2em!important;line-height:1.1!important;font-variant:small-caps;font-variant-caps:small-caps;letter-spacing:.08em;font-family:"Palatino Linotype","Book Antiqua",Georgia,serif}
         .author-id a:hover{text-decoration:underline!important}
@@ -310,22 +302,11 @@
         .page-counter img{display:block;height:20px;max-width:160px}
         .footer-license-copy{display:block!important;border-top:1px solid var(--border);padding-top:14px!important;margin-top:0!important;color:var(--muted)!important;font-size:12px!important}
         @media(max-width:850px){.author-id a{font-size:1.7em!important}.ioaa-context-footnote{margin-left:18px!important;margin-right:18px!important}}
-        @media(max-width:540px){.book-art{min-height:190px!important}.book-art img{height:180px!important}.author-id a{font-size:1.55em!important}.author-links{justify-content:flex-start!important}.additional-reading strong{font-size:18px!important}}
+        @media(max-width:540px){.book-art{min-height:190px!important}.book-art img{height:180px!important}.author-id a{font-size:1.55em!important}.additional-reading strong{font-size:18px!important}}
       `;
       doc.head.appendChild(style);
 
       [...authorLinks.querySelectorAll('.promo-link')].forEach(link=>{if(!link.href.includes('orcid.org')) link.remove();});
-      const orcidLink=authorLinks.querySelector('.promo-link[href*="orcid.org"]');
-      if(orcidLink){orcidLink.innerHTML='<i class="fab fa-orcid" aria-hidden="true"></i><span>ORCID</span>';orcidLink.setAttribute('aria-label','ORCID');orcidLink.title='ORCID';}
-      const socialLinks=[
-        ['linkedin','https://www.linkedin.com/in/fahim-rajit-hossain/','fab fa-linkedin-in','LinkedIn'],
-        ['facebook','https://www.facebook.com/fahimrajithossain.shwadhin','fab fa-facebook-f','Facebook'],
-        ['instagram','https://www.instagram.com/rajit_13/','fab fa-instagram','Instagram'],
-        ['github','https://github.com/Rajit13/','fab fa-github','GitHub'],
-        ['youtube','https://www.youtube.com/@Rajit_13/','fab fa-youtube','YouTube']
-      ];
-      socialLinks.forEach(([cls,href,icon,label])=>{const a=doc.createElement('a');a.className='author-social '+cls;a.href=href;a.target='_blank';a.rel='noopener';a.setAttribute('aria-label',label);a.title=label;a.innerHTML='<i class="'+icon+'" aria-hidden="true"></i>';authorLinks.appendChild(a);});
-
       const caption=bookArt.querySelector('figcaption'); if(caption) caption.remove();
       const authorName=doc.querySelector('.author-id a');
       if(authorName){authorName.textContent='Fahim Rajit Hossain Shwadhin';authorName.href=portfolioUrl;authorName.target='_blank';authorName.rel='noopener';authorName.title='Open portfolio website';}
