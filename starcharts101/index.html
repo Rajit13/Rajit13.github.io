@@ -21,13 +21,13 @@
     frame.addEventListener('load',()=>{
       try{
         const doc=frame.contentDocument||frame.contentWindow.document;
-        if(doc&&!doc.querySelector('script[data-book-first-graph]')){
+        if(doc&&!doc.querySelector('script[data-astronomy-graph]')){
           const script=doc.createElement('script');
-          script.src='book-first-graph.js?v=20260916b';
-          script.dataset.bookFirstGraph='true';
+          script.src='graph-engine-v3.js?v=20260916c';
+          script.dataset.astronomyGraph='true';
           doc.body.appendChild(script);
         }
-      }catch(error){console.error('Could not install book-first graph layer:',error)}
+      }catch(error){console.error('Could not install astronomy-aware graph layer:',error)}
     });
     frame.addEventListener('error',()=>{frame.style.display='none';fallback.style.display='grid';});
   </script>
