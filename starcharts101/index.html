@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Star Maps 101 · Interactive Book & Observation Graph</title>
-  <meta name="description" content="Interactive companion to Star Charts 101 and Practices, including live book contents and the IOAA 2025 observation knowledge graph.">
+  <title>Star Charts 101 and Practices · Book & Observation Knowledge Graph</title>
+  <meta name="description" content="Interactive companion to Star Charts 101 and Practices, including the live book contents and the IOAA 2025 observation knowledge graph.">
   <link rel="canonical" href="https://rajit13.github.io/starcharts101/">
   <style>
     html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #101319; }
@@ -14,10 +14,10 @@
   </style>
 </head>
 <body>
-  <iframe id="site" src="graph.html" title="Star Maps 101 interactive companion"></iframe>
+  <iframe id="site" src="graph.html" title="Star Charts 101 and Practices interactive companion"></iframe>
   <div id="fallback">
     <div>
-      <h1>Star Maps 101</h1>
+      <h1>Star Charts 101 and Practices</h1>
       <p>The interactive companion could not be loaded.</p>
       <p><a href="graph.html">Open the graph directly</a></p>
     </div>
@@ -43,9 +43,11 @@
         const tocToggle = doc.getElementById('toc-toggle');
         const tocPanel = doc.getElementById('toc-panel');
         const footer = doc.querySelector('.license-foot');
-        if (!authorLinks || !bookArt || !nav || !tocToggle || !tocPanel || !footer) return false;
+        const workspace = doc.querySelector('main.workspace');
+        if (!authorLinks || !bookArt || !nav || !tocToggle || !tocPanel || !footer || !workspace) return false;
         if (doc.documentElement.dataset.polished === 'true') return true;
         doc.documentElement.dataset.polished = 'true';
+        doc.title = 'Star Charts 101 and Practices · Book & Observation Knowledge Graph';
 
         const style = doc.createElement('style');
         style.textContent = `
@@ -63,6 +65,8 @@
             color:#7ec8ff!important;
             text-decoration:none!important;
             font-weight:700!important;
+            font-size:2em!important;
+            line-height:1.1!important;
             font-variant:small-caps;
             font-variant-caps:small-caps;
             letter-spacing:.08em;
@@ -92,10 +96,19 @@
             object-fit:contain!important;
             background:transparent!important;
             filter:none!important;
-            transform:none!important;
+            transform:rotate(180deg)!important;
             transform-origin:center!important;
           }
           .book-art figcaption{display:none!important}
+
+          .book-copy h1{line-height:1.12!important}
+          .book-copy h1 .graph-subtitle{
+            display:inline-block;
+            margin-top:6px;
+            font-size:.76em;
+            font-weight:620;
+            color:#cbd5e5;
+          }
 
           .book-nav #toc-toggle{
             background:#d9e9ff!important;
@@ -116,6 +129,23 @@
           .toc-static:hover{
             background:transparent!important;
             color:inherit!important;
+          }
+
+          .ioaa-context-footnote{
+            margin:18px 30px 20px!important;
+            padding:13px 15px!important;
+            border:1px solid #34465d!important;
+            border-left:3px solid var(--green)!important;
+            border-radius:7px!important;
+            background:#151b24!important;
+            color:#cbd5e5!important;
+            font-size:12px!important;
+          }
+          .ioaa-context-footnote strong{
+            display:block;
+            margin-bottom:4px;
+            color:#eef4ff!important;
+            font-size:13px!important;
           }
 
           .license-foot{
@@ -148,10 +178,15 @@
             max-width:160px
           }
 
+          @media(max-width:850px){
+            .author-id a{font-size:1.7em!important}
+            .ioaa-context-footnote{margin-left:18px!important;margin-right:18px!important}
+          }
           @media(max-width:540px){
             .book-art{min-height:190px!important}
             .book-art img{height:180px!important}
             .license-foot{align-items:flex-start!important}
+            .author-id a{font-size:1.55em!important}
           }
         `;
         doc.head.appendChild(style);
@@ -164,18 +199,26 @@
         if (caption) caption.remove();
 
         const authorName = doc.querySelector('.author-id a');
-        if (authorName) {
-          authorName.textContent = 'Fahim Rajit Hossain Shwadhin';
-        }
+        if (authorName) authorName.textContent = 'Fahim Rajit Hossain Shwadhin';
 
         const eyebrow = doc.querySelector('.book-copy .eyebrow');
-        if (eyebrow) {
-          eyebrow.textContent = 'INTERACTIVE COMPANION TO THE ASTRONOMY OLYMPIAD BOOK';
+        if (eyebrow) eyebrow.textContent = 'INTERACTIVE COMPANION TO THE BOOK';
+
+        const title = doc.querySelector('.book-copy h1');
+        if (title) {
+          title.innerHTML = 'Star Charts 101 and Practices<br><span class="graph-subtitle">Book &amp; observation knowledge graph</span>';
         }
 
         const intro = doc.querySelector('.book-copy p');
         if (intro) {
-          intro.innerHTML = '<strong>Star Charts 101 and Practices</strong> is an <strong>astronomy-olympiad-focused</strong> book for <strong>IOAA</strong>, <strong>OWAO</strong>, and related astronomy observation training — not a general Olympiad guide. It covers star maps, constellations, lunar motion, deep-sky objects, coordinate systems, projections, celestial navigation, telescope observation, magnitude estimation and observation problems.';
+          intro.innerHTML = '<strong>Star Charts 101 and Practices</strong> is a practice book dedicated to astronomy enthusiasts and students preparing for the Star Charts/Observational Round of Astronomy and Earth Science Olympiads. It is not a full star atlas; rather, it is intended as a practical problem-solving companion. The book draws on the author’s experience as a participant in two international Olympiads, an IOAA team leader since 2018, a stargazer, and an amateur astronomer.';
+        }
+
+        const ioaaNote = doc.querySelector('.ioaa-note');
+        if (ioaaNote) {
+          ioaaNote.classList.add('ioaa-context-footnote');
+          ioaaNote.innerHTML = '<strong>IOAA 2025 context</strong>The graph’s OM (Sky Map), OT (Telescope), and OP (Planetarium) nodes and task mappings refer specifically to the IOAA 2025 Observation Round.';
+          workspace.insertAdjacentElement('afterend', ioaaNote);
         }
 
         tocPanel.classList.add('open');
@@ -202,7 +245,12 @@
 
         [...doc.querySelectorAll('a')].forEach(link => {
           const text = link.textContent.trim();
-          if (text === 'Latest PDF' || /Download latest book PDF/i.test(text)) {
+          if (
+            text === 'Latest PDF' ||
+            /Download latest book PDF/i.test(text) ||
+            /Open full PDF/i.test(text) ||
+            link.href.includes('/releases/latest/download/StarMaps101.pdf')
+          ) {
             link.href = pdfPreview;
             link.target = '_blank';
             link.rel = 'noopener';
@@ -216,8 +264,8 @@
         copy.innerHTML = originalFooterHtml;
         const counter = doc.createElement('div');
         counter.className = 'page-counter';
-        counter.setAttribute('aria-label', 'Star Maps 101 page views');
-        counter.innerHTML = '<span>Page views</span><img src="https://visitor-badge.laobi.icu/badge?page_id=Rajit13.StarMaps101.Interactive" alt="Star Maps 101 page view counter">';
+        counter.setAttribute('aria-label', 'Star Charts 101 and Practices page views');
+        counter.innerHTML = '<span>Page views</span><img src="https://visitor-badge.laobi.icu/badge?page_id=Rajit13.StarMaps101.Interactive" alt="Star Charts 101 and Practices page view counter">';
         footer.append(copy, counter);
 
         return true;
