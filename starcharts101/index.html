@@ -28,6 +28,7 @@
       'use strict';
       const frame = document.getElementById('site');
       const fallback = document.getElementById('fallback');
+      const pdfPreview = 'https://github.com/Rajit13/Star-Maps-101-and-Practices/blob/master/StarMaps101.pdf';
       let attempts = 0;
 
       function patch() {
@@ -52,6 +53,23 @@
           .author-links .promo-link{display:none!important}
           .author-links .promo-link[href*="orcid.org"]{display:inline-flex!important}
 
+          .author-id small{
+            color:var(--green);
+            font-size:10px;
+            letter-spacing:1.5px;
+            text-transform:uppercase
+          }
+          .author-id a{
+            color:#7ec8ff!important;
+            text-decoration:none!important;
+            font-weight:700!important;
+            font-variant:small-caps;
+            font-variant-caps:small-caps;
+            letter-spacing:.08em;
+            font-family:"Palatino Linotype","Book Antiqua",Georgia,serif;
+          }
+          .author-id a:hover{text-decoration:none!important}
+
           .book-art{
             background:#07101b!important;
             border-color:#34465d!important;
@@ -59,12 +77,23 @@
             padding:14px!important;
             box-shadow:inset 0 0 42px rgba(79,132,184,.08);
           }
-          .book-art a{display:flex;align-items:center;justify-content:center;width:100%;height:100%;}
+          .book-art a{
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            width:100%;
+            height:100%;
+            pointer-events:none!important;
+            cursor:default!important;
+          }
           .book-art img{
             width:100%!important;
             max-height:255px!important;
             object-fit:contain!important;
             background:transparent!important;
+            filter:none!important;
+            transform:none!important;
+            transform-origin:center!important;
           }
           .book-art figcaption{display:none!important}
 
@@ -80,6 +109,15 @@
           .toc-head h2{font-size:21px!important}
           .toc-head h2::before{content:'★ ';color:var(--blue)}
 
+          .toc-static{
+            pointer-events:none!important;
+            cursor:default!important;
+          }
+          .toc-static:hover{
+            background:transparent!important;
+            color:inherit!important;
+          }
+
           .license-foot{
             display:flex!important;
             align-items:center!important;
@@ -88,9 +126,27 @@
             flex-wrap:wrap!important;
           }
           .footer-license-copy{flex:1 1 620px}
-          .page-counter{display:flex;align-items:center;gap:8px;white-space:nowrap;padding:6px 10px;border:1px solid var(--border);border-radius:7px;background:#171d27}
-          .page-counter span{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.8px}
-          .page-counter img{display:block;height:20px;max-width:160px}
+          .page-counter{
+            display:flex;
+            align-items:center;
+            gap:8px;
+            white-space:nowrap;
+            padding:6px 10px;
+            border:1px solid var(--border);
+            border-radius:7px;
+            background:#171d27
+          }
+          .page-counter span{
+            color:var(--muted);
+            font-size:11px;
+            text-transform:uppercase;
+            letter-spacing:.8px
+          }
+          .page-counter img{
+            display:block;
+            height:20px;
+            max-width:160px
+          }
 
           @media(max-width:540px){
             .book-art{min-height:190px!important}
@@ -107,9 +163,31 @@
         const caption = bookArt.querySelector('figcaption');
         if (caption) caption.remove();
 
+        const authorName = doc.querySelector('.author-id a');
+        if (authorName) {
+          authorName.textContent = 'Fahim Rajit Hossain Shwadhin';
+        }
+
+        const eyebrow = doc.querySelector('.book-copy .eyebrow');
+        if (eyebrow) {
+          eyebrow.textContent = 'INTERACTIVE COMPANION TO THE ASTRONOMY OLYMPIAD BOOK';
+        }
+
+        const intro = doc.querySelector('.book-copy p');
+        if (intro) {
+          intro.innerHTML = '<strong>Star Charts 101 and Practices</strong> is an <strong>astronomy-olympiad-focused</strong> book for <strong>IOAA</strong>, <strong>OWAO</strong>, and related astronomy observation training — not a general Olympiad guide. It covers star maps, constellations, lunar motion, deep-sky objects, coordinate systems, projections, celestial navigation, telescope observation, magnitude estimation and observation problems.';
+        }
+
         tocPanel.classList.add('open');
         tocToggle.setAttribute('aria-expanded', 'true');
         tocToggle.textContent = 'Book contents ▴';
+
+        [...doc.querySelectorAll('.toc-item')].forEach(link => {
+          const div = doc.createElement('div');
+          div.className = link.className + ' toc-static';
+          div.innerHTML = link.innerHTML;
+          link.replaceWith(div);
+        });
 
         const order = ['toc-toggle', 'Interactive graph', 'Latest PDF', 'Repository', 'Releases'];
         const navItems = [...nav.children];
@@ -120,6 +198,15 @@
         order.forEach(key => {
           const el = findItem(key);
           if (el) nav.insertBefore(el, spacer || null);
+        });
+
+        [...doc.querySelectorAll('a')].forEach(link => {
+          const text = link.textContent.trim();
+          if (text === 'Latest PDF' || /Download latest book PDF/i.test(text)) {
+            link.href = pdfPreview;
+            link.target = '_blank';
+            link.rel = 'noopener';
+          }
         });
 
         const originalFooterHtml = footer.innerHTML;
