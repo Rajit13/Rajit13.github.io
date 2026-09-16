@@ -19,6 +19,89 @@
   <script>
     const frame=document.getElementById('site'),fallback=document.getElementById('fallback');
     frame.addEventListener('error',()=>{frame.style.display='none';fallback.style.display='grid';});
+    frame.addEventListener('load',()=>{
+      const doc=frame.contentDocument,win=frame.contentWindow;
+      if(!doc||!win)return;
+
+      if(!doc.getElementById('sc101-targeted-enhancements')){
+        const style=doc.createElement('style');
+        style.id='sc101-targeted-enhancements';
+        style.textContent=`
+          .student-core-finding{margin:18px 30px 0;padding:14px 16px;border:1px solid #34465d;border-left:3px solid var(--blue);border-radius:7px;background:#151b24;color:#cbd5e5;font-size:13px}
+          .student-core-finding .eyebrow{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--green)}
+          .student-core-finding h2{font-size:19px;margin:3px 0 7px;color:var(--text)}
+          .student-core-finding p{margin:6px 0;max-width:1100px}
+          .additional-reading{font-size:16px}
+          .additional-reading strong{font-size:22px}
+          .additional-reading-links a{font-size:16px;line-height:1.6}
+          @media(max-width:900px){.student-core-finding{margin-left:18px;margin-right:18px}}
+        `;
+        doc.head.append(style);
+      }
+
+      const graph=doc.querySelector('main#graph');
+      if(graph&&!doc.querySelector('.student-core-finding')){
+        const section=doc.createElement('section');
+        section.className='student-core-finding';
+        section.setAttribute('aria-label','Core finding in simple terms');
+        section.innerHTML=`<div class="eyebrow">For a high-school reader</div><h2>What is the main idea of this graph?</h2><p>Think of this as a study map of <strong>Star Charts 101 and Practices</strong>. If a topic appears in \(f\) of the \(N\) indexed book units, its occurrence fraction is \(f/N\); a larger book node therefore means that topic appears in more parts of the book, not that it is automatically more important in an exam.</p><p>For two book topics \(A\) and \(B\), the displayed relationship strength is \(w(A,B)\in[0,1]\). A larger \(w\) means the topics are more strongly connected across the book's reference neighbourhoods. Green IOAA links show shared skills with 2025 observation tasks, but they do <strong>not</strong> predict marks or readiness. The screen position has no physical axis, so use the displayed \(w\) value—not visual distance—for the numerical relationship.</p>`;
+        graph.insertAdjacentElement('afterend',section);
+      }
+
+      function typeset(root){
+        if(!root||!win.MathJax||typeof win.MathJax.typesetPromise!=='function')return;
+        win.MathJax.typesetPromise([root]).catch(()=>{});
+      }
+
+      function prepareMethodMath(){
+        const method=doc.getElementById('method');
+        if(!method||method.querySelector('mjx-container'))return;
+        let html=method.innerHTML,next=html;
+        next=next.replace(/<div class="kg-formula">[\s\S]*?<\/div>/,`<div class="kg-formula">\\[
+          p(A\\to B)=\\frac{1}{f_A}\\sum_{d\\ni A}\\frac{\\#\\{\\text{units containing }B\\text{ in }S(d)\\}}{\\#S(d)}
+          \\]
+          \\[
+          w(A,B)=\\sqrt{p(A\\to B)\\,p(B\\to A)}
+          \\]
+          \\[
+          S(d)=\\{d\\}\\cup\\{\\text{resolved units explicitly referenced by }d\\}
+          \\]</div>`);
+        next=next.replace(/normalized co-occurrence C\(A,B\)\/√\(fA fB\)/g,'normalized co-occurrence \\(C(A,B)/\\sqrt{f_Af_B}\\)');
+        next=next.replace(/Document frequency f<\/td>/g,'Document frequency \\(f\\)</td>');
+        next=next.replace(/Relationship strength w<\/td>/g,'Relationship strength \\(w\\)</td>');
+        next=next.replace(/Neighbour count k<\/td>/g,'Neighbour count \\(k\\)</td>');
+        next=next.replace(/π\[30 \+ 130 log\(1\+f\)\/log\(1\+(\d+)\)\] graph units²/g,'\\(\\pi[30+130\\log(1+f)/\\log(1+$1)]\\) graph units²');
+        next=next.replace(/If A occurs in four units and the B fractions in their reference neighbourhoods are 1\/2, 1, 0 and 0, then p\(A → B\) = \(0\.5 \+ 1 \+ 0 \+ 0\)\/4 = 0\.375\. If p\(B → A\) = 0\.600, the displayed strength is √\(0\.375 × 0\.600\) ≈ 0\.474 \/ 1\./g,'If \\(A\\) occurs in four units and the \\(B\\) fractions in their reference neighbourhoods are \\(1/2,1,0,0\\), then \\(p(A\\to B)=(0.5+1+0+0)/4=0.375\\). If \\(p(B\\to A)=0.600\\), the displayed strength is \\(w=\\sqrt{0.375\\times0.600}\\approx0.474\\) on the \\(0\\)–\\(1\\) scale.');
+        if(next!==html){method.innerHTML=next;typeset(method)}
+      }
+
+      function prepareDetailsMath(){
+        const details=doc.getElementById('details');
+        if(!details||details.querySelector('mjx-container'))return;
+        const html=details.innerHTML;
+        let next=html
+          .replace(/Node area follows log\(1 \+ frequency\)/g,'Node area follows \\(\\log(1+f)\\)')
+          .replace(/Symmetric relationship strength = √\(([0-9.]+) × ([0-9.]+)\)\./g,'Symmetric relationship strength is \\(w=\\sqrt{$1\\times $2}\\).')
+          .replace(/Strength runs from 0 to 1\./g,'Strength runs from \\(0\\) to \\(1\\).');
+        if(next!==html){details.innerHTML=next;typeset(details)}
+      }
+
+      function enhance(){
+        const student=doc.querySelector('.student-core-finding');
+        if(student&&!student.querySelector('mjx-container'))typeset(student);
+        prepareMethodMath();
+        prepareDetailsMath();
+      }
+
+      enhance();
+      let queued=false;
+      const observer=new win.MutationObserver(()=>{
+        if(queued)return;
+        queued=true;
+        win.requestAnimationFrame(()=>{queued=false;enhance()});
+      });
+      observer.observe(doc.body,{childList:true,subtree:true});
+    });
   </script>
 </body>
 </html>
