@@ -1,243 +1,373 @@
-<!DOCTYPE HTML>
-<!--
-	Editorial by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>Research and Projects</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<link rel="icon" href="images/ori_website.png" type="image/x-icon">
-		<script type="text/javascript" async
-        	src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
-  		</script>
-	</head>
-	<body class="is-preload">
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07111f">
+  <meta name="description" content="Research and astronomy education projects by Fahim Rajit Hossain Shwadhin: exoplanet atmospheres, strong gravitational lensing, dark matter, Star Charts 101 and Practices, and astronomy education.">
+  <title>Research & Projects · Fahim Rajit Hossain Shwadhin</title>
+  <link rel="icon" href="images/ori_website.png" type="image/x-icon">
+  <style>
+    :root{
+      --bg:#050a13;
+      --bg2:#081322;
+      --panel:rgba(12,25,43,.86);
+      --panel-strong:#0d1a2d;
+      --line:rgba(151,190,255,.16);
+      --line-strong:rgba(151,190,255,.32);
+      --text:#eef5ff;
+      --muted:#aebdd1;
+      --blue:#7ec8ff;
+      --cyan:#6ce5df;
+      --violet:#b7a5ff;
+      --amber:#ffd38a;
+      --green:#8de2bd;
+      --shadow:0 18px 55px rgba(0,0,0,.28);
+      --radius:20px;
+      --max:1180px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 15% 10%,rgba(72,123,255,.18),transparent 30rem),
+        radial-gradient(circle at 85% 16%,rgba(125,79,255,.12),transparent 28rem),
+        radial-gradient(circle at 72% 82%,rgba(46,201,190,.09),transparent 32rem),
+        linear-gradient(180deg,#040811 0%,#07111f 47%,#050a13 100%);
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      line-height:1.7;
+      min-height:100vh;
+    }
+    body:before,body:after{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:-1;
+    }
+    body:before{
+      opacity:.45;
+      background-image:
+        radial-gradient(circle at 10% 20%,#fff 0 1px,transparent 1.4px),
+        radial-gradient(circle at 38% 72%,#fff 0 1px,transparent 1.4px),
+        radial-gradient(circle at 76% 31%,#d8ecff 0 1px,transparent 1.4px),
+        radial-gradient(circle at 91% 81%,#fff 0 1px,transparent 1.4px),
+        radial-gradient(circle at 58% 10%,#fff 0 1px,transparent 1.4px);
+      background-size:190px 190px,260px 260px,230px 230px,310px 310px,360px 360px;
+    }
+    body:after{
+      background:linear-gradient(90deg,transparent,rgba(110,170,255,.025),transparent);
+      transform:skewY(-8deg);
+    }
+    a{color:var(--blue);text-decoration:none}
+    a:hover{color:#fff}
+    img{max-width:100%;display:block}
+    .shell{width:min(calc(100% - 34px),var(--max));margin:0 auto}
+    .topbar{
+      position:sticky;top:0;z-index:20;
+      backdrop-filter:blur(18px);
+      background:rgba(5,10,19,.78);
+      border-bottom:1px solid var(--line);
+    }
+    .nav{
+      min-height:70px;
+      display:flex;align-items:center;justify-content:space-between;gap:22px;
+    }
+    .brand{display:flex;align-items:center;gap:12px;color:var(--text);font-weight:760;letter-spacing:.1px}
+    .brand img{width:34px;height:34px;object-fit:cover;border-radius:50%;border:1px solid var(--line-strong);box-shadow:0 0 22px rgba(126,200,255,.18)}
+    .brand span{white-space:nowrap}
+    .navlinks{display:flex;align-items:center;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+    .navlinks a{padding:8px 11px;border-radius:999px;color:var(--muted);font-size:.91rem}
+    .navlinks a:hover,.navlinks a.active{color:var(--text);background:rgba(126,200,255,.1)}
+    .hero{padding:78px 0 52px;position:relative}
+    .hero-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(260px,.65fr);gap:42px;align-items:center}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--cyan);font-size:.78rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+    .eyebrow:before{content:"✦";font-size:.9rem}
+    h1,h2,h3{line-height:1.16;margin-top:0}
+    h1{font-size:clamp(2.7rem,7vw,5.7rem);letter-spacing:-.055em;margin:.18em 0 .2em;max-width:820px}
+    .hero .lead{font-size:clamp(1.05rem,2vw,1.27rem);color:#c7d5e8;max-width:780px;margin:0 0 20px}
+    .hero p{color:var(--muted);max-width:780px}
+    .hero-actions,.buttons{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+    .button{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      min-height:44px;padding:10px 15px;border-radius:11px;border:1px solid var(--line-strong);
+      background:rgba(17,35,59,.72);color:var(--text);font-weight:720;font-size:.91rem;
+      transition:.18s ease;
+    }
+    .button:hover{transform:translateY(-2px);background:rgba(35,67,106,.9);box-shadow:0 10px 30px rgba(0,0,0,.2)}
+    .button.primary{color:#06111e;background:linear-gradient(135deg,#93d5ff,#70e1d8);border-color:transparent}
+    .button.primary:hover{color:#06111e;filter:brightness(1.08)}
+    .hero-visual{
+      min-height:380px;border:1px solid var(--line);border-radius:30px;overflow:hidden;position:relative;
+      background:#07111d;box-shadow:var(--shadow);
+    }
+    .hero-visual img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.72;filter:saturate(.8) contrast(1.04)}
+    .hero-visual:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 20%,rgba(4,9,17,.2) 50%,#07111d 100%)}
+    .orbit-card{position:absolute;z-index:2;left:20px;right:20px;bottom:20px;padding:16px 17px;border-radius:16px;background:rgba(5,12,23,.76);border:1px solid rgba(194,225,255,.2);backdrop-filter:blur(13px)}
+    .orbit-card strong{display:block;font-size:1.05rem;margin-bottom:4px}
+    .orbit-card span{color:var(--muted);font-size:.88rem}
+    .quick-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:32px}
+    .quick{padding:15px 16px;border:1px solid var(--line);border-radius:14px;background:rgba(10,21,36,.56)}
+    .quick b{display:block;color:#fff;font-size:1.05rem}.quick span{color:var(--muted);font-size:.78rem}
+    section.block{padding:48px 0}
+    .section-head{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:22px}
+    .section-head h2{font-size:clamp(1.8rem,4vw,2.55rem);margin:5px 0 0;letter-spacing:-.03em}
+    .section-head p{max-width:590px;color:var(--muted);margin:0}
+    .featured{
+      display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);gap:24px;
+      padding:30px;border-radius:var(--radius);border:1px solid rgba(126,200,255,.28);
+      background:
+        radial-gradient(circle at 100% 0%,rgba(126,200,255,.15),transparent 26rem),
+        linear-gradient(145deg,rgba(13,29,50,.96),rgba(8,19,34,.91));
+      box-shadow:var(--shadow);overflow:hidden;position:relative;
+    }
+    .featured:before{content:"";position:absolute;width:260px;height:260px;border:1px solid rgba(126,200,255,.11);border-radius:50%;right:-75px;top:-130px;box-shadow:0 0 0 38px rgba(126,200,255,.025),0 0 0 76px rgba(126,200,255,.018)}
+    .featured h3{font-size:clamp(2rem,4vw,3.1rem);letter-spacing:-.045em;margin:7px 0 12px}
+    .featured p{color:#bfcee2;max-width:760px}
+    .feature-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:20px 0}
+    .feature-item{padding:13px;border-radius:12px;border:1px solid var(--line);background:rgba(5,13,24,.48);font-size:.9rem;color:#d4e0ee}
+    .feature-item b{display:block;color:var(--cyan);font-size:.76rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px}
+    .graph-preview{align-self:stretch;min-height:330px;border-radius:16px;border:1px solid var(--line);background:
+      radial-gradient(circle at 28% 30%,rgba(126,200,255,.19) 0 4px,transparent 5px),
+      radial-gradient(circle at 64% 24%,rgba(108,229,223,.2) 0 5px,transparent 6px),
+      radial-gradient(circle at 76% 62%,rgba(183,165,255,.22) 0 5px,transparent 6px),
+      radial-gradient(circle at 38% 70%,rgba(255,211,138,.16) 0 4px,transparent 5px),
+      linear-gradient(135deg,#07121f,#0c1b2e);position:relative;overflow:hidden}
+    .graph-preview:before,.graph-preview:after{content:"";position:absolute;inset:13%;border:1px solid rgba(146,190,255,.12);border-radius:50%;transform:rotate(19deg)}
+    .graph-preview:after{inset:26% 6%;transform:rotate(-27deg)}
+    .graph-label{position:absolute;left:17px;right:17px;bottom:17px;padding:13px 14px;border-radius:12px;background:rgba(5,12,22,.78);border:1px solid var(--line);font-size:.85rem;color:var(--muted)}
+    .graph-label strong{display:block;color:#fff;margin-bottom:2px}
+    .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+    .card{padding:24px;border-radius:var(--radius);background:var(--panel);border:1px solid var(--line);box-shadow:0 14px 40px rgba(0,0,0,.12);position:relative;overflow:hidden}
+    .card:hover{border-color:var(--line-strong)}
+    .card-top{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:12px}
+    .card h3{font-size:1.42rem;margin:0;letter-spacing:-.02em}
+    .role{font-size:.75rem;color:var(--green);font-weight:800;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+    .card p{color:var(--muted);margin:.65em 0}
+    .tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:15px}
+    .tag{padding:5px 8px;border-radius:999px;background:rgba(126,200,255,.075);border:1px solid rgba(126,200,255,.14);color:#c9d8ec;font-size:.74rem}
+    .card .buttons{margin-top:17px}
+    .card .button{min-height:38px;padding:8px 11px;font-size:.8rem}
+    .edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .edu-card{padding:24px;border-radius:var(--radius);border:1px solid var(--line);background:linear-gradient(145deg,rgba(15,30,51,.82),rgba(8,18,31,.82))}
+    .edu-card h3{font-size:1.35rem;margin-bottom:10px}.edu-card p{color:var(--muted)}
+    .skills{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+    .skill{padding:21px;border-radius:16px;border:1px solid var(--line);background:rgba(10,22,38,.72)}
+    .skill .icon{font-size:1.4rem;margin-bottom:8px}.skill h3{font-size:1rem;margin-bottom:7px}.skill p{font-size:.88rem;color:var(--muted);margin:0}
+    .reading{padding:24px;border-left:3px solid var(--cyan);background:rgba(12,27,45,.7);border-radius:0 16px 16px 0}
+    .reading p{margin:0;color:#c4d2e4}
+    .contact-panel{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(250px,.9fr);gap:24px;padding:30px;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(145deg,rgba(12,26,45,.94),rgba(8,17,30,.9));margin-bottom:55px}
+    .contact-panel h2{font-size:2rem;margin-bottom:8px}.contact-panel p{color:var(--muted);margin:0}
+    .contact-links{display:flex;gap:9px;align-content:flex-start;justify-content:flex-end;flex-wrap:wrap}
+    footer{border-top:1px solid var(--line);padding:24px 0 38px;color:#8292a7;font-size:.8rem}
+    footer .shell{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
+    .smallcap{font-size:.75rem;color:var(--cyan);font-weight:800;letter-spacing:.11em;text-transform:uppercase}
+    @media(max-width:900px){
+      .hero-grid,.featured,.contact-panel{grid-template-columns:1fr}
+      .hero-visual{min-height:310px}.quick-grid{grid-template-columns:repeat(2,1fr)}
+      .cards,.edu-grid{grid-template-columns:1fr}.skills{grid-template-columns:1fr 1fr}
+      .contact-links{justify-content:flex-start}
+    }
+    @media(max-width:680px){
+      .nav{align-items:flex-start;flex-direction:column;padding:14px 0}.navlinks{justify-content:flex-start}.navlinks a{padding:5px 8px}
+      .hero{padding-top:48px}.quick-grid,.feature-list,.skills{grid-template-columns:1fr}
+      .featured,.card,.edu-card,.contact-panel{padding:20px}.section-head{align-items:flex-start;flex-direction:column}
+      h1{font-size:3rem}.role{white-space:normal}.card-top{flex-direction:column}
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="shell nav">
+      <a class="brand" href="https://rajit13.github.io/">
+        <img src="images/ori_website.png" alt="Orion icon">
+        <span>Fahim Rajit Hossain Shwadhin</span>
+      </a>
+      <nav class="navlinks" aria-label="Main navigation">
+        <a href="https://rajit13.github.io/">Home</a>
+        <a class="active" href="research.html">Research</a>
+        <a href="starcharts101/">Star Charts 101</a>
+        <a href="olympiad.html">Olympiads</a>
+        <a href="about.html">About</a>
+      </nav>
+    </div>
+  </header>
 
-		<!-- Wrapper -->
-			<div id="wrapper">
+  <main>
+    <section class="hero">
+      <div class="shell hero-grid">
+        <div>
+          <div class="eyebrow">Research · astronomy education · open resources</div>
+          <h1>Researching the universe, then turning the ideas into tools people can learn from.</h1>
+          <p class="lead">I am an early-career astronomy researcher working across exoplanet atmospheres, strong gravitational lensing, dark matter, and observational astronomy education.</p>
+          <p>My research journey began in 2020. Alongside scientific projects, I build open teaching resources, write astronomy books, and develop tools for Astronomy Olympiad training.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#projects">Explore research</a>
+            <a class="button" href="starcharts101/">Open Star Charts 101 ↗</a>
+            <a class="button" href="https://github.com/Rajit13/" target="_blank" rel="noopener">GitHub ↗</a>
+          </div>
+          <div class="quick-grid" aria-label="Research focus areas">
+            <div class="quick"><b>Exoplanets</b><span>Atmospheres & spectroscopy</span></div>
+            <div class="quick"><b>Lensing</b><span>Mass modeling & dark matter</span></div>
+            <div class="quick"><b>Education</b><span>Books & open learning tools</span></div>
+            <div class="quick"><b>Olympiads</b><span>Observational astronomy</span></div>
+          </div>
+        </div>
+        <div class="hero-visual" aria-label="Milky Way photograph">
+          <img src="images/milkyway.jpg" alt="Milky Way night sky">
+          <div class="orbit-card"><strong>From spectra to sky maps</strong><span>Research, scientific computing, observational astronomy, and education on one page.</span></div>
+        </div>
+      </div>
+    </section>
 
-				<!-- Main -->
-					<div id="main">
-						<div class="inner">
+    <section class="block" id="star-charts-101">
+      <div class="shell">
+        <div class="section-head">
+          <div><div class="eyebrow">Featured open project</div><h2>Star Charts 101 and Practices</h2></div>
+          <p>An observational astronomy book that now has its own interactive Book Reading Guide and Knowledge Graph.</p>
+        </div>
+        <article class="featured">
+          <div>
+            <div class="smallcap">Open-course book · observational astronomy</div>
+            <h3>The book is no longer only a PDF.</h3>
+            <p><strong>Star Charts 101 and Practices</strong> is an open resource for star-chart reading and the observational side of Astronomy Olympiad preparation. Its companion webpage lets students move through the book structurally and conceptually instead of reading it as a long linear document.</p>
+            <div class="feature-list">
+              <div class="feature-item"><b>Reading guide</b>Browse current chapters, sections, subsections and page references.</div>
+              <div class="feature-item"><b>Knowledge graph</b>Explore how sky maps, coordinate systems, navigation, telescope work and observation skills connect.</div>
+              <div class="feature-item"><b>IOAA 2025 evidence</b>Curated mappings show how the book supports skills appearing in the OM, OT and OP observation tasks.</div>
+              <div class="feature-item"><b>Live repository sync</b>Book structure, contents, sources and graph nodes refresh from the current LaTeX/TOC workflow.</div>
+            </div>
+            <p>The structural layer is generated automatically from the latest committed book contents, while deeper teaching relationships and IOAA mappings remain manually curated so the graph stays meaningful.</p>
+            <div class="buttons">
+              <a class="button primary" href="starcharts101/">Explore the interactive webpage ↗</a>
+              <a class="button" href="https://raw.githubusercontent.com/Rajit13/Star-Maps-101-and-Practices/master/StarMaps101.pdf" target="_blank" rel="noopener">Open latest PDF ↗</a>
+              <a class="button" href="https://github.com/Rajit13/Star-Maps-101-and-Practices" target="_blank" rel="noopener">Repository ↗</a>
+            </div>
+          </div>
+          <a class="graph-preview" href="starcharts101/" aria-label="Open the Star Charts 101 interactive knowledge graph">
+            <div class="graph-label"><strong>Book Reading Guide & Knowledge Graph</strong>Live book structure + curated conceptual and IOAA observation connections.</div>
+          </a>
+        </article>
+      </div>
+    </section>
 
-							<!-- Header -->
-								<header id="header">
-									<a href="https://rajit13.github.io/" class="logo"><strong>Fahim's</strong> portfolio</a>
-									<ul class="icons">
-										<li><a href="https://www.linkedin.com/in/fahim-rajit-hossain/" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
-										<li><a href="https://www.facebook.com/fahimrajithossain.shwadhin" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-										<li><a href="https://www.instagram.com/rajit_13/" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-										<li><a href="https://github.com/Rajit13/" class="icon brands fa-github"><span class="label">Github</span></a></li>
-										<li><a href="https://www.youtube.com/@Rajit_13/" class="icon brands fa-youtube"><span class="label">YouTube</span></a></li>
-									</ul>
-								</header>
+    <section class="block" id="projects">
+      <div class="shell">
+        <div class="section-head">
+          <div><div class="eyebrow">Research</div><h2>Scientific projects</h2></div>
+          <p>A clearer snapshot of the questions, methods, and tools behind my main research work.</p>
+        </div>
+        <div class="cards">
+          <article class="card" id="cassum">
+            <div class="card-top"><h3>CASSUM · Exoplanet atmospheric modeling</h3><span class="role">Research Fellow · Apr 2024–Present</span></div>
+            <p>I work on forward modeling and retrieval questions for exoplanet atmospheres, including whether different combinations of C/O ratio and metallicity can be distinguished with JWST-quality transit spectra.</p>
+            <p>The project uses ARCiS together with PandExo to generate atmospheric models and synthetic observations, with particular attention to molecular features such as CO₂ and H₂O and to the observing conditions under which atmospheric scenarios remain distinguishable.</p>
+            <div class="tags"><span class="tag">Exoplanet atmospheres</span><span class="tag">Forward modeling</span><span class="tag">Atmospheric retrieval</span><span class="tag">JWST</span><span class="tag">ARCiS</span><span class="tag">PandExo</span></div>
+            <div class="buttons"><a class="button" href="http://cosmicorigins.space/cassum-vico24" target="_blank" rel="noopener">CASSUM program ↗</a></div>
+          </article>
 
-							<!-- Content -->
-								<section>
-									<header class="main">
-										<h1>My Research & Projects</h1>
-									</header>
+          <article class="card" id="bdlensing">
+            <div class="card-top"><h3>BD Lensing · Strong gravitational lens modeling</h3><span class="role">Research Collaborator · Feb 2023–Present</span></div>
+            <p>This project focuses on modeling strong gravitational lenses to study how mass is distributed in massive lens galaxies and how that mass distribution compares with the observed light.</p>
+            <p>I use <strong>lenstronomy</strong> and Bayesian lens-modeling workflows to connect image data, parametric mass models, and questions about the relative distribution of baryonic and dark matter.</p>
+            <div class="tags"><span class="tag">Strong lensing</span><span class="tag">Bayesian modeling</span><span class="tag">Dark matter</span><span class="tag">lenstronomy</span><span class="tag">Python</span></div>
+            <div class="buttons">
+              <a class="button" href="https://www.astrobridge.org/projects/bdlensing" target="_blank" rel="noopener">Project ↗</a>
+              <a class="button" href="https://github.com/ajshajib/lens_modeling_tutorial" target="_blank" rel="noopener">Lens-modeling tutorial ↗</a>
+              <a class="button" href="website_docs/Gravitational_Lensing_Primer.pdf" target="_blank" rel="noopener">My lensing notes ↗</a>
+            </div>
+          </article>
 
-									<span class="image main"><img src="images/milkyway.jpg" alt="" /></span>
+          <article class="card" id="leaps">
+            <div class="card-top"><h3>TiO and VO in WASP-76b</h3><span class="role">LEAPS Summer Intern · May–Aug 2020</span></div>
+            <p>At Leiden University, I investigated high-resolution transmission spectroscopy of the hot Jupiter WASP-76b using CARMENES data, focusing on the search for atmospheric signatures including TiO, VO, and H₂O.</p>
+            <p>The work introduced me to high-resolution spectroscopy, model templates, cross-correlation techniques, and the challenges of comparing atmospheric detections across spectral resolutions.</p>
+            <div class="tags"><span class="tag">High-resolution spectroscopy</span><span class="tag">Transmission spectroscopy</span><span class="tag">WASP-76b</span><span class="tag">CARMENES</span><span class="tag">Cross-correlation</span></div>
+            <div class="buttons">
+              <a class="button" href="http://leaps.strw.leidenuniv.nl/" target="_blank" rel="noopener">LEAPS ↗</a>
+              <a class="button" href="https://youtu.be/RnCJT1lOCbQ?si=ahYu9YihYnK4MVrd" target="_blank" rel="noopener">Presentation ↗</a>
+              <a class="button" href="https://bdoaa.org/exoplanet-atmosphere-bangla/" target="_blank" rel="noopener">Bengali explainer ↗</a>
+            </div>
+          </article>
 
-									<p> I am an early career researcher. My research interests include Exoplanetary Atmosphere, Strong Gravitational Lensing, Dark Matter distribution, and Variable Stars ✨.  </p>
-									<p> I started my research journey during the summer of 2020. Since then I've worked on several research projects and some Academic projects. I'm working on writing my first research paper, my undergraduate thesis paper, and A Textbook on Astronomy. You can read all about my current endeavors below.</p>
+          <article class="card">
+            <div class="card-top"><h3>Research communication & reproducible learning</h3><span class="role">Ongoing</span></div>
+            <p>I frequently turn the concepts I learn in research into notes, diagrams, code examples, talks, and student-facing explanations. This includes lensing notes, atmospheric-spectroscopy explainers, Astronomy Olympiad material, and open GitHub projects.</p>
+            <p>For me, writing and teaching are not separate from research: they are useful tests of whether I actually understand the assumptions, approximations, and limitations in a model.</p>
+            <div class="tags"><span class="tag">Scientific writing</span><span class="tag">Open education</span><span class="tag">Visualization</span><span class="tag">LaTeX</span><span class="tag">GitHub</span></div>
+            <div class="buttons"><a class="button" href="https://bdoaa.org/astronomy-journal-reading/" target="_blank" rel="noopener">Astronomy journal-reading guide ↗</a></div>
+          </article>
+        </div>
+      </div>
+    </section>
 
-									<hr class="major" />
+    <section class="block" id="books">
+      <div class="shell">
+        <div class="section-head">
+          <div><div class="eyebrow">Books & long-term projects</div><h2>Astronomy in Bengali and beyond</h2></div>
+          <p>Long-form resources that grew out of the same goal: make technical astronomy more approachable without stripping away the mathematics and physics.</p>
+        </div>
+        <div class="edu-grid">
+          <article class="edu-card">
+            <div class="smallcap">Book</div>
+            <h3>জ্যোতির্বিজ্ঞানের যতকিছু — অলিম্পিয়াড ও অন্যান্য</h3>
+            <p>A Bengali astronomy textbook developed with Md. Mahmudunnobe, built around Astronomy Olympiad preparation while also serving as an introduction to mathematical and physical astronomy. The project grew from the lack of sufficiently detailed Bengali resources we encountered when we began studying astronomy.</p>
+            <div class="buttons">
+              <a class="button primary" href="https://www.rokomari.com/book/471442/jyotirbigganer-jotokichu" target="_blank" rel="noopener">Book page ↗</a>
+              <a class="button" href="website_docs/Astrobook_Preview.pdf" target="_blank" rel="noopener">Preview ↗</a>
+              <a class="button" href="libration.html">Sample articles</a>
+            </div>
+          </article>
+          <article class="edu-card" id="surjya-siddhanta">
+            <div class="smallcap">Open translation & annotation project</div>
+            <h3>আধুনিক সূর্যসিদ্ধান্ত · Modern Surya Siddhanta</h3>
+            <p>An ongoing modern Bengali translation and explanatory annotation of the Surya Siddhanta. The aim is to make historical astronomical ideas readable to a present-day Bengali audience while adding modern terminology and context where useful.</p>
+            <div class="buttons"><a class="button primary" href="website_docs/Modern_Surjya.pdf" target="_blank" rel="noopener">Open PDF ↗</a></div>
+          </article>
+        </div>
+      </div>
+    </section>
 
-									<header class="major">
-									<h3> Research Skills:</h3>
-									</header>
-									<span class="image right"> <img src="images/lenstronomy.png" alt="" /></span>
-									<span class="image right"> <img src="https://www.explore-exoplanets.eu/wp-content/uploads/2020/03/ARCIS_logo-300x300.png" alt="" /></span>
-									<p><strong>Simulation and Software Skills:</strong> ARCiS, LENSTRONOMY, SAOImage DS9, PandExo, TOPCAT, \(\rm LaTex\), Inkscape, Microsoft Word, PowerPoint, Excel.</p>
-									<p><strong>Programming Languages: C</strong> (with high school coursework, 2014-16), \(\rm C++\) (with undergraduate coursework, 2019), \(\rm Python\) (Research projects, 2020-Present), \(\rm HTML/CSS\). </p>
-									<hr class="major" />
-									I've written a detailed blog on Astronomy journal reading recommendations and how to read the journals (in Bengali). The blog also contains a list of Bangladeshi Astronomers. Any recommendations for improving the article are welcome. You can read the blog <a href="https://bdoaa.org/astronomy-journal-reading/" target="_blank">here</a> 
-									<hr class="major" />
+    <section class="block" id="skills">
+      <div class="shell">
+        <div class="section-head">
+          <div><div class="eyebrow">Methods & tools</div><h2>Research toolkit</h2></div>
+          <p>The page is intentionally organized by what I actually use in scientific work rather than as a long software inventory.</p>
+        </div>
+        <div class="skills">
+          <div class="skill"><div class="icon">🪐</div><h3>Atmospheric modeling</h3><p>ARCiS, PandExo, forward modeling, retrieval concepts, transmission spectroscopy, C/O ratio and metallicity studies.</p></div>
+          <div class="skill"><div class="icon">🌀</div><h3>Gravitational lensing</h3><p>lenstronomy, parametric lens models, Bayesian inference, mass-light comparisons, dark-matter questions.</p></div>
+          <div class="skill"><div class="icon">📊</div><h3>Astronomical data</h3><p>Python, SAOImage DS9, TOPCAT, data visualization, model comparison, scientific plotting and analysis workflows.</p></div>
+          <div class="skill"><div class="icon">⌨️</div><h3>Programming</h3><p>Python for research, plus experience with C, C++, HTML/CSS, and Git/GitHub-based project workflows.</p></div>
+          <div class="skill"><div class="icon">✍️</div><h3>Scientific communication</h3><p>LaTeX, technical writing, diagrams, teaching notes, presentations, open-source educational material and book development.</p></div>
+          <div class="skill"><div class="icon">🔭</div><h3>Observational astronomy</h3><p>Star charts, coordinate systems, telescope practice, magnitude estimation, celestial navigation and Olympiad observation training.</p></div>
+        </div>
+      </div>
+    </section>
 
-									<header class="major">
-									<h2 id="cassum"><a href="http://cosmicorigins.space/cassum-vico24" target="_blank">CASSUM</a></h2>
-									</header>	
-									<h4> \(\text{Research Fellow (April 2024- Present)}\)</h4>
+    <section class="block">
+      <div class="shell">
+        <div class="reading"><p><strong>Looking for a starting point?</strong> I have also written a Bengali guide to reading astronomy journals and building a literature-reading habit. <a href="https://bdoaa.org/astronomy-journal-reading/" target="_blank" rel="noopener">Read the guide ↗</a></p></div>
+      </div>
+    </section>
 
-									<article>
-									<span class="image right"> <img src="images/CASSUM.png" alt="" /></span>
-									<p>\( \text{keywords: Exoplanetary Atmphsphere} \diamond \text{Forward Modeling \& Retrtieval} \) </p>
-									<p> I am currently involved in a Research program supervised by <a href="" target="_blank">Dr. Niloofar Khorshid</a>, an ARIEL postdoctoral fellow from Cosmic Origins, Chalmers University and Technology (CASSUM-CICO-VISO). Under her supervision, we're working on Exoplanetary Atmospheric modeling. In this work, we test the observability of this prediction. We used forward modeling to simulate various planetary atmospheric compositions and investigate whether planets with the same C/O ratio but different metallicities are observable using the James Webb Space Telescope (JWST). We utilized the ARCiS forward modeling and retrieval code in conjunction with PandExo to create models and synthetic observations. We explored the relationship and impact of metallicity (oxygen abundance) and varied the C/O ratio with a defined temperature-pressure profile. Our focus was on the transit spectroscopy of a toy planet, with parameters similar to GJ 486b, in the 2.5 to 5-micron range to observe \(\text{CO}_2\) and \( \text{H}_2\text{O}\) features and mark the changes. </p>
-									<p> Our forward modeling and initial estimates indicate that the spectra should be distinguishable by JWST, supporting the hypothesis of super-solar oxygen abundance according to IOPF. We aim to perform retrievals to determine the boundary conditions for the C/O ratio, metallicity, and confined/unconfined temperature-pressure profiles to better understand observation feasibility.</p>
-								      <ul class="actions">
-										<li><a href="hhttps://drive.google.com/file/d/1xeJrsehbJ8VDjR9Tdl_ZZT-FNARBme1Y/view" class="button primary">My first Presentation</a></li>
-								
-									</ul>
-									</article>
+    <section class="block" id="contact">
+      <div class="shell contact-panel">
+        <div><div class="eyebrow">Contact</div><h2>Research, teaching, or astronomy education?</h2><p>I am happy to connect about research collaborations, astronomy education, Olympiad training, or open educational resources.</p></div>
+        <div class="contact-links">
+          <a class="button primary" href="mailto:farahoshwadhin.13@gmail.com">Email me</a>
+          <a class="button" href="https://www.linkedin.com/in/fahim-rajit-hossain/" target="_blank" rel="noopener">LinkedIn ↗</a>
+          <a class="button" href="https://github.com/Rajit13/" target="_blank" rel="noopener">GitHub ↗</a>
+          <a class="button" href="https://www.youtube.com/@Rajit_13/" target="_blank" rel="noopener">YouTube ↗</a>
+        </div>
+      </div>
+    </section>
+  </main>
 
-									<hr class="major" />
-									
-
-									<header class="major">
-									<h2 id="bdlensing"><a href="https://www.astrobridge.org/projects/bdlensing" target="_blank">BD Lensing</a></h2>
-									</header>	
-									<h4> \(\text{Research Colloborator (Feb 2023- Present)}\)</h4>
-
-									
-									<article>
-									<span class="image right"> <img src="images/bdlensing.gif" alt="" /></span>
-									<p>\( \text{keywords: Gravitational Lensing} \diamond \text{Bayesian Modeling} \diamond \text{Dark Matter} \) </p>
-									<p> I am currently involved in a Research program supervised by <a href="https://ajshajib.github.io" target="_blank">Dr. Anowar Shajib</a>, a NASA Einstein fellow from the University of Chicago. Under his supervision, we're working on Strong Gravitational Lens modeling. Through lens modeling, we will quantify how the mass is distributed in the lens galaxy and compare it with the light distribution to investigate the alignment between dark matter and baryonic matter in massive elliptical galaxies. The modeling will be performed with the software package <a href="https://github.com/lenstronomy/lenstronomy" target="_blank">lenstronomy</a>, written in Python. I am privileged to be recognized as the first author of the paper that will be submitted for Publication .</p>
-									<p> From this research I learned the mathematical modeling of stellar systems and got highly involved in Gravitational lenses and Dark matter distribution. I'll soon update this page about the codes used for the program as well as a few notes that I've written to understand the mathematical concepts regarding this research.</p>
-								      <ul class="actions">
-										<li><a href="https://github.com/ajshajib/lens_modeling_tutorial" class="icon brands fa-github button primary">Lens Modeling Code</a></li>
-									        <li><a href="website_docs/Gravitational_Lensing_Primer.pdf" class="icon brands fa-github button primary">Gravitation Lensing Notes</a></li>
-										<li><a href="https://github.com/Rajit13/My-Project-Works/tree/4ffee98e39b06db36640786f8adb52d81b0684ad/BDLensing%20Assignments" class="button primary">BDLensing Repository</a></li>
-									</ul>
-									</article>
-
-									<hr class="major" />
-
-									<header class="major">
-									<h2 id="leaps">TiO and VO in Atmosphere of exoplanet WASP 76-b</h2>
-									</header>	
-									<h4> \(\text{Summer Intern (May-Aug, 2020)}\)</h4>
-									<p>\( \text{keywords: High resolution Spectroscopy} \diamond \text{WASP 76b} \diamond \text{Extra-terrestial Atmosphere} \) </p>
-									<p> In the summer of 2020, I had an opportunity to attend my first Astronomy research internship at Leiden University (The Leiden/ESA Astrophysics Program for Summer Students, <a href="http://leaps.strw.leidenuniv.nl/" target="_blank">LEAPS</a>) with Dr. Aurora Kesseli and Dr. Alex Cridland acting as my supervisors on the evolution of the exoplanetary Atmospheres. I have been offered the J. Mayo Scholarship at Leiden Observatory. We looked into the hot Jupiter WASP-76b using High Resolution Spectroscopy (HRS) with the data observed by CARMENES. The method used is transmission spectroscopy. Transmission spectroscopy of exoplanetary atmospheres routinely reveals light chemical species, such as H2O, Na, and K. Heavier molecules, such as Titanium Oxide (TiO) and Vanadium Oxide, have long been predicted to be present in the hottest exoplanetary atmospheres, but definitive detections of these species have been proven to be elusive. It has been predicted that metal oxides such as TiO and Vanadium Oxide occur in the observable regions of the hottest exoplanetary atmospheres causing thermal inversions on the dayside. </p>
-	
-									<p>Our objective was to compare our observation with the already found signatures of TiO in Low-Resolution Spectroscopy (LRS). Previously, some studies found that there is in fact sign of TiO which was detected using LRS but it was noticed that when we do multi-resolution examination the results sometimes become conflicted and vague. So in our project, we decided to use HRS to confirm the existence of TiO and some other species. Multi-resolution spectroscopic observations are highly valuable in characterizing exoplanetary atmospheres and, hence, in understanding their formation history and evolution.</p>
-									<p>During our study, we used a cross-correlation method to retrieve any signature of TiO with our predicted model at a certain temperature. Our study at this point found that there are some signs of TiO also H2O but to explain something more vividly we’re cross-checking with different cross-correlation templates and a Python package called SYSREM.</p>
-									<p> I've written a blog on the basics of Transmission spectroscopy and Exoplanetary atmosphere detection which can be found below. I've also presented my research in the first-ever Bangladeshi Astronomy Journal Club. </p> 
-									<ul class="actions">
-										<li><a href="https://youtu.be/RnCJT1lOCbQ?si=ahYu9YihYnK4MVrd" class="icon brands fa-youtube button small">Journal Presentation Recording</a></li>
-										<li><a href="https://bdoaa.org/exoplanet-atmosphere-bangla/" class="button small">Blog</a></li>
-									</ul>
-									 
-
-									<hr class="major" />
-
-									<header class="major">
-									<h2 id="astrobook">জ্যোতির্বিজ্ঞানের যত কিছু --  First Bengali Astronomy Textbook</h2>
-									</header>	
-									<h4> \(\text{Author (Ongoing)}\)</h4>
-									<p>\( \text{keywords: Introductory Textbook} \diamond \text{Astronomy Olympiads} \diamond \text{Astronomy Outreach} \) </p>
-									<li><a href="website_docs/Astrobook_Preview.pdf" class="button primary">Preview of the Book</a></li>
-									<p>Along with my friend <a href="https://mahmud-nobe.github.io/" target="_blank">Md. Mahmudunnobe</a>, I have dedicated the past five years to the creation of an Astronomy Textbook in Bengali. This academic book primarily targets students preparing for Astronomy Olympiads but extends its reach to early undergraduate students with a passion for Astronomy. The book has been meticulously crafted to provide a highly personalized learning experience, covering topics that are not only relevant to modern astronomy but also incorporate the latest data sets and references in the field. Some very dedicated students (<a href="https://www.linkedin.com/in/adnan-bin-alamgir/" target="_blank">Adnan Bin Alamgir</a>, Md Bayezid Bostami, and Hritom Sarker Oyon) are working as beta-readers and editors to ensure the quality. </p>
-									<p>The book is written in \(\rm LaTex\) and is currently divided into seven chapters, and we are planning to release it in two volumes. The current draft of the book spans 450 pages, and I have personally curated all the diagrams featured within it. Tamralipi Publications is publishing the first part of the book! Below, I am pleased to provide you with <a href="https://rajit13.github.io/libration.html" target="_blank">some sample articles</a> and a preview showcasing the diagrams included in the book:</p>
-									<p>রাতের তারাভরা আকাশ সেই যুগ যুগ ধরেই মানুষকে আকৃষ্ট করে। বর্তমানেও সূর্য-চন্দ্রগ্রহণ, ছায়াপথ, তারার জন্ম-মৃত্যু, কৃষ্ণগহ্বর এইগুলো সবার কাছেই অনেক কৌতুহলের বিষয়। অনেক ক্ষেত্রেই এসবের হালকা কিছু ধারণা নিয়েই আমরা সন্তুষ্ট হয়ে যাই। আবার অনেকসময় আমাদের মনে কিছু প্রশ্ন সাড়া দেয় ঠিকই যার সুন্দর উত্তর খুঁজে পেতে বাগ পেতে হয়। প্রচলিত গল্পকারে লেখা বই পড়ে অনেকেই সন্তুষ্ট হতে পারে না। মহাবিশ্বের এবং আমাদের আকাশের বিভিন্ন চাঞ্চল্যকর বিষয়ের সত্যিকারের সৌন্দর্য্য অনুভব করার জন্য আমাদেরকে এই গল্পগুলোর পেছনের যে গণিত আর বিজ্ঞান আছে, সেটাও জানতে হবে।
-    
-এই বইটি তাই তোমাদের জন্যই, যারা মহাকাশের এই গল্পগুলোর সাথে সাথে তার পেছনের গণিত আর বিজ্ঞানটাকেও জানতে চাও। আমরা যখন প্রথম জ্যোতির্বিজ্ঞানের এই মনোমুগ্ধকর জগতে পথচলা শুরু করি, তখন অন্যতম প্রধান একটা বাধা ছিল বাংলায় পর্যাপ্ত রিসোর্সের অভাব। সেই শূণ্যতা পূরণের জন্যই আমাদের এই প্রথম প্রয়াস। বইটি লেখা হয়েছে জ্যোতির্বিজ্ঞান অলিম্পিয়াডকে ভিত্তি ধরে কিন্ত এটি আসলে যেকোনো প্রাথমিক জ্যোতির্বিজ্ঞানে একাডেমিক বইয়ের ভূমিকা পূরন করে। আমরা বিশ্বাস করি বইটি হতে পারে তোমাদের আধুনিক জ্যোতির্বিজ্ঞান গবেষণা এবং চর্চার হাতেখড়ি।</p>
-									<span class="image main"><img src="images/Astrobook_sample1.png" alt="" /></span> 
-									<span class="image main"><img src="images/Astrobook_sample2.png" alt="" /></span> 
-									<span class="image main"><img src="images/earth_mars_positions_trace.gif" alt="" /></span> 
-									<ul class="actions">
-										<li><a href="https://youtu.be/47sMOf2Gak0?t=2599" class="icon brands fa-youtube button small">mention of the book by former IOAA president</a></li>
-									</ul>
-
-									<hr class="major" />
-
-									<header class="major">
-									<h2 id="Surjya_Siddhanta">আধুনিক সূর্যসিদ্ধান্ত--  Modern Surya Siddhanta</h2>
-									</header>	
-									<h4> \(\text{Author (Ongoing)}\)</h4>
-									<p>\( \text{keywords: Historical Astronomy} \diamond \text{Astronomy Olympiads} \diamond \text{Astronomy Outreach} \) </p>
-									<p>জ্যোতির্বিজ্ঞান নিয়ে এবং পড়াশুনা করছি দীর্ঘদিন যাবত। ২০২০ সাল থেকে একটি বাংলা জ্যোতির্বিজ্ঞান বই নিয়েও কাজ করছি তাই ঘটনাক্রমেই ঘাটতে গিয়ে সূর্য-সিদ্ধান্ত বইয়ের পিডিএফ খুলে বসি। শখের বসে পড়তে গিয়ে দাঁত ভাঙ্গা একেকটা শব্দ আর বিভিন্ন এস্ট্রোনোমিকাল সংজ্ঞার ভারে আমি বুঝছি যে সূর্যসিদ্ধান্ত বর্তমান বাংলাভাষী কেউ পরে কিছু বুঝবেও না আবার আগ্রহ হারিয়ে ফেলবে, কারও আমার মত মাথা খারাপ না। তাই আমি নিজেই নোট আকারে এই বইয়ের আধুনিক অনুবাদ এবং সাথে কিছু আধুনিক টিকা দিয়ে এই কাজটা করা শুরু করেছি। সূর্য সিদ্ধান্তের এই আধুনিক বাংলা এবং ব্যাখ্যা লেখা আমার নিজের কাছে কোনো কোড ডিকোড করার মত লাগছে, আবার আশ্চর্যও লাগছে যে ১০০ বছর আগের অনুবাদ এবং প্রায় কয়েকশ বছর আগেও ভারতীয় উপমহাদেশে জ্যোতির্বিদরা কত কিছু জানত! বাংলাভাষায় এস্ট্রোনমি যে এত কাজ হয়েছে তা কালের গর্বে হারিয়ে যাচ্ছে। আমার প্রথম বই \textit{জ্যোতির্বিজ্ঞানের যত কিছু -- অলিম্পিয়াড ও অন্যান্য} পাবলিশ হওয়ার পর যদি আমার ধৈর্য্য আর আগ্রহ টিকে থাকে তাহলে এই কাজটা বই আকারে পাবলিশ করতে পারি। ততদিন ওপেন-সোর্স পিডিএফ আকারে আগ্রহীদের জন্য আমার নিজস্ব ওয়েবসাইটে রেখে দিচ্ছি, কাজ করার সাথে সাথে আপডেট করব আশা করি।  </p>
-									<li><a href="website_docs/Modern_Surjya.pdf" class="button primary">আধুনিক সূর্যসিদ্ধান্ত PDF</a></li>
-								</section>
-
-						</div>
-					</div>
-
-				<!-- Sidebar -->
-					<div id="sidebar">
-						<div class="inner">
-
-							<!-- Search -->
-								<section id="search" class="alt">
-									<form method="post" action="#">
-										<input type="text" name="query" id="query" placeholder="Search" />
-									</form>
-								</section>
-							<!-- Menu -->
-								<nav id="menu">
-									<header class="major">
-										<h2>Menu</h2>
-									</header>
-									<ul>
-										<li><a href="https://rajit13.github.io/">Homepage</a></li>
-										<li><a href="research.html">Research</a></li>
-										<li><a href="olympiad.html">Astronomy Olympiads</a></li>
-										<li><a href="about.html">My Background</a></li>
-										<li>
-											<span class="opener">Blogs and Posts</span>
-											<ul>
-												<li><a href="https://rajit13.github.io/libration.html">Librtion of Moon</a></li>
-												<li><a href="#">Ipsum Adipiscing</a></li>
-												<li><a href="#">Tempus Magna</a></li>
-												<li><a href="#">Feugiat Veroeros</a></li>
-											</ul>
-										</li>
-										<li><a href="travels.html">Travel</a></li>
-										<li><a href="elements.html">Art</a></li>
-								
-									</ul>
-								</nav>
-
-							<!-- Section -->
-								<section>
-									<header class="major">
-										<h2>Astronomy Olympiads</h2>
-									</header>
-									<div class="mini-posts">
-										<article>
-											<a href="https://www.ioaastrophysics.org/international-board/" class="image"><img src="images/ioaa2023.jpg" alt="IOAA 2023 Leaders" /></a>
-											<p> International Team Leaders of IOAA 2023.</p>
-										</article>
-										<article>
-											<a href="https://bdoaa.org/about-us/" class="image"><img src="images/working.jpg" alt="" /></a>
-											<p>Working on Script Moderation of Olympiads</p>
-										</article>
-										<article>
-											<a href="#" class="image"><img src="images/oly2.jpg" alt="" /></a>
-											<p> Bangladesh Team at IOAA 2023, Chorzow, Poland.</p>
-										</article>
-									</div>
-									<ul class="actions">
-										<li><a href="olympiad.html" class="button">More</a></li>
-									</ul>
-								</section>
-
-							<!-- Section -->
-								<section>
-									<header class="major">
-										<h2>Get in touch</h2>
-									</header>
-									<p> You can contact me through any social media or the information below.</p>
-									<ul class="contact">
-										<li class="icon solid fa-envelope"><a href="mailto:farahoshwadhin.13@gmail.com"> farahoshwadhin.13@gmail.com</a></li>
-										<li class="icon solid fa-phone">(+880) 1781259313</li>
-										<li class="icon solid fa-home">75-A/W, University of Rajshahi residential Area,<br />
-										 Bangladesh-6205</li>
-									</ul>
-								</section>
-
-							<!-- Footer -->
-								<footer id="footer">
-									<p class="copyright">&copy; Fahim. All rights reserved. </p>
-								</footer>
-
-						</div>
-					</div>
-
-			</div>
-
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-
-	</body>
+  <footer>
+    <div class="shell"><span>© Fahim Rajit Hossain Shwadhin</span><span>Research · astronomy education · open science</span></div>
+  </footer>
+</body>
 </html>
