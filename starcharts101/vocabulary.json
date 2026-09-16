@@ -1,0 +1,626 @@
+{
+  "concepts": [
+    {
+      "id": "c-constellation",
+      "key": "constellation",
+      "label": "Constellation recognition",
+      "domain": "patterns",
+      "aliases": [
+        "constellation recognition",
+        "constellation pattern",
+        "constellation lines",
+        "recognize constellation",
+        "identify constellation"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-constellation-names",
+      "key": "constellation-names",
+      "label": "Constellation names & IAU abbreviations",
+      "domain": "patterns",
+      "aliases": [
+        "constellation name",
+        "iau abbreviation",
+        "genitive form",
+        "constellation abbreviation"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-bayer",
+      "key": "bayer",
+      "label": "Star & Bayer designations",
+      "domain": "patterns",
+      "aliases": [
+        "bayer designation",
+        "bayer",
+        "flamsteed",
+        "greek letter",
+        "alpha star",
+        "beta star"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-dso",
+      "key": "dso",
+      "label": "Deep-sky objects",
+      "domain": "patterns",
+      "aliases": [
+        "deep sky",
+        "deep-sky",
+        "dso",
+        "galaxy",
+        "nebula",
+        "cluster"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-messier",
+      "key": "messier",
+      "label": "Messier objects",
+      "domain": "patterns",
+      "aliases": [
+        "messier",
+        "m31",
+        "m42",
+        "m45",
+        "m13",
+        "m57",
+        "m51"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-messier-types",
+      "key": "messier-types",
+      "label": "Messier object types",
+      "domain": "patterns",
+      "aliases": [
+        "galaxy",
+        "nebula",
+        "open cluster",
+        "globular cluster",
+        "planetary nebula",
+        "object type",
+        "classification"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-catalogue",
+      "key": "catalogue",
+      "label": "Catalogue / SIMBAD lookup",
+      "domain": "patterns",
+      "aliases": [
+        "simbad",
+        "catalogue",
+        "catalog",
+        "database lookup",
+        "object database"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-sky-map",
+      "key": "sky-map",
+      "label": "Sky-map reading",
+      "domain": "maps",
+      "aliases": [
+        "sky map",
+        "star chart",
+        "chart reading",
+        "map reading"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-position",
+      "key": "position",
+      "label": "Position identification",
+      "domain": "maps",
+      "aliases": [
+        "position identification",
+        "identify position",
+        "locate object",
+        "find position",
+        "mark position"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-plotting",
+      "key": "plotting",
+      "label": "Plotting celestial objects",
+      "domain": "maps",
+      "aliases": [
+        "plot object",
+        "plotting",
+        "mark on map",
+        "place on map",
+        "draw position"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-orientation",
+      "key": "orientation",
+      "label": "Map orientation",
+      "domain": "maps",
+      "aliases": [
+        "map orientation",
+        "orientation",
+        "north up",
+        "east west",
+        "orient map"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-angular-scale",
+      "key": "angular-scale",
+      "label": "Angular scale & separation",
+      "domain": "maps",
+      "aliases": [
+        "angular distance",
+        "angular separation",
+        "angular scale",
+        "measure angle",
+        "map scale"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-coordinates",
+      "key": "coordinates",
+      "label": "Celestial coordinate systems",
+      "domain": "coords",
+      "aliases": [
+        "celestial coordinate",
+        "coordinate system",
+        "coordinate grid",
+        "coordinate lines"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-equatorial",
+      "key": "equatorial",
+      "label": "Equatorial coordinates",
+      "domain": "coords",
+      "aliases": [
+        "equatorial coordinate",
+        "equatorial system",
+        "equatorial grid"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-horizontal",
+      "key": "horizontal",
+      "label": "Horizontal (alt-az) coordinates",
+      "domain": "coords",
+      "aliases": [
+        "horizontal coordinate",
+        "altitude azimuth",
+        "alt-az",
+        "alt az"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-ra",
+      "key": "ra",
+      "label": "Right ascension",
+      "domain": "coords",
+      "aliases": [
+        "right ascension",
+        "hour circle"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-dec",
+      "key": "dec",
+      "label": "Declination",
+      "domain": "coords",
+      "aliases": [
+        "declination"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-coordinate-measurement",
+      "key": "coordinate-measurement",
+      "label": "Coordinate measurement & interpolation",
+      "domain": "coords",
+      "aliases": [
+        "coordinate measurement",
+        "grid value",
+        "coordinate value",
+        "interpolation",
+        "measure coordinate"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-coordinate-transform",
+      "key": "coordinate-transform",
+      "label": "Coordinate transformation",
+      "domain": "coords",
+      "aliases": [
+        "coordinate transformation",
+        "coordinate conversion",
+        "equatorial to horizontal",
+        "horizontal to equatorial"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-ecliptic",
+      "key": "ecliptic",
+      "label": "Ecliptic",
+      "domain": "coords",
+      "aliases": [
+        "ecliptic",
+        "zodiac"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-celestial-equator",
+      "key": "celestial-equator",
+      "label": "Celestial equator",
+      "domain": "coords",
+      "aliases": [
+        "celestial equator"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-equinox",
+      "key": "equinox",
+      "label": "Equinoxes",
+      "domain": "coords",
+      "aliases": [
+        "vernal equinox",
+        "autumnal equinox",
+        "equinox"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-projection",
+      "key": "projection",
+      "label": "Map projections",
+      "domain": "proj",
+      "aliases": [
+        "map projection",
+        "projection"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-stereographic",
+      "key": "stereographic",
+      "label": "Stereographic projection",
+      "domain": "proj",
+      "aliases": [
+        "stereographic"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-mercator",
+      "key": "mercator",
+      "label": "Mercator projection",
+      "domain": "proj",
+      "aliases": [
+        "mercator"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-pole-view",
+      "key": "pole-view",
+      "label": "Pole-view maps",
+      "domain": "proj",
+      "aliases": [
+        "pole view",
+        "pole-view",
+        "polar map"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-horizon-view",
+      "key": "horizon-view",
+      "label": "Horizon / alt-az view",
+      "domain": "proj",
+      "aliases": [
+        "horizon diagram",
+        "horizon view",
+        "altitude",
+        "azimuth"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-precession",
+      "key": "precession",
+      "label": "Precession of the equinoxes",
+      "domain": "motion",
+      "aliases": [
+        "precession"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-seasonal-sky",
+      "key": "seasonal-sky",
+      "label": "Seasonal / monthly sky",
+      "domain": "motion",
+      "aliases": [
+        "monthly sky",
+        "seasonal sky",
+        "seasonal change",
+        "month sky"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-moon-motion",
+      "key": "moon-motion",
+      "label": "Moon motion",
+      "domain": "motion",
+      "aliases": [
+        "moon motion",
+        "lunar motion",
+        "motion of moon",
+        "moon moves"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-moon-phase",
+      "key": "moon-phase",
+      "label": "Lunar phase & illumination",
+      "domain": "motion",
+      "aliases": [
+        "moon phase",
+        "lunar phase",
+        "illumination",
+        "full moon",
+        "gibbous",
+        "crescent"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-planet-motion",
+      "key": "planet-motion",
+      "label": "Planetary apparent motion",
+      "domain": "motion",
+      "aliases": [
+        "planet motion",
+        "planetary motion",
+        "apparent motion",
+        "retrograde",
+        "elongation"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-navigation",
+      "key": "navigation",
+      "label": "Celestial navigation",
+      "domain": "nav",
+      "aliases": [
+        "celestial navigation",
+        "navigation"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-sidereal",
+      "key": "sidereal",
+      "label": "Sidereal time",
+      "domain": "nav",
+      "aliases": [
+        "sidereal time",
+        "local sidereal",
+        "lst"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-hour-angle",
+      "key": "hour-angle",
+      "label": "Hour angle",
+      "domain": "nav",
+      "aliases": [
+        "hour angle"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-latitude",
+      "key": "latitude",
+      "label": "Latitude determination",
+      "domain": "nav",
+      "aliases": [
+        "determine latitude",
+        "observer latitude",
+        "latitude"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-longitude",
+      "key": "longitude",
+      "label": "Longitude & local time",
+      "domain": "nav",
+      "aliases": [
+        "longitude",
+        "local time",
+        "solar time",
+        "timekeeping"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-culmination",
+      "key": "culmination",
+      "label": "Rise, set & culmination",
+      "domain": "nav",
+      "aliases": [
+        "culmination",
+        "rising",
+        "setting",
+        "meridian transit",
+        "transit meridian"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-naked-eye",
+      "key": "naked-eye",
+      "label": "Naked-eye observation",
+      "domain": "observe",
+      "aliases": [
+        "naked eye",
+        "naked-eye"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-magnitude",
+      "key": "magnitude",
+      "label": "Magnitude estimation",
+      "domain": "observe",
+      "aliases": [
+        "magnitude estimation",
+        "estimate magnitude",
+        "magnitude",
+        "correct magnitude"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-brightness",
+      "key": "brightness",
+      "label": "Brightness comparison",
+      "domain": "observe",
+      "aliases": [
+        "brightness comparison",
+        "brightness",
+        "brightest",
+        "fainter"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-accuracy",
+      "key": "accuracy",
+      "label": "Measurement accuracy & uncertainty",
+      "domain": "observe",
+      "aliases": [
+        "measurement accuracy",
+        "uncertainty",
+        "measurement error",
+        "precision",
+        "deviation"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-telescope",
+      "key": "telescope",
+      "label": "Telescope operation",
+      "domain": "scope",
+      "aliases": [
+        "telescope operation",
+        "telescope aided",
+        "telescope",
+        "mount"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-focal",
+      "key": "focal",
+      "label": "Focal length & magnification",
+      "domain": "scope",
+      "aliases": [
+        "focal length",
+        "magnification",
+        "eyepiece focal length"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-fov",
+      "key": "fov",
+      "label": "Eyepieces & field of view",
+      "domain": "scope",
+      "aliases": [
+        "field of view",
+        "eyepiece",
+        "fov",
+        "magnification"
+      ],
+      "kind": "concept"
+    },
+    {
+      "id": "c-centering",
+      "key": "centering",
+      "label": "Target acquisition & centering",
+      "domain": "scope",
+      "aliases": [
+        "target acquisition",
+        "centering",
+        "centre target",
+        "center target",
+        "crosshair",
+        "finder"
+      ],
+      "kind": "concept"
+    }
+  ],
+  "domains": {
+    "patterns": {
+      "label": "Stars, constellations & catalogues",
+      "color": "#85b7ff"
+    },
+    "maps": {
+      "label": "Sky maps & positions",
+      "color": "#69c7d6"
+    },
+    "coords": {
+      "label": "Coordinates & reference geometry",
+      "color": "#8fa6ff"
+    },
+    "proj": {
+      "label": "Map projections",
+      "color": "#b49cff"
+    },
+    "motion": {
+      "label": "Celestial motion & Solar System",
+      "color": "#e5a9df"
+    },
+    "nav": {
+      "label": "Celestial navigation & time",
+      "color": "#f0c47d"
+    },
+    "observe": {
+      "label": "Naked-eye observation & measurement",
+      "color": "#86d6a7"
+    },
+    "scope": {
+      "label": "Telescope skills",
+      "color": "#75d8c6"
+    }
+  }
+}

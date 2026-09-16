@@ -1,0 +1,406 @@
+[
+  {
+    "id": "OM01.1",
+    "label": "OM01.1 · Identify and label Bayer stars",
+    "paper": "OM",
+    "kind": "task",
+    "concepts": [
+      "c-bayer",
+      "c-constellation",
+      "c-position"
+    ],
+    "coverage": "direct",
+    "reason": "Use Bayer designations and constellation patterns to locate the eight named stars.",
+    "gap": "Practise identifying these particular stars on an unlabelled map.",
+    "url": "https://ioaa2025.in/wp-content/uploads/2025/09/Observation-SkyMap-Questions.pdf",
+    "mapping": "Editorial skill interpretation of the official question; not an examiner-approved coverage rating."
+  },
+  {
+    "id": "OM01.2",
+    "label": "OM01.2 · Plot six Messier galaxies",
+    "paper": "OM",
+    "kind": "task",
+    "concepts": [
+      "c-messier",
+      "c-dso",
+      "c-plotting"
+    ],
+    "coverage": "direct",
+    "reason": "Use catalogue recognition and remembered sky positions to place the six galaxies.",
+    "gap": "Memorise and practise the six requested galaxy locations; a topic match does not demonstrate recall.",
+    "url": "https://ioaa2025.in/wp-content/uploads/2025/09/Observation-SkyMap-Questions.pdf",
+    "mapping": "Editorial skill interpretation of the official question; not an examiner-approved coverage rating."
+  },
+  {
+    "id": "OM01.3",
+    "label": "OM01.3 · Draw the ecliptic",
+    "paper": "OM",
+    "kind": "task",
+    "concepts": [
+      "c-ecliptic",
+      "c-sky-map"
+    ],
+    "coverage": "direct",
+    "reason": "Recognise the ecliptic path through the mapped sky and draw it continuously.",
+    "gap": "Practise the curve on the supplied projection.",
+    "url": "https://ioaa2025.in/wp-content/uploads/2025/09/Observation-SkyMap-Questions.pdf",
+    "mapping": "Editorial skill interpretation of the official question; not an examiner-approved coverage rating."
+  },
+  {
+    "id": "OM01.4a",
+    "label": "OM01.4a · Locate the Sun at the eclipse",
+    "paper": "OM",
+    "kind": "task",
+    "concepts": [
+      "c-ecliptic",
+      "c-seasonal-sky",
+      "c-position"
+    ],
+    "coverage": "transferable",
+    "reason": "Infer the Sun’s position along the ecliptic from the date of the solar eclipse.",
+    "gap": "Combine seasonal solar position with the eclipse geometry.",
+    "url": "https://ioaa2025.in/wp-content/uploads/2025/09/Observation-SkyMap-Questions.pdf",
+    "mapping": "Editorial skill interpretation of the official question; not an examiner-approved coverage rating."
+  },
+  {
+    "id": "OM01.4b",
+    "label": "OM01.4b · Reconstruct the earlier Moon",
+    "paper": "OM",
+    "kind": "task",
+    "concepts": [
+      "c-moon-motion",
+      "c-moon-phase",
+      "c-plotting"
+    ],
+    "coverage": "transferable",
+    "reason": "Use the solar-eclipse epoch to infer the Moon’s earlier position, phase and bright-limb orientation.",
+    "gap": "Practise backward date offsets and shading the illuminated side correctly.",
+    "url": "https://ioaa2025.in/wp-content/uploads/2025/09/Observation-SkyMap-Questions.pdf",
+    "mapping": "Editorial skill interpretation of the official question; not an examiner-approved coverage rating."
+  },
+  {
+    "id": "OM02.1",
+    "label": "OM02.1 · Identify boundary constellations",
+    "paper": "OM",
+    "kind": "task",
+    "concepts": [
+      "c-constellation",
+      "c-constellation-names"
+    ],
+    "coverage": "direct",
+    "reason": "Identify constellations from their IAU boundaries and line patterns.",
+    "gap": "Practise boundary-based recognition, not only familiar stick figures.",
+    "url": "https://ioaa2025.in/wp-content/uploads/2025/09/Observation-SkyMap-Questions.pdf",
+    "mapping": "Editorial skill interpretation of the official question; not an examiner-approved coverage rating."
+  },
+  {
+    "id": "OM02.2a",
+    "label": "OM02.2a · Identify the red-square grid family",
+    "paper": "OM",
+    "kind": "task",
+    "concepts": [
+      "c-coordinates",
+      "c-equatorial",
+      "c-ecliptic",
+      "c-galactic"
+    ],
+    "coverage": "transferable",
+    "reason": "Distinguish coordinate families using their poles, equators and grid geometry.",
+    "gap": "Compare all three candidate systems; book phrase matches do not certify full galactic-grid coverage.",
+    "url": "https://ioaa2025.in/wp-content/uploads/2025/09/Observation-SkyMap-Questions.pdf",
+    "mapping": "Editorial skill interpretation of the official question; not an examiner-approved coverage rating."
+  },
+  {
+    "id": "OM02.2b",
+    "label": "OM02.2b · Identify the blue-circle grid family",
+    "paper": "OM",
+    "kind": "task",
+    "concepts": [
+      "c-coordinates",
+      "c-equatorial",
+      "c-ecliptic",
+      "c-galactic"
+    ],
+    "coverage": "transferable",
+    "reason": "Identify the complementary coordinate family through the marked circles.",
+    "gap": "Practise distinguishing longitude-like and latitude-like lines across coordinate systems.",
+    "url": "https://ioaa2025.in/wp-content/uploads/2025/09/Observation-SkyMap-Questions.pdf",
+    "mapping": "Editorial skill interpretation of the official question; not an examiner-approved coverage rating."
+  },
+  {
+    "id": "OM02.3",
+    "label": "OM02.3 · Locate the coordinate poles",
+    "paper": "OM",
+    "kind": "task",
+    "concepts": [
+      "c-coordinates",
+      "c-pole-view"
+    ],
+    "coverage": "direct",
+    "reason": "Infer the north and south poles from the convergence and symmetry of the grid.",
+    "gap": "Check pole identity for the actual grid rather than assuming celestial poles.",
+    "url": "https://ioaa2025.in/wp-content/uploads/2025/09/Observation-SkyMap-Questions.pdf",
+    "mapping": "Editorial skill interpretation of the official question; not an examiner-approved coverage rating."
+  },
+  {
+    "id": "OM02.4",
+    "label": "OM02.4 · Identify reference curves",
+    "paper": "OM",
+    "kind": "task",
+    "concepts": [
+      "c-ecliptic",
+      "c-celestial-equator",
+      "c-galactic"
+    ],
+    "coverage": "transferable",
+    "reason": "Distinguish the ecliptic, celestial equator and galactic equator on the map.",
+    "gap": "Practise recognising their relative orientations in unfamiliar projections.",
+    "url": "https://ioaa2025.in/wp-content/uploads/2025/09/Observation-SkyMap-Questions.pdf",
+    "mapping": "Editorial skill interpretation of the official question; not an examiner-approved coverage rating."
+  },
+  {
+    "id": "OM02.5",
+    "label": "OM02.5 · Mark both equinoxes",
+    "paper": "OM",
+    "kind": "task",
+    "concepts": [
+      "c-equinox",
+      "c-ecliptic",
+      "c-celestial-equator"
+    ],
+    "coverage": "direct",
+    "reason": "Locate the intersections of the ecliptic and celestial equator and distinguish the two equinoxes.",
+    "gap": "Practise deciding which intersection is vernal.",
+    "url": "https://ioaa2025.in/wp-content/uploads/2025/09/Observation-SkyMap-Questions.pdf",
+    "mapping": "Editorial skill interpretation of the official question; not an examiner-approved coverage rating."
+  },
+  {
+    "id": "OM02.6",
+    "label": "OM02.6 · Indicate annual solar motion",
+    "paper": "OM",
+    "kind": "task",
+    "concepts": [
+      "c-ecliptic",
+      "c-seasonal-sky",
+      "c-equinox"
+    ],
+    "coverage": "direct",
+    "reason": "Use the Sun’s annual eastward motion along the ecliptic at the vernal equinox.",
+    "gap": "Confirm the arrow direction after accounting for map orientation.",
+    "url": "https://ioaa2025.in/wp-content/uploads/2025/09/Observation-SkyMap-Questions.pdf",
+    "mapping": "Editorial skill interpretation of the official question; not an examiner-approved coverage rating."
+  },
+  {
+    "id": "OM02.7",
+    "label": "OM02.7 · Calibrate coordinate values",
+    "paper": "OM",
+    "kind": "task",
+    "concepts": [
+      "c-coordinate-measurement",
+      "c-coordinates",
+      "c-angular-scale"
+    ],
+    "coverage": "direct",
+    "reason": "Read and interpolate the marked grid values with the correct coordinate units.",
+    "gap": "Practise numerical calibration and longitude wrap-around.",
+    "url": "https://ioaa2025.in/wp-content/uploads/2025/09/Observation-SkyMap-Questions.pdf",
+    "mapping": "Editorial skill interpretation of the official question; not an examiner-approved coverage rating."
+  },
+  {
+    "id": "OM02.8",
+    "label": "OM02.8 · Identify shaded constellation regions",
+    "paper": "OM",
+    "kind": "task",
+    "concepts": [
+      "c-constellation",
+      "c-constellation-names",
+      "c-sky-map"
+    ],
+    "coverage": "direct",
+    "reason": "Use constellation placement and IAU abbreviations to classify the shaded regions.",
+    "gap": "Practise rejecting shaded regions absent from the supplied list.",
+    "url": "https://ioaa2025.in/wp-content/uploads/2025/09/Observation-SkyMap-Questions.pdf",
+    "mapping": "Editorial skill interpretation of the official question; not an examiner-approved coverage rating."
+  },
+  {
+    "id": "OM03.1",
+    "label": "OM03.1 · Infer latitude from Orion",
+    "paper": "OM",
+    "kind": "task",
+    "concepts": [
+      "c-latitude",
+      "c-horizontal",
+      "c-mercator"
+    ],
+    "coverage": "transferable",
+    "reason": "Combine Orion’s known geometry with the altitude–azimuth map to estimate observer latitude.",
+    "gap": "Work through the actual orientation and hemisphere inference.",
+    "url": "https://ioaa2025.in/wp-content/uploads/2025/09/Observation-SkyMap-Questions.pdf",
+    "mapping": "Editorial skill interpretation of the official question; not an examiner-approved coverage rating."
+  },
+  {
+    "id": "OM03.2",
+    "label": "OM03.2 · Transfer Orion to another place and date",
+    "paper": "OM",
+    "kind": "task",
+    "concepts": [
+      "c-coordinate-transform",
+      "c-hour-angle",
+      "c-sidereal",
+      "c-longitude",
+      "c-latitude",
+      "c-mercator"
+    ],
+    "coverage": "transferable",
+    "reason": "Convert the initial directions to equatorial coordinates, update observing time/location, and transform back before plotting.",
+    "gap": "Practise the complete multi-step calculation and equal-scale drawing; isolated topic knowledge is insufficient.",
+    "url": "https://ioaa2025.in/wp-content/uploads/2025/09/Observation-SkyMap-Questions.pdf",
+    "mapping": "Editorial skill interpretation of the official question; not an examiner-approved coverage rating."
+  },
+  {
+    "id": "OT01.1",
+    "label": "OT01.1 · Identify reference stars",
+    "paper": "OT",
+    "kind": "task",
+    "concepts": [
+      "c-bayer",
+      "c-constellation",
+      "c-sky-map"
+    ],
+    "coverage": "direct",
+    "reason": "Recognise the four named reference stars on the supplied map.",
+    "gap": "Timed star-identification practice is still necessary.",
+    "url": "https://ioaa2025.in/wp-content/uploads/2025/09/Observation-Telescope-Questions.pdf",
+    "mapping": "Editorial skill interpretation of the official question; not an examiner-approved coverage rating."
+  },
+  {
+    "id": "OT01.2",
+    "label": "OT01.2 · Plot the coordinate target",
+    "paper": "OT",
+    "kind": "task",
+    "concepts": [
+      "c-ra",
+      "c-dec",
+      "c-coordinate-measurement",
+      "c-plotting"
+    ],
+    "coverage": "direct",
+    "reason": "Use the permitted local rectangular coordinate grid to interpolate the target position.",
+    "gap": "Practise sexagesimal conversion and interpolation on the supplied field.",
+    "url": "https://ioaa2025.in/wp-content/uploads/2025/09/Observation-Telescope-Questions.pdf",
+    "mapping": "Editorial skill interpretation of the official question; not an examiner-approved coverage rating."
+  },
+  {
+    "id": "OT01.3",
+    "label": "OT01.3 · Acquire and centre the target",
+    "paper": "OT",
+    "kind": "task",
+    "concepts": [
+      "c-telescope",
+      "c-fov",
+      "c-centering"
+    ],
+    "coverage": "direct",
+    "reason": "Choose an eyepiece, find the target and centre it on the crosshair.",
+    "gap": "Hands-on telescope practice under the six-minute limit cannot be replaced by reading.",
+    "url": "https://ioaa2025.in/wp-content/uploads/2025/09/Observation-Telescope-Questions.pdf",
+    "mapping": "Editorial skill interpretation of the official question; not an examiner-approved coverage rating."
+  },
+  {
+    "id": "OT02.1",
+    "label": "OT02.1 · Measure lensing time delays",
+    "paper": "OT",
+    "kind": "task",
+    "concepts": [
+      "c-lensing",
+      "c-accuracy",
+      "c-brightness"
+    ],
+    "coverage": "additional",
+    "reason": "Match the same variability features between lensed images, measure delays repeatedly and convert the movie time scale.",
+    "gap": "Additional training: feature matching in time series, repeated timing and uncertainty reduction. General measurement discussion is only transferable support.",
+    "url": "https://ioaa2025.in/wp-content/uploads/2025/09/Observation-Telescope-Questions.pdf",
+    "mapping": "Editorial skill interpretation of the official question; not an examiner-approved coverage rating."
+  },
+  {
+    "id": "OP01.1",
+    "label": "OP01.1 · Rank orbital semi-major axes",
+    "paper": "OP",
+    "kind": "task",
+    "concepts": [
+      "c-orbital-period",
+      "c-planet-motion",
+      "c-accuracy"
+    ],
+    "coverage": "additional",
+    "reason": "Measure the apparent orbital progression and connect orbital period with semi-major axis under Kepler’s relation.",
+    "gap": "Additional training in period estimation and the Kepler period–size relation; apparent-motion discussion alone is insufficient.",
+    "url": "https://ioaa2025.in/wp-content/uploads/2025/09/Observation-Planetarium-Questions.pdf",
+    "mapping": "Editorial skill interpretation of the official question; not an examiner-approved coverage rating."
+  },
+  {
+    "id": "OP01.2",
+    "label": "OP01.2 · Trace trajectories and infer inclinations",
+    "paper": "OP",
+    "kind": "task",
+    "concepts": [
+      "c-inclination",
+      "c-ecliptic",
+      "c-projection",
+      "c-angular-scale"
+    ],
+    "coverage": "transferable",
+    "reason": "Trace the moving objects, measure each trajectory’s inclination to the ecliptic and combine the estimates.",
+    "gap": "Practise dome-to-map tracing and the orbital-plane geometry.",
+    "url": "https://ioaa2025.in/wp-content/uploads/2025/09/Observation-Planetarium-Questions.pdf",
+    "mapping": "Editorial skill interpretation of the official question; not an examiner-approved coverage rating."
+  },
+  {
+    "id": "OP02.1",
+    "label": "OP02.1 · Map moons in an unfamiliar sky",
+    "paper": "OP",
+    "kind": "task",
+    "concepts": [
+      "c-sky-map",
+      "c-position",
+      "c-plotting"
+    ],
+    "coverage": "transferable",
+    "reason": "Transfer four visible moon positions from an unfamiliar projected sky to its map.",
+    "gap": "Practise rapid pattern matching without relying on familiar Earth constellations.",
+    "url": "https://ioaa2025.in/wp-content/uploads/2025/09/Observation-Planetarium-Questions.pdf",
+    "mapping": "Editorial skill interpretation of the official question; not an examiner-approved coverage rating."
+  },
+  {
+    "id": "OP02.2",
+    "label": "OP02.2 · Reconstruct ring boundaries",
+    "paper": "OP",
+    "kind": "task",
+    "concepts": [
+      "c-ring-geometry",
+      "c-projection",
+      "c-angular-scale"
+    ],
+    "coverage": "additional",
+    "reason": "Translate the observed ring geometry into a scaled plan-view construction with the given illumination.",
+    "gap": "Additional training in ring and shadow geometry; generic projections are supporting skills only.",
+    "url": "https://ioaa2025.in/wp-content/uploads/2025/09/Observation-Planetarium-Questions.pdf",
+    "mapping": "Editorial skill interpretation of the official question; not an examiner-approved coverage rating."
+  },
+  {
+    "id": "OP02.3",
+    "label": "OP02.3 · Determine the physical ring width",
+    "paper": "OP",
+    "kind": "task",
+    "concepts": [
+      "c-ring-geometry",
+      "c-angular-scale",
+      "c-accuracy"
+    ],
+    "coverage": "additional",
+    "reason": "Use the reconstructed diagram and given planet radius to convert a measured width to kilometres.",
+    "gap": "First validate the ring construction; then practise scale ratios and measurement uncertainty.",
+    "url": "https://ioaa2025.in/wp-content/uploads/2025/09/Observation-Planetarium-Questions.pdf",
+    "mapping": "Editorial skill interpretation of the official question; not an examiner-approved coverage rating."
+  }
+]

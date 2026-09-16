@@ -1,0 +1,17 @@
+{
+  "name": "starcharts101-knowledge-graph",
+  "version": "2.0.0",
+  "description": "Reproducible Star Charts 101 book graph and IOAA study overlays",
+  "scripts": {
+    "test": "node test-metrics.mjs",
+    "build": "python3 build-data.py && python3 make-exams.py && esbuild engine.js --bundle --minify --outfile=graph-engine-v8.js --legal-comments=eof"
+  },
+  "keywords": [],
+  "type": "module",
+  "dependencies": {
+    "esbuild": "^0.28.2",
+    "graphology": "^0.26.0",
+    "graphology-layout-forceatlas2": "^0.10.1"
+  },
+  "private": true
+}

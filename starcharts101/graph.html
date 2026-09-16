@@ -143,55 +143,6 @@ const pdfUrl=rawBase+'/StarMaps101.pdf?v='+stamp;
 const orionUrl=rawBase+'/images/ori_1.svg?v='+stamp;
 document.getElementById('pdfNav').href=pdfUrl;document.getElementById('pdfToc').href=pdfUrl;document.getElementById('orion').src=orionUrl;
 
-const COLORS={topic:'#85b7ff',task:'#7ddab3',exam:'#62d0a5',practice:'#bf9cff',gap:'#f5c47b'};
-const STOP=new Set(('a an and are as at be been being but by can could did do does for from had has have if in into is it its may more most not of on or our out over should so than that the their them then there these they this those to under up use used using very was we were what when where which while who will with would you your '+
-'page question questions answer answersheet appropriate given following corresponding respectively certain also only any each all').split(/\s+/));
-const ALIASES=[
-  ['right ascension',['right ascension','ra ',' r.a.','hour angle']],['declination',['declination',' dec ','delta']],['coordinates',['coordinate','grid','equatorial','horizontal','altitude','azimuth']],
-  ['ecliptic',['ecliptic','zodiac','vernal equinox','autumnal equinox']],['constellation',['constellation','iau abbreviation','bayer']],['messier',['messier','galaxy','deep sky','dso']],
-  ['moon',['moon','lunar','phase','illumination','eclipse']],['telescope',['telescope','eyepiece','field of view','crosshair','mount','finder']],
-  ['projection',['projection','mercator','stereographic','map scale']],['timing',['time delay','stopwatch','light curve','repeated timing','uncertainty']],
-  ['orbit',['orbit','semi major','semi-major','kepler','period','inclination','tno']],['ring',['ring','boundary','parallel light','scale drawing']],
-  ['navigation',['local time','sidereal','latitude','longitude','meridian','culmination']],['magnitude',['magnitude','brightness','flux']]
-];
-
-const GAPS=[
-{id:'gap-transfer',label:'Integrated date/site transfer',task:'OM03.2',seed:'date local time longitude latitude hemisphere hour angle redraw sky at new site'},
-{id:'gap-mount',label:'Finder-free telescope rehearsal',task:'OT01.3',seed:'finder free telescope projected field focus eyepiece crosshair centering timed practical'},
-{id:'gap-timing',label:'Repeated time-delay measurement',task:'OT02.1',seed:'stopwatch repeated timing light curve match feature uncertainty average time delay'},
-{id:'gap-kepler',label:'Period & Kepler ranking',task:'OP01.1',seed:'orbital period semi major axis Kepler rank full revolution timing eccentric orbit'},
-{id:'gap-tracks',label:'Dynamic trajectory tracing',task:'OP01.2',seed:'trace moving object trajectory repeated positions inclination nodes measure angle timed dome'},
-{id:'gap-rings',label:'Ring-boundary reconstruction',task:'OP02.2',seed:'ring boundary projection parallel rays observer geometry scale reconstruction'}];
-
-const TASKS=[
-{id:'OM01.1',paper:'OM',marks:4,label:'Bayer stars',text:'Mark and label specified Bayer-designation stars on a sky map.',skills:'Bayer designation star recognition constellation pattern chart placement'},
-{id:'OM01.2',paper:'OM',marks:6,label:'Messier galaxies',text:'Mark six specified Messier galaxies on a sky map.',skills:'Messier galaxies deep sky catalogue coordinates chart placement'},
-{id:'OM01.3',paper:'OM',marks:2,label:'Draw the ecliptic',text:'Draw and label the ecliptic on the sky map.',skills:'ecliptic zodiac celestial reference line sky map'},
-{id:'OM01.4a',paper:'OM',marks:1,label:'Sun from eclipse date',text:'Locate the Sun on the map for a dated total solar eclipse at local noon.',skills:'Sun ecliptic calendar date seasonal sky eclipse'},
-{id:'OM01.4b',paper:'OM',marks:3,label:'Moon position & illumination',text:'Reconstruct the Moon several days earlier and draw the correct illuminated side.',skills:'Moon motion phase illumination Sun geometry eclipse'},
-{id:'OM02.1',paper:'OM',marks:1,label:'Recognize constellations',text:'Identify two constellations from lines, boundaries and cultural depictions.',skills:'constellation recognition IAU abbreviation rotated pattern'},
-{id:'OM02.2a',paper:'OM',marks:1,label:'Identify latitude grid',text:'Identify which coordinate family corresponds to one set of grid lines.',skills:'coordinate grid latitude ecliptic equatorial galactic geometry'},
-{id:'OM02.2b',paper:'OM',marks:1,label:'Identify longitude grid',text:'Identify which coordinate family corresponds to the other set of grid lines.',skills:'coordinate grid longitude right ascension ecliptic galactic geometry'},
-{id:'OM02.3',paper:'OM',marks:1,label:'Orient grid poles',text:'Identify north and south poles of the displayed coordinate grid.',skills:'celestial poles map orientation coordinate grid'},
-{id:'OM02.4',paper:'OM',marks:2,label:'Identify reference curves',text:'Identify which major celestial reference curves are drawn on the map.',skills:'ecliptic celestial equator galactic equator reference lines'},
-{id:'OM02.5',paper:'OM',marks:2,label:'Equinox locations',text:'Mark the vernal and autumnal equinoxes on the grid.',skills:'vernal equinox autumnal equinox ecliptic celestial equator intersection'},
-{id:'OM02.6',paper:'OM',marks:1,label:'Annual solar motion',text:'Indicate the direction of the Sun’s annual motion near the vernal equinox.',skills:'Sun annual motion ecliptic direction right ascension'},
-{id:'OM02.7',paper:'OM',marks:3,label:'Calibrate grid values',text:'Write numerical coordinate values for selected grid lines.',skills:'coordinate measurement scale interpolation units right ascension declination'},
-{id:'OM02.8',paper:'OM',marks:4,label:'Constellation regions',text:'Identify constellation regions from a candidate list on the coordinate map.',skills:'constellation geography coordinate grid IAU abbreviation'},
-{id:'OM03.1',paper:'OM',marks:4,label:'Latitude from Orion',text:'Infer observing latitude from a Mercator sky view of Orion.',skills:'Orion latitude altitude azimuth celestial equator Mercator horizon geometry'},
-{id:'OM03.2',paper:'OM',marks:14,label:'Transfer Orion to new site/date',text:'Redraw Orion at a new latitude, longitude, date and local time on an identical Mercator grid.',skills:'date site transfer local time longitude latitude hour angle declination altitude azimuth Mercator hemisphere'},
-{id:'OT01.1',paper:'OT',marks:6,label:'Reference-star identification',text:'Identify four named/Bayer reference stars on a supplied sky map.',skills:'Bayer stars constellation recognition reference stars sky map'},
-{id:'OT01.2',paper:'OT',marks:7,label:'Plot a coordinate target',text:'Plot a new diffuse object from RA and declination using a locally linear rectangular grid.',skills:'right ascension declination coordinate interpolation rectangular grid target plotting'},
-{id:'OT01.3',paper:'OT',marks:12,label:'Acquire & centre target',text:'Use the telescope and eyepieces to find the plotted target and centre it on the crosshair.',skills:'telescope eyepiece field of view centering crosshair focusing target acquisition'},
-{id:'OT02.1',paper:'OT',marks:25,label:'Measure lensing delays',text:'Use repeated projected variability to measure time delays among lensed quasar images and reduce uncertainty.',skills:'time delay light curve repeated timing stopwatch variability uncertainty flux'},
-{id:'OP01.1',paper:'OP',marks:8,label:'Rank orbital sizes',text:'Rank four TNOs by semi-major axis using their observed motion.',skills:'orbit period semi major axis Kepler TNO angular motion timing'},
-{id:'OP01.2',paper:'OP',marks:17,label:'Trace trajectories & inclinations',text:'Trace moving TNO trajectories and measure orbital inclinations relative to the ecliptic.',skills:'trajectory tracing ecliptic orbital inclination angle preserving projection moving objects'},
-{id:'OP02.1',paper:'OP',marks:8,label:'Map unfamiliar moons',text:'Mark positions of visible moons on a sky map from an unfamiliar planetary viewpoint.',skills:'sky to map object placement unfamiliar viewpoint rotating sky moons'},
-{id:'OP02.2',paper:'OP',marks:12,label:'Reconstruct ring boundaries',text:'Use the planetarium view to draw ring boundaries to scale in a pole-view geometry diagram.',skills:'ring boundary scale drawing parallel rays observer geometry projection'},
-{id:'OP02.3',paper:'OP',marks:5,label:'Ring width in kilometres',text:'Convert the reconstructed ring geometry into a physical ring width.',skills:'scale calibration physical size geometry measurement ring width'}
-];
-const EXAM_URLS={OM:'https://ioaa2025.in/wp-content/uploads/2025/09/Observation-SkyMap-Questions.pdf',OT:'https://ioaa2025.in/wp-content/uploads/2025/09/Observation-Telescope-Questions.pdf',OP:'https://ioaa2025.in/wp-content/uploads/2025/09/Observation-Planetarium-Questions.pdf'};
-
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function titlePlain(s){return String(s||'').replace(/\\[a-zA-Z]+\*?(?:\[[^\]]*\])?\{([^{}]*)\}/g,'$1').replace(/[{}$\\]/g,' ').replace(/\s+/g,' ').trim()}
@@ -211,22 +162,6 @@ function parseToc(text){
     if(m) out.push({type:m[1],number:titlePlain(m[2]||''),title:titlePlain(m[3]),page:m[4]});
   }
   return out;
-}
-function splitWindows(text,max=1800){
-  const paras=String(text||'').split(/\n\s*\n+/).map(plainTex).filter(x=>x.length>35);const out=[];let cur='';
-  for(const p of paras){if((cur+' '+p).length>max&&cur){out.push(cur);cur=p}else cur+=(cur?' ':'')+p} if(cur)out.push(cur);return out;
-}
-function parseTexChunks(tex,toc){
-  const clean=String(tex||'').replace(/(^|[^\\])%.*$/gm,'$1');
-  const re=/\\(section|subsection|subsubsection)\*?\{([^}]*)\}/g,heads=[];let m;
-  while((m=re.exec(clean))) heads.push({type:m[1],title:titlePlain(m[2]),start:m.index,bodyStart:re.lastIndex});
-  const tocMap=new Map(toc.map(x=>[normalizeTitle(x.title),x]));const chunks=[];
-  if(heads.length){splitWindows(clean.slice(0,heads[0].start)).forEach((text,j)=>chunks.push({id:'src-front-'+j,type:'frontmatter',title:'Front matter and abstract',page:'',number:'',text,rawLength:heads[0].start}));}
-  heads.forEach((h,i)=>{const raw=clean.slice(h.bodyStart,i+1<heads.length?heads[i+1].start:clean.length);const match=tocMap.get(normalizeTitle(h.title));const windows=splitWindows(raw);
-    windows.forEach((text,j)=>chunks.push({id:'src-'+i+'-'+j,type:h.type,title:h.title,page:match?.page||'',number:match?.number||'',text,rawLength:raw.length}));
-  });
-  if(!heads.length)splitWindows(clean).forEach((text,j)=>chunks.push({id:'src-all-'+j,type:'document',title:'StarMaps101.tex',page:'',number:'',text,rawLength:clean.length}));
-  return chunks;
 }
 function sourceTextHtml(text){
   const tokens=/\\(url|textbf|textit|emph)\{([^{}]*)\}|\\\\|\\&/g;
@@ -275,160 +210,12 @@ function buildToc(toc,tex){
     }else if(current){const d=document.createElement('div');d.className='toc-subitem '+(item.type==='subsubsection'?'depth-2':'');d.innerHTML='<span>'+esc((item.number?item.number+' ':'')+item.title)+'</span><small>p. '+esc(item.page)+'</small>';current.append(d)}
   });
 }
-function normalizedText(text){
-  let s=' '+plainTex(text).toLowerCase().replace(/[^\p{L}\p{N}\s-]+/gu,' ')+' ';
-  for(const [canon,forms] of ALIASES){if(forms.some(f=>s.includes(' '+f.toLowerCase())||s.includes(f.toLowerCase())))s+=' '+canon.replace(/\s+/g,'_')+' ';}
-  return s.replace(/\s+/g,' ').trim();
-}
-function tokens(text){return normalizedText(text).split(' ').map(x=>x.replace(/^-+|-+$/g,'')).filter(x=>x.length>2&&!STOP.has(x)&&!/^\d+$/.test(x))}
-function makeIdf(texts){const N=texts.length,df=new Map();for(const text of texts){for(const t of new Set(tokens(text)))df.set(t,(df.get(t)||0)+1)}const idf=new Map();for(const [t,n] of df)idf.set(t,Math.log((N+1)/(n+1))+1);return idf}
-function vec(text,idf){const c=new Map();for(const t of tokens(text))c.set(t,(c.get(t)||0)+1);const v=new Map();for(const [t,n] of c){const w=idf.get(t);if(w)v.set(t,(1+Math.log(n))*w)}return v}
-function norm(v){let s=0;for(const x of v.values())s+=x*x;return Math.sqrt(s)||1}
-function cosine(a,b){let s=0;const [small,big]=a.size<b.size?[a,b]:[b,a];for(const [k,x] of small){const y=big.get(k);if(y)s+=x*y}return s/(norm(a)*norm(b))}
-function combine(entries){const out=new Map();let total=0;for(const [v,w] of entries){total+=w;for(const [k,x] of v)out.set(k,(out.get(k)||0)+x*w)}if(total)for(const k of out.keys())out.set(k,out.get(k)/total);return out}
-function sharedTerms(a,b,n=6){const arr=[];for(const [k,x] of a){const y=b.get(k);if(y)arr.push([k,x*y])}return arr.sort((x,y)=>y[1]-x[1]).slice(0,n).map(x=>x[0].replace(/_/g,' '))}
-function scoreClass(s){return s>=.26?'high':s>=.15?'medium':'low'}
-function sourceUrl(e){return e.page?pdfUrl+'#page='+encodeURIComponent(e.page):repoBase+'/blob/master/StarMaps101.tex'}
-function slug(v){return String(v||'topic').toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,72)||'topic'}
-function arrayCosine(a,b){let dot=0,aa=0,bb=0;const n=Math.min(a.length,b.length);for(let i=0;i<n;i++){dot+=a[i]*b[i];aa+=a[i]*a[i];bb+=b[i]*b[i]}return dot/(Math.sqrt(aa)*Math.sqrt(bb)||1)}
-const ACTIVATION_TAU=.075,TOP_K_IOAA=3;
 
-let DATA=null,lookup=new Map(),adj=new Map(),layout=null,shownNodes=[],shownEdges=[],selectedNode=null,selectedEdge=null,hovered=null;
-const canvas=$('#net'),ctx=canvas.getContext('2d'),tip=$('#tip');let DPR=Math.min(devicePixelRatio||1,2),W=0,H=710,zoom=1,panX=0,panY=0,drag=null;
-function edgeKey(e){return e.source+'→'+e.target+'|'+e.relation}
-function buildGraph(chunks,idf){
-  const chunkVecs=chunks.map(c=>({...c,vec:vec(c.text,idf)}));
-  const grouped=new Map();
-  for(const c of chunkVecs){
-    if(c.type==='frontmatter'||c.type==='document')continue;
-    const headingIndex=(c.id.match(/^src-(\d+)-/)||[])[1]||c.id;
-    const key=headingIndex+'|'+c.type+'|'+c.number+'|'+c.title;
-    if(!grouped.has(key))grouped.set(key,[]);grouped.get(key).push(c);
-  }
-  const topics=[];let ordinal=0;
-  for(const group of grouped.values()){
-    const first=group[0],body=group.map(c=>c.text).join(' '),wordCount=tokens(body).length;
-    if(wordCount<22||/^(sources?|references?|license)$/i.test(first.title.trim()))continue;
-    const label=(first.number?first.number+' ':'')+first.title;
-    const kind=(/^6(?:\.|$)/.test(first.number)||/practice|problem|olympiad|20\d{2}/i.test(first.title))?'practice':'topic';
-    const tv=vec(label+' '+body,idf);
-    const evidence=chunkVecs.map(c=>({chunk:c,score:cosine(tv,c.vec)})).sort((a,b)=>b.score-a.score).slice(0,6);
-    const profile=chunkVecs.map(c=>Math.max(0,(cosine(tv,c.vec)-ACTIVATION_TAU)/(1-ACTIVATION_TAU)));
-    const mass=profile.reduce((a,b)=>a+b,0),breadth=profile.filter(x=>x>0).length;
-    topics.push({id:'topic-'+(++ordinal)+'-'+slug(label),label,title:first.title,number:first.number,type:first.type,kind,vec:tv,evidence,profile,mass,breadth,ownWindows:group.length,wordCount,page:first.page||''});
-  }
-  const maxMass=Math.max(...topics.map(t=>t.mass),.001);
-  for(const t of topics)t.prominence=t.importance=t.mass/maxMass;
-
-  const taskNodes=TASKS.map(t=>({...t,kind:'task',vec:vec(t.text+' '+t.skills,idf),url:EXAM_URLS[t.paper],importance:.5}));
-  const examNodes=['OM','OT','OP'].map(p=>({id:p,label:p==='OM'?'OM · Sky Map':p==='OT'?'OT · Telescope':'OP · Planetarium',kind:'exam',paper:p,url:EXAM_URLS[p],importance:.72}));
-  const gaps=GAPS.map(g=>({...g,kind:'gap',vec:vec(g.seed,idf),importance:.32}));
-  const nodes=[...topics,...taskNodes,...examNodes,...gaps],edges=[];
-
-  for(const t of taskNodes){
-    edges.push({source:t.paper,target:t.id,relation:'contains task',kind:'hierarchy',weight:1.05});
-    const ranked=topics.map(p=>({topic:p,sim:cosine(t.vec,p.vec)})).sort((a,b)=>b.sim-a.sim).slice(0,TOP_K_IOAA).filter(r=>r.sim>=.035);
-    t.associations=ranked;
-    ranked.forEach(r=>edges.push({source:r.topic.id,target:t.id,relation:'IOAA topical similarity',kind:'association',similarity:r.sim,weight:.35+4.0*r.sim,shared:sharedTerms(r.topic.vec,t.vec),topic:r.topic.id,task:t.id}));
-  }
-
-  const topicPairs=new Set();
-  for(const a of topics){
-    const ranked=topics.filter(b=>b.id!==a.id).map(b=>({b,sim:arrayCosine(a.profile,b.profile)})).sort((x,y)=>y.sim-x.sim).slice(0,4);
-    for(const r of ranked){if(r.sim<.12)continue;const pair=[a.id,r.b.id].sort().join('|');if(topicPairs.has(pair))continue;topicPairs.add(pair);edges.push({source:a.id,target:r.b.id,relation:'book topic relatedness',kind:'semantic',similarity:r.sim,weight:.18+2.7*r.sim,shared:sharedTerms(a.vec,r.b.vec)})}
-  }
-  for(const g of gaps){const task=taskNodes.find(t=>t.id===g.task);if(task)edges.push({source:g.id,target:task.id,relation:'additional training',kind:'gap',weight:.75,shared:sharedTerms(g.vec,task.vec)})}
-
-  const ioaaRel=new Map();
-  for(const p of topics){const sims=taskNodes.map(t=>cosine(p.vec,t.vec)).sort((a,b)=>b-a).slice(0,TOP_K_IOAA);ioaaRel.set(p.id,sims.reduce((a,b)=>a+b,0)/(sims.length||1));p.ioaaRelevance=ioaaRel.get(p.id)}
-  const taskCoverage=new Map();for(const t of taskNodes)taskCoverage.set(t.id,Math.max(0,...topics.map(p=>cosine(p.vec,t.vec))));
-  const bookAlignment=topics.reduce((s,p)=>s+p.prominence*(ioaaRel.get(p.id)||0),0)/(topics.reduce((s,p)=>s+p.prominence,0)||1);
-  const meanTaskCoverage=[...taskCoverage.values()].reduce((a,b)=>a+b,0)/(taskCoverage.size||1);
-  const deg=new Map(nodes.map(n=>[n.id,0]));edges.forEach(e=>{deg.set(e.source,(deg.get(e.source)||0)+e.weight);deg.set(e.target,(deg.get(e.target)||0)+e.weight)});
-  return {nodes,edges,chunkVecs,topics,taskNodes,gaps,deg,ioaaRel,taskCoverage,bookAlignment,meanTaskCoverage};
-}
-function seed(n){const group={topic:[330,330],practice:[290,560],exam:[760,310],task:[720,400],gap:[570,600]}[n.kind]||[500,350],h=[...n.id].reduce((a,c)=>((a*33)^c.charCodeAt(0))>>>0,5381),a=(h%10000)/10000*Math.PI*2,r=35+((h>>>8)%100)/100*115;return{x:group[0]+Math.cos(a)*r,y:group[1]+Math.sin(a)*r}}
-function forceLayout(nodes,edges){
-  const p=new Map(nodes.map(n=>[n.id,seed(n)])),valid=edges.filter(e=>p.has(e.source)&&p.has(e.target));let temp=12;
-  for(let it=0;it<380;it++){const fx=new Map(nodes.map(n=>[n.id,0])),fy=new Map(nodes.map(n=>[n.id,0]));
-    for(let i=0;i<nodes.length;i++){const ni=nodes[i],pi=p.get(ni.id);for(let j=i+1;j<nodes.length;j++){const nj=nodes[j],pj=p.get(nj.id);let dx=pi.x-pj.x,dy=pi.y-pj.y,d2=dx*dx+dy*dy+4,d=Math.sqrt(d2),f=235*(1+ni.importance)*(1+nj.importance)/d2,ux=dx/d,uy=dy/d;fx.set(ni.id,fx.get(ni.id)+ux*f);fy.set(ni.id,fy.get(ni.id)+uy*f);fx.set(nj.id,fx.get(nj.id)-ux*f);fy.set(nj.id,fy.get(nj.id)-uy*f)}}
-    for(const e of valid){const a=p.get(e.source),b=p.get(e.target);let dx=b.x-a.x,dy=b.y-a.y,d=Math.hypot(dx,dy)+.001,f=e.weight*4.6*Math.log1p(d/25),ux=dx/d,uy=dy/d;fx.set(e.source,fx.get(e.source)+ux*f);fy.set(e.source,fy.get(e.source)+uy*f);fx.set(e.target,fx.get(e.target)-ux*f);fy.set(e.target,fy.get(e.target)-uy*f)}
-    for(const n of nodes){const q=p.get(n.id),dx=500-q.x,dy=350-q.y,d=Math.hypot(dx,dy)+.001,g=.0025*(1+n.importance)*d;fx.set(n.id,fx.get(n.id)+dx/d*g);fy.set(n.id,fy.get(n.id)+dy/d*g);const x=fx.get(n.id),y=fy.get(n.id),mag=Math.hypot(x,y)||1,step=Math.min(temp,mag);q.x+=x/mag*step;q.y+=y/mag*step}temp*=.986}
-  const xs=[...p.values()].map(v=>v.x),ys=[...p.values()].map(v=>v.y),minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);for(const q of p.values()){q.x=65+(q.x-minX)/(maxX-minX||1)*870;q.y=55+(q.y-minY)/(maxY-minY||1)*610}return p
-}
-function neighbours(id){return adj.get(id)||new Set()}
-function radius(n){const base=n.kind==='exam'?9:n.kind==='task'?6.4:n.kind==='gap'?6:n.kind==='practice'?6.7:7;const scale=(n.kind==='topic'||n.kind==='practice')?Math.sqrt(Math.max(0,n.prominence||0)):.45;return base+4.7*scale}
-function modeOf(n){return n.paper||(/^OM/.test(n.id)?'OM':/^OT/.test(n.id)?'OT':/^OP/.test(n.id)?'OP':'')}
-function filter(){
-  if(!DATA)return;const paper=$('#paper').value,view=$('#view').value,q=$('#search').value.trim().toLowerCase();let ids=new Set(DATA.nodes.map(n=>n.id));
-  if(paper!=='all'){const taskIds=new Set(DATA.taskNodes.filter(t=>t.paper===paper).map(t=>t.id));const assocTopics=new Set(DATA.edges.filter(e=>e.kind==='association'&&taskIds.has(e.target)).map(e=>e.source));ids=new Set(DATA.nodes.filter(n=>n.id===paper||taskIds.has(n.id)||assocTopics.has(n.id)||(n.kind==='gap'&&taskIds.has(n.task))).map(n=>n.id))}
-  if(view==='exam')ids=new Set([...ids].filter(id=>['topic','practice','task','exam'].includes(lookup.get(id)?.kind)));
-  if(view==='book')ids=new Set([...ids].filter(id=>['topic','practice'].includes(lookup.get(id)?.kind)));
-  if(view==='gap')ids=new Set([...ids].filter(id=>['gap','task','topic'].includes(lookup.get(id)?.kind)));
-  shownNodes=DATA.nodes.filter(n=>ids.has(n.id));shownEdges=DATA.edges.filter(e=>ids.has(e.source)&&ids.has(e.target)&&(view!=='exam'||e.kind!=='semantic')&&(view!=='gap'||e.kind==='gap'||e.kind==='association'));
-  const hits=new Set(q?shownNodes.filter(n=>(n.label+' '+(n.skills||'')+' '+(n.text||'')).toLowerCase().includes(q)).map(n=>n.id):[]);
-  $('#status').textContent=shownNodes.length+' nodes · '+shownEdges.length+' links'+(q?' · '+hits.size+' matches':'');draw(hits)
-}
-function resize(){const r=canvas.getBoundingClientRect();W=Math.max(1,r.width);H=Math.max(1,r.height);canvas.width=W*DPR;canvas.height=H*DPR;draw()}
-function fit(){zoom=Math.min(W/1000,H/720);panX=(W-1000*zoom)/2;panY=(H-720*zoom)/2;draw()}
-function toGraph(x,y){return{x:(x-panX)/zoom,y:(y-panY)/zoom}}
-function draw(hits=null){
-  if(!DATA||!layout)return;const q=$('#search').value.trim();if(!hits&&q)hits=new Set(shownNodes.filter(n=>(n.label+' '+(n.skills||'')+' '+(n.text||'')).toLowerCase().includes(q.toLowerCase())).map(n=>n.id));
-  const focus=selectedNode||hovered,near=focus?neighbours(focus):null;ctx.setTransform(DPR,0,0,DPR,0,0);ctx.clearRect(0,0,W,H);ctx.save();ctx.translate(panX,panY);ctx.scale(zoom,zoom);
-  for(const e of shownEdges){const a=layout.get(e.source),b=layout.get(e.target);if(!a||!b)continue;const active=selectedEdge===edgeKey(e)||(focus&&(e.source===focus||e.target===focus)),dim=(focus&&!active)||(q&&hits&&!hits.has(e.source)&&!hits.has(e.target));ctx.globalAlpha=dim?.045:1;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle=active?'#eef5ff':e.kind==='gap'?'#a9804c':e.kind==='association'?'#5f927e':e.kind==='semantic'?'#526985':'#53697b';ctx.lineWidth=active?2.3:.45+Math.min(2.35,e.weight*.55);if(e.kind==='gap')ctx.setLineDash([4,4]);else if(e.kind==='semantic')ctx.setLineDash([2,4]);else ctx.setLineDash([]);ctx.stroke()}
-  ctx.setLineDash([]);for(const n of shownNodes){const p=layout.get(n.id),r=radius(n),active=n.id===selectedNode||n.id===hovered,dim=(focus&&n.id!==focus&&!near?.has(n.id))||(q&&hits&&!hits.has(n.id));ctx.globalAlpha=dim?.1:1;
-    if((n.kind==='topic'||n.kind==='practice')&&(n.ioaaRelevance||0)>0){ctx.beginPath();ctx.arc(p.x,p.y,r+3.1,0,Math.PI*2);ctx.strokeStyle='rgba(125,218,179,'+Math.min(.78,.16+2.2*(n.ioaaRelevance||0))+')';ctx.lineWidth=.8+3.2*(n.ioaaRelevance||0);ctx.stroke()}
-    ctx.beginPath();if(n.kind==='gap')ctx.rect(p.x-r,p.y-r,2*r,2*r);else ctx.arc(p.x,p.y,r,0,Math.PI*2);ctx.fillStyle=COLORS[n.kind]||'#8aa0b7';ctx.fill();ctx.strokeStyle=active?'#fff':'#c4d0df';ctx.lineWidth=active?2.2:.7;ctx.stroke();const important=active||n.kind==='exam'||n.kind==='gap'||((n.prominence||0)>.56)||(hits&&hits.has(n.id));if(important){ctx.font=(active?'600 ':'')+'10.5px system-ui,sans-serif';ctx.textBaseline='middle';ctx.lineWidth=3.5;ctx.strokeStyle='#101319';ctx.fillStyle='#dde7f4';ctx.strokeText(n.label,p.x+r+4,p.y);ctx.fillText(n.label,p.x+r+4,p.y)}}ctx.restore();ctx.globalAlpha=1
-}
-function hitNode(x,y){const g=toGraph(x,y);let best=null,bd=Infinity;for(const n of shownNodes){const p=layout.get(n.id),d=Math.hypot(g.x-p.x,g.y-p.y),r=radius(n)+5/zoom;if(d<r&&d<bd){best=n;bd=d}}return best}
-function segDist(px,py,ax,ay,bx,by){const dx=bx-ax,dy=by-ay,l=dx*dx+dy*dy;if(!l)return Math.hypot(px-ax,py-ay);let t=((px-ax)*dx+(py-ay)*dy)/l;t=Math.max(0,Math.min(1,t));return Math.hypot(px-(ax+t*dx),py-(ay+t*dy))}
-function hitEdge(x,y){const g=toGraph(x,y);let best=null,bd=Infinity;for(const e of shownEdges){const a=layout.get(e.source),b=layout.get(e.target);if(!a||!b)continue;const d=segDist(g.x,g.y,a.x,a.y,b.x,b.y);if(d<6/zoom&&d<bd){best=e;bd=d}}return best}
-function local(e){const r=canvas.getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top}}
-canvas.addEventListener('pointerdown',e=>{const m=local(e),n=hitNode(m.x,m.y);canvas.setPointerCapture(e.pointerId);drag={mode:n?'node':'pan',node:n?.id,startX:m.x,startY:m.y,baseX:panX,baseY:panY,moved:false};canvas.classList.add('grabbing')});
-canvas.addEventListener('pointermove',e=>{const m=local(e);if(drag){const dx=m.x-drag.startX,dy=m.y-drag.startY;if(Math.hypot(dx,dy)>3)drag.moved=true;if(drag.mode==='pan'){panX=drag.baseX+dx;panY=drag.baseY+dy}else{const p=layout.get(drag.node);p.x+=e.movementX/zoom;p.y+=e.movementY/zoom}draw();return}const n=hitNode(m.x,m.y);hovered=n?.id||null;if(n){tip.hidden=false;tip.innerHTML='<strong>'+esc(n.label)+'</strong><span class="tip-meta">'+esc(n.kind)+((n.kind==='topic'||n.kind==='practice')?' · book prominence '+(n.prominence||0).toFixed(2)+' · IOAA relevance '+(n.ioaaRelevance||0).toFixed(2):'')+'</span>';tip.style.left=e.clientX+12+'px';tip.style.top=e.clientY+12+'px'}else tip.hidden=true;draw()});
-canvas.addEventListener('pointerup',e=>{const m=local(e),n=hitNode(m.x,m.y),ed=!n?hitEdge(m.x,m.y):null;if(!drag?.moved&&n)selectNode(n.id);else if(!drag?.moved&&ed)selectEdge(ed);else if(!drag?.moved){selectedNode=null;selectedEdge=null;overview()}drag=null;canvas.classList.remove('grabbing');draw()});
-canvas.addEventListener('pointerleave',()=>{hovered=null;tip.hidden=true;draw()});canvas.addEventListener('wheel',e=>{e.preventDefault();const m=local(e),g=toGraph(m.x,m.y),f=Math.exp(-e.deltaY*.0012),nz=Math.max(.25,Math.min(5,zoom*f));panX=m.x-g.x*nz;panY=m.y-g.y*nz;zoom=nz;draw()},{passive:false});
-
-function evidenceHtml(topic){
-  return '<div class="evidence">'+(topic.evidence||[]).slice(0,5).map(r=>'<a class="evidence-item" href="'+esc(sourceUrl(r.chunk))+'" target="_blank" rel="noopener"><b>'+esc((r.chunk.number?r.chunk.number+' ':'')+r.chunk.title)+'</b><small>topic evidence '+r.score.toFixed(3)+(r.chunk.page?' · p. '+esc(r.chunk.page):'')+'</small></a>').join('')+'</div>';
-}
-function edgeHtml(e){const a=lookup.get(e.source),b=lookup.get(e.target),score=e.similarity!=null?e.similarity.toFixed(3):'—';return '<button class="association" data-edge="'+esc(edgeKey(e))+'"><strong><span>'+esc(a?.label)+' ↔ '+esc(b?.label)+'</span><span class="score">'+score+'</span></strong><small>'+esc(e.relation)+'</small></button>'}
-function selectNode(id){
-  selectedNode=id;selectedEdge=null;const n=lookup.get(id),edges=DATA.edges.filter(e=>e.source===id||e.target===id).sort((a,b)=>(b.similarity||0)-(a.similarity||0));let html='<span class="tag">'+esc(n.kind)+'</span><h2>'+esc(n.label)+'</h2>';
-  if(n.kind==='task'){
-    const coverage=DATA.taskCoverage.get(n.id)||0;html+='<p>'+esc(n.text)+'</p><p><strong>Recognized skill document:</strong> '+esc(n.skills)+'</p><div class="stats"><div><b>'+esc(n.paper)+'</b>paper</div><div><b>'+coverage.toFixed(3)+'</b>best book similarity</div></div><p>All IOAA tasks are treated equally in the relevance metric.</p><p><a href="'+esc(n.url)+'" target="_blank" rel="noopener">Open official question paper ↗</a></p>';
-  }else if(n.kind==='topic'||n.kind==='practice'){
-    const close=edges.filter(e=>e.kind==='semantic').slice(0,5);html+='<p>This is a live topic generated from the current section/subsection body in <code>StarMaps101.tex</code>. Its size depends only on how strongly and broadly that topic is discussed across the current book.</p><div class="stats"><div><b>'+(n.prominence||0).toFixed(3)+'</b>book prominence</div><div><b>'+(n.ioaaRelevance||0).toFixed(3)+'</b>IOAA 2025 relevance</div><div><b>'+n.breadth+'</b>active book windows</div><div><b>'+n.wordCount+'</b>words in source topic</div></div><h3>Strong book evidence</h3>'+evidenceHtml(n);if(close.length)html+='<h3>Closest book topics</h3><div class="connections">'+close.map(edgeHtml).join('')+'</div>';
-  }else if(n.kind==='exam')html+='<p>Official IOAA 2025 observation paper. Its task nodes are compared equally with the current book topics; paper marks do not change the graph metrics.</p><p><a href="'+esc(n.url)+'" target="_blank" rel="noopener">Open official paper ↗</a></p>';
-  else html+='<p>Additional training node used to flag a practical bridge that is not strongly represented in the current book text.</p>';
-  html+='<h3>Associations</h3><div class="connections">'+edges.slice(0,20).map(edgeHtml).join('')+'</div>';$('#details').innerHTML=html;$('#details').querySelectorAll('[data-edge]').forEach(b=>b.onclick=()=>{const k=b.dataset.edge,e=DATA.edges.find(x=>edgeKey(x)===k);if(e)selectEdge(e)});draw()
-}
-function selectEdge(e){
-  selectedNode=null;selectedEdge=edgeKey(e);const a=lookup.get(e.source),b=lookup.get(e.target);let html='<span class="tag">Association result</span><h2>'+esc(a?.label)+' ↔ '+esc(b?.label)+'</h2><p><strong>'+esc(e.relation)+'</strong></p>';
-  if(e.similarity!=null){const metric=e.kind==='semantic'?'book-context relatedness':e.kind==='association'?'topic/task similarity':'association strength';html+='<div class="stats"><div><b>'+e.similarity.toFixed(3)+'</b>'+metric+'</div><div><b>'+scoreClass(e.similarity)+'</b>relative overlap</div></div>'}
-  if(e.kind==='association')html+='<p>This line compares a book topic with one IOAA 2025 task. It is independent of the task mark value.</p>';
-  if(e.kind==='semantic')html+='<p>This line measures how similarly the two topics are distributed across the full current book text. It is a book-internal relationship, independent of IOAA 2025.</p>';
-  if(e.shared?.length)html+='<h3>Shared weighted terms</h3><div class="shared">'+e.shared.map(t=>'<span class="chip">'+esc(t)+'</span>').join('')+'</div>';
-  const topic=[a,b].find(n=>n&&(n.kind==='topic'||n.kind==='practice'));const task=[a,b].find(n=>n&&n.kind==='task');if(task)html+='<h3>IOAA task context</h3><p>'+esc(task.text)+'</p>';if(topic)html+='<h3>Book evidence behind the topic</h3>'+evidenceHtml(topic);
-  html+='<h3>Inspect endpoints</h3><div class="connections"><button class="association" data-node="'+esc(e.source)+'"><strong>'+esc(a?.label)+'</strong></button><button class="association" data-node="'+esc(e.target)+'"><strong>'+esc(b?.label)+'</strong></button></div>';
-  $('#details').innerHTML=html;$('#details').querySelectorAll('[data-node]').forEach(x=>x.onclick=()=>selectNode(x.dataset.node));draw()
-}
-function overview(){
-  const assoc=DATA.edges.filter(e=>e.kind==='association'),semantic=DATA.edges.filter(e=>e.kind==='semantic');$('#details').innerHTML='<span class="tag">Full-text knowledge map</span><h2>What the cluster is showing</h2><p>The blue/violet network is the current Star Charts 101 book itself: node size is full-book topic prominence and topic-to-topic lines show how closely topics are discussed in the same book contexts. Green IOAA 2025 task nodes are an external comparison layer. Their links measure topic similarity only; marks do not affect any graph metric.</p><div class="stats"><div><b>'+DATA.topics.length+'</b>live book topics</div><div><b>'+DATA.chunkVecs.length+'</b>book text windows</div><div><b>'+semantic.length+'</b>book-topic links</div><div><b>'+DATA.taskNodes.length+'</b>IOAA tasks</div><div><b>'+DATA.bookAlignment.toFixed(3)+'</b>book↔IOAA alignment</div><div><b>'+DATA.meanTaskCoverage.toFixed(3)+'</b>mean task match</div></div><p>Select a <strong>book node</strong> to see its prominence, related topics, and source evidence. Select an <strong>IOAA task</strong> to see which current book topics match it. Select any <strong>line</strong> to inspect the individual relationship.</p>'
-}
-function initAdj(){lookup=new Map(DATA.nodes.map(n=>[n.id,n]));adj=new Map(DATA.nodes.map(n=>[n.id,new Set()]));for(const e of DATA.edges){adj.get(e.source)?.add(e.target);adj.get(e.target)?.add(e.source)}}
-async function boot(){
-  try{
-    const [tr,cr]=await Promise.all([fetch(texUrl,{cache:'no-store'}),fetch(tocUrl,{cache:'no-store'})]);if(!tr.ok)throw new Error('TeX HTTP '+tr.status);const tex=await tr.text(),toc=cr.ok?parseToc(await cr.text()):[];buildToc(toc,tex);
-    const chunks=parseTexChunks(tex,toc);const corpus=[...chunks.map(c=>c.text),...TASKS.map(x=>x.text+' '+x.skills),...GAPS.map(x=>x.seed)];const idf=makeIdf(corpus);DATA=buildGraph(chunks,idf);initAdj();layout=forceLayout(DATA.nodes,DATA.edges);
-    $('#liveStatus').textContent='Full-text sync · '+DATA.topics.length+' live topics · '+chunks.length+' text windows · '+TASKS.length+' IOAA tasks';$('#runtime').innerHTML='<span>'+tex.length.toLocaleString()+' source characters scanned</span><span>'+chunks.length+' full-text windows</span><span>'+DATA.topics.length+' live book topics</span><span>'+DATA.edges.filter(e=>e.kind==='semantic').length+' book-topic relationships</span><span>'+TASKS.length+' equal-weight IOAA 2025 tasks</span><span>'+DATA.edges.filter(e=>e.kind==='association').length+' IOAA topic associations</span><span>book↔IOAA alignment '+DATA.bookAlignment.toFixed(3)+'</span>';
-    filter();resize();fit();overview();if(window.MathJax?.typesetPromise)window.MathJax.typesetPromise();
-  }catch(err){console.error(err);$('#status').textContent='Full-text graph could not load';$('#liveStatus').textContent='Full-text sync failed';$('#details').innerHTML='<span class="tag">Load error</span><h2>Knowledge graph unavailable</h2><p>The page loaded, but the current <code>StarMaps101.tex</code> could not be fetched. <a href="'+repoBase+'" target="_blank" rel="noopener">Open repository ↗</a></p>'}
-}
-$('#search').addEventListener('input',filter);$('#paper').addEventListener('change',filter);$('#view').addEventListener('change',filter);$('#reset').onclick=()=>{$('#search').value='';$('#paper').value='all';$('#view').value='all';selectedNode=null;selectedEdge=null;filter();fit();overview()};$('#zin').onclick=()=>{zoom=Math.min(5,zoom*1.18);draw()};$('#zout').onclick=()=>{zoom=Math.max(.25,zoom/1.18);draw()};$('#bookmap').onclick=()=>{$('#view').value='exam';filter();canvas.scrollIntoView({behavior:'smooth',block:'center'})};
 $('#toc-toggle').onclick=()=>{const p=$('#toc-panel'),open=p.classList.toggle('open');$('#toc-toggle').setAttribute('aria-expanded',String(open));$('#toc-toggle').textContent=open?'Book contents ▴':'Book contents ▾'};
-new ResizeObserver(()=>{if(DATA&&layout)resize()}).observe(canvas);boot();
+Promise.all([fetch(texUrl,{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Book source unavailable');return r.text()}),fetch(tocUrl,{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Book contents unavailable');return r.text()})]).then(([tex,toc])=>buildToc(parseToc(toc),tex)).catch(e=>{console.error(e);$('#tocAccordion').textContent='Book contents could not load. Please use the PDF link above.'});
 })();
 </script>
+<script src="graph-engine-v8.js?v=20260916" defer></script>
 </body>
 </html>
+
