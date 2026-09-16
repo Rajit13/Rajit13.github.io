@@ -28,7 +28,7 @@ window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},cht
 #tip{position:fixed;z-index:40;pointer-events:none;background:#171e28;border:1px solid #56647a;color:#edf2fa;padding:5px 8px;border-radius:5px;box-shadow:0 3px 12px rgba(0,0,0,.35);font-size:12px;max-width:280px}#tip[hidden]{display:none!important}.tip-meta{display:block;color:#9eadbf;font-size:10.5px;margin-top:2px}
 @media(max-width:900px){.author-bar{align-items:flex-start;flex-direction:column;padding-left:18px;padding-right:18px}.author-links{justify-content:flex-start}.author-id a{font-size:1.7em}.book-hero{grid-template-columns:110px minmax(0,1fr);padding-left:18px;padding-right:18px;gap:16px}.book-art{min-height:150px}.book-art img{max-height:165px}.book-nav,.toc-panel,.toolbar{padding-left:18px;padding-right:18px}.workspace{grid-template-columns:1fr}.plot{border-right:0}.side{border-top:1px solid var(--border);max-height:none}.graph-stage{height:610px}.ioaa-context,.method{margin-left:18px;margin-right:18px}.method-grid{grid-template-columns:1fr}}
 @media(max-width:540px){.book-hero{grid-template-columns:1fr}.book-art{max-height:220px}.book-art img{height:180px}.author-id a{font-size:1.55em}.toolbar label{width:100%;justify-content:space-between}.toolbar input{width:min(230px,62vw)}}
-.book-sources{margin:10px 0;padding-left:30px;color:#d8e2ef;font-size:14px;line-height:1.65}.book-sources li{padding:5px 8px 8px 0}.book-sources a{overflow-wrap:anywhere}.sources-pdf{display:inline-block;margin:4px 12px 12px;font-size:13px}
+.book-sources{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 4px 16px;padding:0;list-style:none;counter-reset:book-source;color:#d8e2ef;font-size:14px;line-height:1.6}.book-sources li{position:relative;counter-increment:book-source;padding:15px 16px 15px 49px;border:1px solid #303e52;border-radius:10px;background:#18212d}.book-sources li::before{content:counter(book-source,decimal-leading-zero);position:absolute;left:14px;top:16px;color:#8399b7;font-size:12px;font-weight:700}.source-name{display:block;color:#dbeaff;font-weight:650;line-height:1.5}.book-sources a.source-name{text-decoration:none;text-underline-offset:4px}.book-sources a.source-name:hover{text-decoration:underline;color:#fff}.book-sources a:focus-visible,.sources-pdf:focus-visible{outline:2px solid #85b7ff;outline-offset:4px;border-radius:3px}.source-arrow{display:inline-block;margin-left:5px;color:#85b7ff;font-size:13px}.source-description{margin:8px 0 0;color:#b3c0d2;font-size:13px;line-height:1.65}.source-description a{overflow-wrap:anywhere}.sources-pdf{display:inline-block;margin:0 4px 12px;padding:8px 12px;border:1px solid #405675;border-radius:7px;font-size:13px;text-decoration:none}.sources-pdf:hover{background:#233249}@media(max-width:650px){.book-sources{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -243,6 +243,16 @@ function sourceTextHtml(text){
   }
   return html+esc(text.slice(last));
 }
+function sourceEntryHtml(text){
+  const match=/\\url\{([^{}]*)\}/.exec(text);
+  if(!match)return '<span class="source-name">'+sourceTextHtml(text)+'</span>';
+  const label=text.slice(0,match.index).replace(/\s*--\s*$/,'').trim();
+  const rawUrl=match[1].trim(),url=/^www\./i.test(rawUrl)?'https://'+rawUrl:rawUrl;
+  const name=sourceTextHtml(label||rawUrl);
+  const title=/^https?:\/\//i.test(url)?'<a class="source-name" href="'+esc(url)+'" target="_blank" rel="noopener">'+name+'<span class="source-arrow" aria-hidden="true">↗</span></a>':'<span class="source-name">'+name+'</span>';
+  const description=text.slice(match.index+match[0].length).replace(/^(?:\s|\\\\)+/,'').trim();
+  return title+(description?'<p class="source-description">'+sourceTextHtml(description)+'</p>':'');
+}
 function bookSourcesHtml(tex){
   const clean=String(tex||'').replace(/(^|[^\\])%.*$/gm,'$1');
   const section=/\\section\*?\{Sources\}/i.exec(clean);
@@ -251,7 +261,7 @@ function bookSourcesHtml(tex){
   const list=/\\begin\{enumerate\}([\s\S]*?)\\end\{enumerate\}/.exec(body);
   if(!list)return '';
   const items=list[1].split(/\\item\b/).slice(1).map(x=>x.trim()).filter(Boolean);
-  return '<ol class="book-sources">'+items.map(x=>'<li>'+sourceTextHtml(x)+'</li>').join('')+'</ol>';
+  return '<ol class="book-sources" role="list">'+items.map(x=>'<li>'+sourceEntryHtml(x)+'</li>').join('')+'</ol>';
 }
 function buildToc(toc,tex){
   const host=$('#tocAccordion');host.innerHTML='';let current=null;
