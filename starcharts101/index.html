@@ -21,13 +21,13 @@
     frame.addEventListener('load',()=>{
       try{
         const doc=frame.contentDocument||frame.contentWindow.document;
-        if(doc&&!doc.querySelector('script[data-astronomy-graph]')){
+        if(doc&&!doc.querySelector('script[data-reference-graph]')){
           const script=doc.createElement('script');
-          script.src='graph-engine-v4.js?v=20260916d';
-          script.dataset.astronomyGraph='true';
+          script.src='graph-engine-v5.js?v=20260916e';
+          script.dataset.referenceGraph='true';
           doc.body.appendChild(script);
         }
-      }catch(error){console.error('Could not install astronomy-aware graph layer:',error)}
+      }catch(error){console.error('Could not install reference-style graph layer:',error)}
     });
     frame.addEventListener('error',()=>{frame.style.display='none';fallback.style.display='grid';});
   </script>
