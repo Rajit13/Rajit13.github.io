@@ -1,0 +1,75 @@
+name: Sync Star Charts 101
+
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: starcharts101-auto-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out website repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: starcharts101/package-lock.json
+
+      - name: Install graph build dependencies
+        working-directory: starcharts101
+        run: npm ci
+
+      - name: Synchronize graph with latest book repository
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        working-directory: starcharts101
+        run: python3 sync-book.py
+
+      - name: Validate generated website assets
+        working-directory: starcharts101
+        run: |
+          python3 - <<'PY'
+          import json, pathlib
+          p = pathlib.Path('.')
+          data = json.loads((p / 'graph-data.json').read_text())
+          tasks = json.loads((p / 'exam-data.json').read_text())
+          assert len(tasks) == 25
+          assert data['source']['repository'] == 'Rajit13/Star-Maps-101-and-Practices'
+          assert len(data['source']['commit']) == 40
+          assert (p / 'graph-engine-v8.js').stat().st_size > 1000
+          assert 'graph-engine-v8.js?v=' in (p / 'graph.html').read_text()
+          print('Validated source commit:', data['source']['commit'])
+          PY
+          node --check graph-engine-v8.js
+
+      - name: Commit refreshed graph only when changed
+        shell: bash
+        run: |
+          if git diff --quiet -- starcharts101/graph-data.json starcharts101/exam-data.json starcharts101/graph-engine-v8.js starcharts101/graph.html; then
+            echo 'Star Charts 101 is already synchronized.'
+            exit 0
+          fi
+          source_sha="$(python3 -c "import json; print(json.load(open('starcharts101/graph-data.json'))['source']['commit'])")"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add starcharts101/graph-data.json starcharts101/exam-data.json starcharts101/graph-engine-v8.js starcharts101/graph.html
+          git commit -m "Auto-sync Star Charts 101 from ${source_sha:0:12}"
+          git push
