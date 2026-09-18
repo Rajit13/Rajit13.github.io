@@ -27,10 +27,57 @@
     .skills{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.skill{padding:21px;border-radius:16px;border:1px solid var(--line);background:rgba(10,22,38,.72)}.skill .icon{font-size:1.4rem;margin-bottom:8px}.skill h3{font-size:1rem;margin-bottom:7px}.skill p{font-size:.88rem;color:var(--muted);margin:0}.reading{padding:24px;border-left:3px solid var(--cyan);background:rgba(12,27,45,.7);border-radius:0 16px 16px 0}.reading p{margin:0;color:#c4d2e4}.contact-panel{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(250px,.9fr);gap:24px;padding:30px;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(145deg,rgba(12,26,45,.94),rgba(8,17,30,.9));margin-bottom:55px}.contact-panel h2{font-size:2rem;margin-bottom:8px}.contact-panel p{color:var(--muted);margin:0}.contact-links{display:flex;gap:8px;justify-content:flex-end;align-items:flex-start;align-content:flex-start;flex-wrap:wrap}.social-icon{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;min-height:40px;padding:0;border-radius:10px;border:1px solid var(--line-strong);background:rgba(17,35,59,.72);color:#dce8f6;font-size:1.03rem;transition:.18s ease}.social-icon:hover{transform:translateY(-2px);background:rgba(35,67,106,.9);box-shadow:0 8px 22px rgba(0,0,0,.2)}.social-icon.email{color:#06111e;background:linear-gradient(135deg,#93d5ff,#70e1d8);border-color:transparent}.social-icon.linkedin:hover{color:#7ec8ff}.social-icon.facebook:hover{color:#9bbcff}.social-icon.instagram:hover{color:#ff9fce}.social-icon.github:hover{color:#fff}.social-icon.youtube:hover{color:#ff8c8c}footer{border-top:1px solid var(--line);padding:24px 0 38px;color:#8292a7;font-size:.8rem}footer .shell{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}.smallcap{font-size:.75rem;color:var(--cyan);font-weight:800;letter-spacing:.11em;text-transform:uppercase}
     @media(max-width:900px){.hero-grid,.featured,.contact-panel{grid-template-columns:1fr}.hero-visual{min-height:310px}.quick-grid{grid-template-columns:repeat(2,1fr)}.cards,.edu-grid{grid-template-columns:1fr}.skills{grid-template-columns:1fr 1fr}.contact-links{justify-content:flex-start}}
     @media(max-width:680px){.nav{align-items:flex-start;flex-direction:column;padding:14px 0}.navlinks{justify-content:flex-start}.navlinks a{padding:5px 8px}.brand span{font-size:1.55em;white-space:normal}.hero{padding-top:48px}.quick-grid,.feature-list,.skills{grid-template-columns:1fr}.featured,.contact-panel{padding:20px}.section-head{align-items:flex-start;flex-direction:column}h1{font-size:3rem}.role{white-space:normal}.card-top{flex-direction:column}.project-media{height:200px}.edu-media{height:180px}}
-  </style>
+  
+/* Shared portfolio header/footer system — aligned with olympiad.html */
+.site-header{border-bottom:1px solid #30394a}
+.author-bar{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:12px max(18px,calc((100vw - 1220px)/2));border-bottom:1px solid #30394a;background:rgba(13,19,29,.94);backdrop-filter:blur(15px)}
+.author-id{display:flex;flex-direction:column;gap:1px;min-width:0}
+.author-id small{color:#7ddab3;font-size:10px;letter-spacing:1.5px;text-transform:uppercase}
+.author-id a{color:#7ec8ff!important;text-decoration:none!important;font-weight:700;font-size:2em;line-height:1.1;font-variant:small-caps;font-variant-caps:small-caps;font-feature-settings:"smcp" 1;letter-spacing:.08em;font-family:"Palatino Linotype","Book Antiqua",Georgia,serif}
+.author-links{display:flex;align-items:center;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+.orcid-link{display:inline-flex;align-items:center;gap:5px;height:34px;padding:0 10px;border:1px solid #485268;border-radius:9px;color:#edf2fa!important;background:#202733;font-size:12px;font-weight:650;text-decoration:none!important}
+.author-social{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border:1px solid #485268;border-radius:9px;background:#202733;color:#dce8f6!important;font-size:14px;transition:.18s ease;text-decoration:none!important}
+.author-social:hover{background:#303c4e;transform:translateY(-1px)}
+.author-social.linkedin:hover{color:#7ec8ff!important}.author-social.facebook:hover{color:#9bbcff!important}.author-social.instagram:hover{color:#ff9fce!important}.author-social.github:hover{color:#fff!important}.author-social.youtube:hover{color:#ff8c8c!important}
+.page-nav{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:10px max(18px,calc((100vw - 1220px)/2));background:#151a23;border-bottom:1px solid #30394a}
+.page-nav a{padding:7px 10px;border:1px solid #3c4658;border-radius:7px;background:#202733;color:#edf2fa!important;font-size:12px;text-decoration:none!important}
+.page-nav a:hover,.page-nav a.active{background:#d9e9ff;color:#101319!important;border-color:#d9e9ff}
+.page-nav .spacer{flex:1}
+.header-searchbox{display:flex;align-items:center;gap:6px;color:#b3bdce;font-size:12px}
+.header-searchbox input{width:190px;background:#0e1722;border:1px solid #3c4658;border-radius:7px;color:#edf2fa;padding:7px 9px;font:inherit}
+.site-footer{border-top:1px solid #30394a;padding:20px 0 34px;color:#8694a6;font-size:11px}
+.site-footer .footer-wrap{width:min(calc(100% - 36px),1220px);margin:0 auto;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+@media(max-width:620px){.author-bar{align-items:flex-start;flex-direction:column;padding:12px 16px}.author-links{justify-content:flex-start}.page-nav{padding:9px 16px}.page-nav .spacer{display:none}.header-searchbox{width:100%}.header-searchbox input{flex:1;width:auto}}
+
+</style>
 </head>
 <body>
-<header class="topbar"><div class="shell nav"><a class="brand" href="https://rajit13.github.io/"><img src="images/ori_website.png" alt="Orion icon"><span>Fahim Rajit Hossain Shwadhin</span></a><nav class="navlinks" aria-label="Main navigation"><a href="https://rajit13.github.io/">Home</a><a class="active" href="research.html">Research</a><a href="starcharts101/">Star Charts 101</a><a href="olympiad.html">Olympiads</a><a href="about.html">About</a></nav></div></header>
+<header class="site-header">
+  <div class="author-bar">
+    <div class="author-id">
+      <small>Research · astronomy education · open resources</small>
+      <a href="https://rajit13.github.io/">Fahim Rajit Hossain Shwadhin</a>
+    </div>
+    <nav class="author-links" aria-label="Author links">
+      <a class="orcid-link" href="https://orcid.org/0009-0002-4699-8059" target="_blank" rel="noopener">ORCID ↗</a>
+      <a class="author-social linkedin" href="https://www.linkedin.com/in/fahim-rajit-hossain/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      <a class="author-social facebook" href="https://www.facebook.com/fahimrajithossain.shwadhin" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a class="author-social instagram" href="https://www.instagram.com/rajit_13/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a class="author-social github" href="https://github.com/Rajit13/" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+      <a class="author-social youtube" href="https://www.youtube.com/@Rajit_13/" target="_blank" rel="noopener" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+    </nav>
+  </div>
+  <nav class="page-nav" aria-label="Page navigation">
+    <a href="https://rajit13.github.io/">Homepage</a>
+    <a class="active" href="research.html">Research</a>
+    <a href="olympiad.html">Astronomy Olympiads</a>
+    <a href="about.html">My Background</a>
+    <a href="travels.html">Travel</a>
+    <a href="elements.html">Art</a>
+    <span class="spacer"></span>
+    <label class="header-searchbox"><span>Search page</span><input class="header-page-search" type="search" placeholder="Search this page…" aria-label="Search this page"></label>
+  </nav>
+</header>
 <main>
 <section class="hero"><div class="shell hero-grid"><div><div class="eyebrow">Research · astronomy education · open resources</div><h1>Researching the universe, then turning the ideas into tools people can learn from.</h1><p class="lead">I am an early-career astronomy researcher working across exoplanet atmospheres, strong gravitational lensing, dark matter, and observational astronomy education.</p><p>My research journey began in 2020. Alongside scientific projects, I build open teaching resources, write astronomy books, and develop tools for Astronomy Olympiad training.</p><div class="hero-actions"><a class="button primary" href="#projects">Explore research</a><a class="button" href="starcharts101/">Open Star Charts 101 ↗</a><a class="button" href="https://github.com/Rajit13/" target="_blank" rel="noopener">GitHub ↗</a></div><div class="quick-grid"><div class="quick"><b>Exoplanets</b><span>Atmospheres & spectroscopy</span></div><div class="quick"><b>Lensing</b><span>Mass modeling & dark matter</span></div><div class="quick"><b>Education</b><span>Books & open learning tools</span></div><div class="quick"><b>Olympiads</b><span>Observational astronomy</span></div></div></div><div class="hero-visual"><img src="images/milkyway.jpg" alt="Milky Way night sky"><div class="orbit-card"><strong>From spectra to sky maps</strong><span>Research, scientific computing, observational astronomy, and education on one page.</span></div></div></div></section>
 
@@ -48,6 +95,16 @@
 <section class="block" id="skills"><div class="shell"><div class="section-head"><div><div class="eyebrow">Methods & tools</div><h2>Research toolkit</h2></div><p>The page is organized by what I actually use in scientific work rather than as a long software inventory.</p></div><div class="skills"><div class="skill"><div class="icon">🪐</div><h3>Atmospheric modeling</h3><p>ARCiS, PandExo, forward modeling, retrieval concepts, transmission spectroscopy, C/O ratio and metallicity studies.</p></div><div class="skill"><div class="icon">🌀</div><h3>Gravitational lensing</h3><p>lenstronomy, parametric lens models, Bayesian inference, mass-light comparisons, dark-matter questions.</p></div><div class="skill"><div class="icon">📊</div><h3>Astronomical data</h3><p>Python, SAOImage DS9, TOPCAT, data visualization, model comparison, scientific plotting and analysis workflows.</p></div><div class="skill"><div class="icon">⌨️</div><h3>Programming</h3><p>Python for research, plus experience with C, C++, HTML/CSS, and Git/GitHub-based project workflows.</p></div><div class="skill"><div class="icon">✍️</div><h3>Scientific communication</h3><p>LaTeX, technical writing, diagrams, teaching notes, presentations, open-source educational material and book development.</p></div><div class="skill"><div class="icon">🔭</div><h3>Observational astronomy</h3><p>Star charts, coordinate systems, telescope practice, magnitude estimation, celestial navigation and Olympiad observation training.</p></div></div></div></section>
 <section class="block"><div class="shell"><div class="reading"><p><strong>Looking for a starting point?</strong> I have also written a Bengali guide to reading astronomy journals and building a literature-reading habit. <a href="https://bdoaa.org/astronomy-journal-reading/" target="_blank" rel="noopener">Read the guide ↗</a></p></div></div></section>
 <section class="block" id="contact"><div class="shell contact-panel"><div><div class="eyebrow">Contact</div><h2>Research, teaching, or astronomy education?</h2><p>I am happy to connect about research collaborations, astronomy education, Olympiad training, or open educational resources.</p></div><div class="contact-links" aria-label="Contact and social links"><a class="social-icon email" href="mailto:farahoshwadhin.13@gmail.com" aria-label="Email" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon linkedin" href="https://www.linkedin.com/in/fahim-rajit-hossain/" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a><a class="social-icon facebook" href="https://www.facebook.com/fahimrajithossain.shwadhin" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook"><i class="fab fa-facebook-f"></i></a><a class="social-icon instagram" href="https://www.instagram.com/rajit_13/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><i class="fab fa-instagram"></i></a><a class="social-icon github" href="https://github.com/Rajit13/" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><i class="fab fa-github"></i></a><a class="social-icon youtube" href="https://www.youtube.com/@Rajit_13/" target="_blank" rel="noopener" aria-label="YouTube" title="YouTube"><i class="fab fa-youtube"></i></a></div></div></section>
-</main><footer><div class="shell"><span>© Fahim Rajit Hossain Shwadhin</span><span>Research · astronomy education · open science</span></div></footer>
+</main><footer class="site-footer"><div class="footer-wrap"><span>© Fahim Rajit Hossain Shwadhin. All rights reserved.</span><span>Research · astronomy education · open science</span></div></footer>
+<script>
+document.querySelectorAll('.header-page-search').forEach(function(input){
+  input.addEventListener('keydown',function(event){
+    if(event.key!=='Enter')return;
+    event.preventDefault();
+    const query=input.value.trim();
+    if(query && window.find) window.find(query,false,false,true,false,false,false);
+  });
+});
+</script>
 </body>
 </html>
