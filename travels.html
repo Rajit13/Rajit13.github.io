@@ -1,157 +1,287 @@
-<!DOCTYPE HTML>
-<!--
-	Editorial by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>Fahim's Journey Around the World</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<link rel="icon" href="images/ori_website.png" type="image/x-icon">
-		<script type="text/javascript" async
-        	src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
-  		</script>
-		<style>
-		    figcaption {
-			text-align: center;
-		    }
-		</style>
-	</head>
-	<body class="is-preload">
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101319">
+<meta name="description" content="Professional and academic travel timeline of Fahim Rajit Hossain Shwadhin for astronomy research, Olympiads, education, and international programs.">
+<title>Work Travel · Fahim Rajit Hossain Shwadhin</title>
+<link rel="icon" href="images/ori_website.png" type="image/x-icon">
+<link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#101319;--panel:#191e27;--panel2:#151a23;--panel3:#111720;
+  --border:#30394a;--border2:#46556a;--muted:#b3bdce;--text:#edf2fa;
+  --blue:#85b7ff;--green:#7ddab3;--amber:#f5c47b;--violet:#bf9cff;--red:#ff9287;
+  --shadow:0 18px 50px rgba(0,0,0,.24);--radius:14px;--max:1220px
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:
+radial-gradient(circle at 18% 2%,rgba(86,132,211,.13),transparent 28rem),
+radial-gradient(circle at 90% 28%,rgba(91,211,187,.07),transparent 28rem),
+linear-gradient(180deg,#0b1017,#101319 36%,#0b1017);
+color:var(--text);font:15px/1.65 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.18;background-image:
+radial-gradient(circle at 12% 18%,#fff 0 1px,transparent 1.4px),
+radial-gradient(circle at 42% 78%,#fff 0 1px,transparent 1.4px),
+radial-gradient(circle at 72% 34%,#dcecff 0 1px,transparent 1.4px),
+radial-gradient(circle at 90% 74%,#fff 0 1px,transparent 1.4px);
+background-size:220px 220px,310px 310px,260px 260px,360px 360px}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}button,input{font:inherit}
+.wrap{width:min(calc(100% - 36px),var(--max));margin:0 auto}
 
-		<!-- Wrapper -->
-			<div id="wrapper">
+/* Shared portfolio header */
+.site-header{border-bottom:1px solid var(--border)}
+.author-bar{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:12px max(18px,calc((100vw - var(--max))/2));border-bottom:1px solid var(--border);background:rgba(13,19,29,.94);backdrop-filter:blur(15px)}
+.author-id{display:flex;flex-direction:column;gap:1px;min-width:0}
+.author-id small{color:var(--green);font-size:10px;letter-spacing:1.5px;text-transform:uppercase}
+.author-id a{color:#7ec8ff;text-decoration:none;font-weight:700;font-size:30px;line-height:1.1;font-variant:small-caps;font-variant-caps:small-caps;font-feature-settings:"smcp" 1;letter-spacing:.08em;font-family:"Palatino Linotype","Book Antiqua",Georgia,serif}
+.author-links{display:flex;align-items:center;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+.orcid-link{display:inline-flex;align-items:center;gap:5px;height:34px;padding:0 10px;border:1px solid #485268;border-radius:9px;color:var(--text);background:#202733;font-size:12px;font-weight:650}
+.author-social{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border:1px solid #485268;border-radius:9px;background:#202733;color:#dce8f6;font-size:14px;transition:.18s ease}
+.author-social:hover{background:#303c4e;transform:translateY(-1px);text-decoration:none}
+.author-social.linkedin:hover{color:#7ec8ff}.author-social.facebook:hover{color:#9bbcff}.author-social.instagram:hover{color:#ff9fce}.author-social.github:hover{color:#fff}.author-social.youtube:hover{color:#ff8c8c}
+.page-nav{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:10px max(18px,calc((100vw - var(--max))/2));background:#151a23;border-bottom:1px solid var(--border)}
+.page-nav a{padding:7px 10px;border:1px solid #3c4658;border-radius:7px;background:#202733;color:var(--text);font-size:12px;text-decoration:none}
+.page-nav a:hover,.page-nav a.active{background:#d9e9ff;color:#101319;border-color:#d9e9ff}
+.page-nav .spacer{flex:1}.searchbox{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:12px}
+.searchbox input{width:190px;background:#0e1722;border:1px solid #3c4658;border-radius:7px;color:var(--text);padding:7px 9px}
 
-				<!-- Main -->
-					<div id="main">
-						<div class="inner">
+/* Travel page */
+.hero{padding:44px 0 30px;border-bottom:1px solid var(--border)}
+.eyebrow{font-size:11px;letter-spacing:2px;color:var(--green);text-transform:uppercase;font-weight:750}
+.hero h1{font-size:clamp(2.35rem,4.6vw,3.8rem);line-height:1.06;letter-spacing:-.04em;margin:7px 0 12px}
+.hero .lead{font-size:clamp(1.08rem,1.8vw,1.28rem);color:#d5dfec;max-width:840px;margin:0 0 12px}
+.hero p{color:#bdc8d8;max-width:900px;margin:0 0 14px}
+.notice{display:inline-flex;align-items:center;gap:8px;padding:9px 11px;border:1px solid #435268;border-radius:8px;background:#151e2a;color:#c8d3e1;font-size:12px}
+.notice i{color:var(--amber)}
+.hero-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:17px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:8px 11px;border:1px solid #4b596d;border-radius:7px;background:#202a37;color:#fff;font-size:12px;font-weight:700;text-decoration:none}
+.btn:hover{text-decoration:none;background:#d9e9ff;color:#101319;border-color:#d9e9ff}
 
-							<!-- Header -->
-								<header id="header">
-									<a href="https://rajit13.github.io/" class="logo"><strong>Fahim's</strong> portfolio</a>
-									<ul class="icons">
-										<li><a href="https://www.linkedin.com/in/fahim-rajit-hossain/" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
-										<li><a href="https://www.facebook.com/fahimrajithossain.shwadhin" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-										<li><a href="https://www.instagram.com/rajit_13/" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-										<li><a href="https://github.com/Rajit13/" class="icon brands fa-github"><span class="label">Github</span></a></li>
-										<li><a href="https://www.youtube.com/@Rajit_13/" class="icon brands fa-youtube"><span class="label">YouTube</span></a></li>
-									</ul>
-								</header>
+.section{padding:34px 0;border-bottom:1px solid var(--border)}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:17px}
+.section-head h2{font-size:clamp(1.7rem,3vw,2.3rem);letter-spacing:-.025em;margin:3px 0 0}
+.section-head p{margin:0;color:var(--muted);max-width:600px}
 
-							<!-- Content -->
-								<section>
-									<header class="main">
-										<h1>My Travels Around the World</h1>
-									</header>
+.country-list{display:flex;flex-wrap:wrap;gap:8px}
+.country{display:inline-flex;align-items:center;gap:7px;padding:8px 11px;border:1px solid var(--border);border-radius:999px;background:#131c27;color:#dce5f0;font-size:12px}
+.country .flag{font-size:18px;line-height:1}
+.country.note{border-style:dashed;color:#aeb8c7}
+.legend{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px;color:#9eabbb;font-size:11px}
+.legend span{display:inline-flex;align-items:center;gap:5px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--green)}.dot.invited{background:transparent;border:1px dashed var(--amber)}
 
-									<p>Due to my work and endeavors, I'm privileged to have visited India, Nepal, Bhutan, Singapore, China, Georgia, Poland, Hungary, Brazil, Sweden, and France. Most of the travel is to participate in different events (Olympiads, Internship, Conference, Summer/Winter School, etc.). <strong>I'll eventually add my travel photos and experiences here.</strong></p>
+.timeline{position:relative;max-width:1020px;margin:0 auto;padding:3px 0}
+.timeline:before{content:"";position:absolute;left:117px;top:8px;bottom:8px;width:1px;background:linear-gradient(180deg,rgba(125,218,179,.55),rgba(133,183,255,.38),rgba(191,156,255,.35))}
+.entry{display:grid;grid-template-columns:95px 26px minmax(0,1fr);gap:10px;position:relative;margin:0 0 14px}
+.when{text-align:right;padding-top:13px}.when strong{display:block;color:#fff;font-size:13px}.when span{display:block;color:#92a1b4;font-size:10px;line-height:1.3}
+.marker{display:flex;justify-content:center;padding-top:16px;position:relative;z-index:2}.marker:before{content:"";width:11px;height:11px;border:3px solid #0d131c;border-radius:50%;background:var(--green);box-shadow:0 0 0 1px rgba(125,218,179,.55)}
+.entry.invited .marker:before{background:#0d131c;border-color:#0d131c;box-shadow:0 0 0 2px var(--amber)}
+.travel-card{border:1px solid var(--border);border-radius:11px;background:rgba(18,26,37,.9);padding:15px 16px;transition:.18s ease}
+.travel-card:hover{border-color:#46566c;background:#151f2b}
+.entry.invited .travel-card{border-style:dashed;border-color:#67583f;background:#1a1918}
+.card-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.place{display:flex;gap:9px;align-items:flex-start}.place .flag{font-size:24px;line-height:1.2}.place h3{font-size:1.08rem;line-height:1.25;margin:0}.place .country-name{color:#9faec0;font-size:11px}
+.type{white-space:nowrap;padding:4px 7px;border:1px solid #415169;border-radius:999px;background:#162131;color:#a9caff;font-size:9px;text-transform:uppercase;letter-spacing:.08em;font-weight:800}
+.type.research{color:#9fe3c7;border-color:#35584c}.type.education{color:#e2c58b;border-color:#5b4c31}.type.invite{color:#efc783;border-color:#725d36}
+.event{margin:10px 0 5px;font-size:13px;color:#e7edf5;font-weight:700}.details{display:flex;gap:7px;flex-wrap:wrap;color:#b9c5d4;font-size:11px}
+.detail{padding:4px 7px;border-radius:6px;background:#0f1721;border:1px solid #293548}.detail strong{color:#e8eef7}
+.entry.invited .event{color:#ecd29c}.entry.invited .details{color:#c8bb9f}
 
+.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.summary-card{padding:17px;border:1px solid var(--border);border-radius:10px;background:#111923}
+.summary-card b{display:block;font-size:1.35rem;color:#fff}.summary-card span{font-size:11px;color:var(--muted)}
 
-									<style>
-									  .center-iframe {
-									    display: flex;
-									    justify-content: center;
-									    align-items: center;
-									    height: 100vh; /* Set the desired height of the centered area */
-									  }
-									</style>
-									
-									<div class="center-iframe">
-									  <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1NYYoa13wjLNGLvdEeveqrCJAuj05EFI&ehbc=2E312F" width="840" height="480"></iframe>
-									</div>
+.related{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.related-card{padding:18px;border:1px solid var(--border);border-radius:10px;background:#111923}
+.related-card h3{margin:0 0 6px}.related-card p{font-size:12.5px;color:var(--muted);margin:0 0 10px}
 
+/* Shared footer */
+.site-footer{border-top:1px solid var(--border);padding:20px 0 34px;color:#8694a6;font-size:11px}.site-footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.hidden-by-search{display:none!important}
 
-						</div>
-					</div>
-							
-				<!-- Sidebar -->
-					<div id="sidebar">
-						<div class="inner">
+@media(max-width:760px){
+  .timeline:before{left:8px}.entry{grid-template-columns:17px minmax(0,1fr);gap:10px;padding-left:0}.when{grid-column:2;text-align:left;padding:0 0 2px}.marker{grid-column:1;grid-row:1/3;padding-top:8px}.travel-card{grid-column:2}.summary-grid{grid-template-columns:1fr}.related{grid-template-columns:1fr}
+}
+@media(max-width:620px){
+  .author-bar{align-items:flex-start;flex-direction:column;padding:12px 16px}.author-id a{font-size:24px!important}.author-links{justify-content:flex-start}.page-nav{padding:9px 16px}.page-nav .spacer{display:none}.searchbox{width:100%}.searchbox input{flex:1;width:auto}
+  .hero{padding-top:30px}.section-head{align-items:flex-start;flex-direction:column}.card-top{flex-direction:column}.type{white-space:normal}
+}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="author-bar">
+    <div class="author-id">
+      <small>Professional travel · astronomy · education</small>
+      <a href="https://rajit13.github.io/">Fahim Rajit Hossain Shwadhin</a>
+    </div>
+    <nav class="author-links" aria-label="Author links">
+      <a class="orcid-link" href="https://orcid.org/0009-0002-4699-8059" target="_blank" rel="noopener">ORCID ↗</a>
+      <a class="author-social linkedin" href="https://www.linkedin.com/in/fahim-rajit-hossain/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      <a class="author-social facebook" href="https://www.facebook.com/fahimrajithossain.shwadhin" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a class="author-social instagram" href="https://www.instagram.com/rajit_13/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a class="author-social github" href="https://github.com/Rajit13/" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+      <a class="author-social youtube" href="https://www.youtube.com/@Rajit_13/" target="_blank" rel="noopener" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+    </nav>
+  </div>
+  <nav class="page-nav" aria-label="Page navigation">
+    <a href="https://rajit13.github.io/">Homepage</a>
+    <a href="research.html">Research</a>
+    <a href="olympiad.html">Astronomy Olympiads</a>
+    <a href="about.html">My Background</a>
+    <a class="active" href="travels.html">Travel</a>
+    <span class="spacer"></span>
+    <label class="searchbox"><span>Search page</span><input id="page-search" type="search" placeholder="Try Sweden, IOAA, CASSUM…" aria-label="Search this page"></label>
+  </nav>
+</header>
 
-							<!-- Search -->
-								<section id="search" class="alt">
-									<form method="post" action="#">
-										<input type="text" name="query" id="query" placeholder="Search" />
-									</form>
-								</section>
-							<!-- Menu -->
-								<nav id="menu">
-									<header class="major">
-										<h2>Menu</h2>
-									</header>
-									<ul>
-										<li><a href="https://rajit13.github.io/">Homepage</a></li>
-										<li><a href="research.html">Research</a></li>
-										<li><a href="olympiad.html">Astronomy Olympiads</a></li>
-										<li>
-											<span class="opener">Blogs and Posts</span>
-											<ul>
-												<li><a href="https://rajit13.github.io/libration.html">Libration of Moon</a></li>
-											</ul>
-										</li>
-										<li><a href="travels.html">Travel</a></li>
-										<li></li>
-								
-									</ul>
-								</nav>
+<main>
+  <section class="hero searchable">
+    <div class="wrap">
+      <div class="eyebrow">A timeline of astronomy-related travel</div>
+      <h1>Work and Academic Travel</h1>
+      <p class="lead">International travel connected to astronomy research, Olympiads, education programs, workshops, and scientific training.</p>
+      <p>This is intentionally <strong>not a general travel diary</strong>. Personal holidays and leisure trips are not included; the timeline below records travel directly connected to my academic, research, Olympiad, or astronomy-education work.</p>
+      <div class="notice"><i class="fas fa-info-circle"></i><span>The Leiden 2020 entry is shown separately because I was invited to LEAPS, but the physical trip could not take place due to COVID-19.</span></div>
+      <div class="hero-actions"><a class="btn" href="research.html">Research projects</a><a class="btn" href="olympiad.html">Olympiad work</a><a class="btn" href="about.html">Background</a></div>
+    </div>
+  </section>
 
-							<!-- Section -->
-								<section>
-									<header class="major">
-										<h2>Research and Projects</h2>
-									</header>
-									<div class="mini-posts">
-										<article>
-											<a href="https://rajit13.github.io/research.html#bdlensing" class="image"><img src="images/bdlensing.gif" alt="Lens Modeling" /></a>
-											<p> Galaxy Lens Modeling.</p>
-										</article>
-										<article>
-											<a href="https://bdoaa.org/about-us/" class="image"><img src="images/working.jpg" alt="" /></a>
-											<p>Working on Script Moderation of Olympiads</p>
-										</article>
-										<article>
-											<a href="#" class="image"><img src="images/oly2.jpg" alt="" /></a>
-											<p> Bangladesh Team at IOAA 2023, Chorzow, Poland.</p>
-										</article>
-									</div>
-									<ul class="actions">
-										<li><a href="research.html" class="button">More</a></li>
-									</ul>
-								</section>
+  <section class="section searchable">
+    <div class="wrap">
+      <div class="section-head"><div><div class="eyebrow">Countries</div><h2>Professional travel footprint</h2></div><p>Countries represented in the work timeline below. The Netherlands is marked as an invitation because the 2020 trip was cancelled.</p></div>
+      <div class="country-list">
+        <span class="country"><span class="flag">🇮🇳</span>India</span>
+        <span class="country"><span class="flag">🇫🇷</span>France</span>
+        <span class="country"><span class="flag">🇨🇳</span>China</span>
+        <span class="country"><span class="flag">🇭🇺</span>Hungary</span>
+        <span class="country note"><span class="flag">🇳🇱</span>Netherlands · invited</span>
+        <span class="country"><span class="flag">🇬🇪</span>Georgia</span>
+        <span class="country"><span class="flag">🇵🇱</span>Poland</span>
+        <span class="country"><span class="flag">🇸🇪</span>Sweden</span>
+        <span class="country"><span class="flag">🇧🇷</span>Brazil</span>
+        <span class="country"><span class="flag">🇳🇵</span>Nepal</span>
+        <span class="country"><span class="flag">🇹🇼</span>Taiwan</span>
+        <span class="country"><span class="flag">🇻🇳</span>Vietnam</span>
+      </div>
+      <div class="legend"><span><i class="dot"></i> completed / scheduled work travel</span><span><i class="dot invited"></i> invited, physical travel cancelled</span></div>
+    </div>
+  </section>
 
-							<!-- Section -->
-								<section>
-									<header class="major">
-										<h2>Get in touch</h2>
-									</header>
-									<p> You can contact me through any social media or the information below.</p>
-									<ul class="contact">
-										<li class="icon solid fa-envelope"><a href="mailto:farahoshwadhin.13@gmail.com"> farahoshwadhin.13@gmail.com</a></li>
-										<li class="icon solid fa-phone">(+880) 1781259313</li>
-										<li class="icon solid fa-home">75-A/W, University of Rajshahi Residential Area,<br />
-										 Bangladesh-6205</li>
-									</ul>
-								</section>
+  <section class="section searchable" id="timeline">
+    <div class="wrap">
+      <div class="section-head"><div><div class="eyebrow">2016–2026</div><h2>Timeline</h2></div><p>Olympiad representation gradually expanded into team leadership, research fellowships, astronomy education, and international schools.</p></div>
 
-							<!-- Footer -->
-								<footer id="footer">
-									<p class="copyright">&copy; Fahim. All rights reserved. </p>
-								</footer>
+      <div class="timeline">
+        <article class="entry">
+          <div class="when"><strong>Dec 2016</strong><span>Bhubaneswar</span></div><div class="marker"></div>
+          <div class="travel-card"><div class="card-top"><div class="place"><span class="flag">🇮🇳</span><div><h3>Bhubaneswar, India</h3><span class="country-name">India</span></div></div><span class="type">Olympiad</span></div><div class="event">10th International Olympiad on Astronomy and Astrophysics (IOAA)</div><div class="details"><span class="detail"><strong>Role:</strong> Bangladesh Representative</span></div></div>
+        </article>
 
-						</div>
-					</div>
+        <article class="entry">
+          <div class="when"><strong>Aug 2017</strong><span>Nice / Côte d’Azur</span></div><div class="marker"></div>
+          <div class="travel-card"><div class="card-top"><div class="place"><span class="flag">🇫🇷</span><div><h3>Nice, France</h3><span class="country-name">France</span></div></div><span class="type education">Olympiad</span></div><div class="event">11th International Earth Science Olympiad (IESO 2017)</div><div class="details"><span class="detail"><strong>Role:</strong> Bangladesh Representative</span><span class="detail">Bronze Medalist</span></div></div>
+        </article>
 
-			</div>
+        <article class="entry">
+          <div class="when"><strong>Dec 2018</strong><span>Beijing</span></div><div class="marker"></div>
+          <div class="travel-card"><div class="card-top"><div class="place"><span class="flag">🇨🇳</span><div><h3>Beijing, China</h3><span class="country-name">China</span></div></div><span class="type">Olympiad</span></div><div class="event">IOAA 2018</div><div class="details"><span class="detail"><strong>Role:</strong> Bangladesh Team Leader</span><span class="detail">First time as Team Leader</span></div></div>
+        </article>
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+        <article class="entry">
+          <div class="when"><strong>Aug 2019</strong><span>Keszthely</span></div><div class="marker"></div>
+          <div class="travel-card"><div class="card-top"><div class="place"><span class="flag">🇭🇺</span><div><h3>Keszthely, Hungary</h3><span class="country-name">Hungary</span></div></div><span class="type">Olympiad</span></div><div class="event">IOAA 2019</div><div class="details"><span class="detail"><strong>Role:</strong> Bangladesh Team Leader</span><span class="detail">Second time as Team Leader</span></div></div>
+        </article>
 
-	</body>
+        <article class="entry invited">
+          <div class="when"><strong>May–Aug 2020</strong><span>Leiden · invitation</span></div><div class="marker"></div>
+          <div class="travel-card"><div class="card-top"><div class="place"><span class="flag">🇳🇱</span><div><h3>Leiden, Netherlands</h3><span class="country-name">Netherlands</span></div></div><span class="type invite">Invited · no travel</span></div><div class="event">Leiden/ESA Astrophysics Program for Summer Students (LEAPS) 2020</div><div class="details"><span class="detail"><strong>Status:</strong> Invited participant</span><span class="detail">Physical travel cancelled due to COVID-19</span></div></div>
+        </article>
+
+        <article class="entry">
+          <div class="when"><strong>Aug 2022</strong><span>Kutaisi</span></div><div class="marker"></div>
+          <div class="travel-card"><div class="card-top"><div class="place"><span class="flag">🇬🇪</span><div><h3>Kutaisi, Georgia</h3><span class="country-name">Georgia</span></div></div><span class="type">Olympiad</span></div><div class="event">IOAA 2022</div><div class="details"><span class="detail"><strong>Role:</strong> Bangladesh Team Leader</span></div></div>
+        </article>
+
+        <article class="entry">
+          <div class="when"><strong>Aug 2023</strong><span>Chorzów</span></div><div class="marker"></div>
+          <div class="travel-card"><div class="card-top"><div class="place"><span class="flag">🇵🇱</span><div><h3>Chorzów, Poland</h3><span class="country-name">Poland</span></div></div><span class="type">Olympiad</span></div><div class="event">IOAA 2023</div><div class="details"><span class="detail"><strong>Role:</strong> Bangladesh Team Leader</span></div></div>
+        </article>
+
+        <article class="entry">
+          <div class="when"><strong>May–Aug 2024</strong><span>Gothenburg</span></div><div class="marker"></div>
+          <div class="travel-card"><div class="card-top"><div class="place"><span class="flag">🇸🇪</span><div><h3>Gothenburg, Sweden</h3><span class="country-name">Sweden</span></div></div><span class="type research">Research</span></div><div class="event">CASSUM 2024</div><div class="details"><span class="detail"><strong>Role:</strong> CASSUM Research Fellow</span><span class="detail">Exoplanet atmosphere research</span></div></div>
+        </article>
+
+        <article class="entry">
+          <div class="when"><strong>Aug 2024</strong><span>Rio de Janeiro</span></div><div class="marker"></div>
+          <div class="travel-card"><div class="card-top"><div class="place"><span class="flag">🇧🇷</span><div><h3>Rio de Janeiro, Brazil</h3><span class="country-name">Brazil</span></div></div><span class="type">Olympiad</span></div><div class="event">IOAA 2024</div><div class="details"><span class="detail"><strong>Role:</strong> Bangladesh Team Leader</span></div></div>
+        </article>
+
+        <article class="entry">
+          <div class="when"><strong>Oct 2024</strong><span>Kathmandu</span></div><div class="marker"></div>
+          <div class="travel-card"><div class="card-top"><div class="place"><span class="flag">🇳🇵</span><div><h3>Kathmandu, Nepal</h3><span class="country-name">Nepal</span></div></div><span class="type">Olympiad</span></div><div class="event">IOAAjr 2024</div><div class="details"><span class="detail"><strong>Role:</strong> Bangladesh Team Leader</span></div></div>
+        </article>
+
+        <article class="entry">
+          <div class="when"><strong>Dec 2024</strong><span>Kathmandu</span></div><div class="marker"></div>
+          <div class="travel-card"><div class="card-top"><div class="place"><span class="flag">🇳🇵</span><div><h3>Kathmandu, Nepal</h3><span class="country-name">Nepal</span></div></div><span class="type education">Astronomy education</span></div><div class="event">1st Asian Regional Shaw–IAU Workshop on Astronomy for Education</div><div class="details"><span class="detail"><strong>Role:</strong> Bangladesh Representative</span></div></div>
+        </article>
+
+        <article class="entry">
+          <div class="when"><strong>Aug 2025</strong><span>Mumbai</span></div><div class="marker"></div>
+          <div class="travel-card"><div class="card-top"><div class="place"><span class="flag">🇮🇳</span><div><h3>Mumbai, India</h3><span class="country-name">India</span></div></div><span class="type">Olympiad</span></div><div class="event">IOAA 2025</div><div class="details"><span class="detail"><strong>Role:</strong> Bangladesh Team Leader</span></div></div>
+        </article>
+
+        <article class="entry">
+          <div class="when"><strong>Nov–Dec 2025</strong><span>Taipei</span></div><div class="marker"></div>
+          <div class="travel-card"><div class="card-top"><div class="place"><span class="flag">🇹🇼</span><div><h3>Taipei, Taiwan</h3><span class="country-name">Taiwan</span></div></div><span class="type education">Astronomy school</span></div><div class="event">47th International School for Young Astronomers</div><div class="details"><span class="detail"><strong>Role:</strong> Bangladesh Participant</span></div></div>
+        </article>
+
+        <article class="entry">
+          <div class="when"><strong>Sep 2026</strong><span>Hanoi</span></div><div class="marker"></div>
+          <div class="travel-card"><div class="card-top"><div class="place"><span class="flag">🇻🇳</span><div><h3>Hanoi, Vietnam</h3><span class="country-name">Vietnam</span></div></div><span class="type">Olympiad</span></div><div class="event">IOAA 2026</div><div class="details"><span class="detail"><strong>Role:</strong> Bangladesh Team Leader</span></div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section searchable">
+    <div class="wrap">
+      <div class="section-head"><div><div class="eyebrow">At a glance</div><h2>What these trips represent</h2></div><p>The timeline reflects three connected parts of my astronomy work rather than tourism.</p></div>
+      <div class="summary-grid">
+        <div class="summary-card"><b>Olympiads</b><span>International representation as a student, then recurring Bangladesh Team Leader responsibilities.</span></div>
+        <div class="summary-card"><b>Research</b><span>International research training and fellowship work, including LEAPS and CASSUM.</span></div>
+        <div class="summary-card"><b>Education</b><span>Astronomy-education workshops and international schools that connect research with teaching and outreach.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section searchable">
+    <div class="wrap">
+      <div class="section-head"><div><div class="eyebrow">Related pages</div><h2>Continue through the portfolio</h2></div></div>
+      <div class="related">
+        <article class="related-card"><h3>Research</h3><p>Read about CASSUM, strong gravitational lensing, exoplanet spectroscopy, and astronomy-education research.</p><a href="research.html">Go to Research →</a></article>
+        <article class="related-card"><h3>Astronomy Olympiads</h3><p>See my IOAA work, BDOAA training, notes, outreach, and observational astronomy resources.</p><a href="olympiad.html">Go to Astronomy Olympiads →</a></article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer"><div class="wrap"><span>© Fahim Rajit Hossain Shwadhin. All rights reserved.</span><span>Professional travel · astronomy · research · education</span></div></footer>
+
+<script>
+(()=>{
+  const input=document.getElementById('page-search');
+  const blocks=[...document.querySelectorAll('.searchable')];
+  input.addEventListener('input',()=>{
+    const q=input.value.trim().toLowerCase();
+    blocks.forEach(block=>block.classList.toggle('hidden-by-search',!!q&&!block.innerText.toLowerCase().includes(q)));
+  });
+})();
+</script>
+</body>
 </html>
