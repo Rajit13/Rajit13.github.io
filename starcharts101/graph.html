@@ -217,7 +217,7 @@ $('#toc-toggle').onclick=()=>{const p=$('#toc-panel'),open=p.classList.toggle('o
 Promise.all([fetch(texUrl,{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Book source unavailable');return r.text()}),fetch(tocUrl,{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Book contents unavailable');return r.text()})]).then(([tex,toc])=>buildToc(parseToc(toc),tex)).catch(e=>{console.error(e);$('#tocAccordion').textContent='Book contents could not load. Please use the PDF link above.'});
 })();
 </script>
-<script src="graph-engine-v8.js?v=20260916" defer></script>
+<script src="graph-engine-v8.js?v=96900abd1055" defer></script>
 </body>
 </html>
 
