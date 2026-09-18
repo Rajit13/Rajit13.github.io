@@ -20,7 +20,7 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}img{d
 .site-header{border-bottom:1px solid var(--border)}
 .author-bar{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:12px max(18px,calc((100vw - var(--max))/2));border-bottom:1px solid var(--border);background:rgba(13,19,29,.94);backdrop-filter:blur(15px)}
 .author-id{display:flex;flex-direction:column;gap:1px;min-width:0}.author-id small{color:var(--green);font-size:10px;letter-spacing:1.5px;text-transform:uppercase}
-.author-id a{color:#7ec8ff;text-decoration:none;font-weight:700;font-size:2em;line-height:1.1;font-variant:small-caps;font-variant-caps:small-caps;font-feature-settings:"smcp" 1;letter-spacing:.08em;font-family:"Palatino Linotype","Book Antiqua",Georgia,serif}
+.author-id a{color:#7ec8ff;text-decoration:none;font-weight:700;font-size:30px;line-height:1.1;font-variant:small-caps;font-variant-caps:small-caps;font-feature-settings:"smcp" 1;letter-spacing:.08em;font-family:"Palatino Linotype","Book Antiqua",Georgia,serif}
 .author-links{display:flex;align-items:center;gap:7px;flex-wrap:wrap;justify-content:flex-end}
 .orcid-link{display:inline-flex;align-items:center;gap:5px;height:34px;padding:0 10px;border:1px solid #485268;border-radius:9px;color:var(--text);background:#202733;font-size:12px;font-weight:650}
 .author-social{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border:1px solid #485268;border-radius:9px;background:#202733;color:#dce8f6;font-size:14px;transition:.18s ease}
@@ -41,6 +41,8 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}img{d
 .site-footer{border-top:1px solid var(--border);padding:20px 0 34px;color:#8694a6;font-size:11px}.site-footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 @media(max-width:900px){.reader-layout{grid-template-columns:1fr}.reader-nav{position:static;order:-1}.project-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:620px){.author-bar{align-items:flex-start;flex-direction:column;padding:12px 16px}.author-links{justify-content:flex-start}.page-nav{padding:9px 16px}.page-nav .spacer{display:none}.searchbox{width:100%}.searchbox input{flex:1;width:auto}.reader{padding:22px 18px;font-size:15.5px}.reader .image.right{float:none;width:100%;margin:1em 0}.project-grid,.contact-panel{grid-template-columns:1fr}.article-hero{padding-top:30px}}
+
+@media(max-width:620px){.author-id a{font-size:24px!important}}
 </style>
 </head>
 <body>
@@ -57,7 +59,7 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}img{d
     </nav>
   </div>
   <nav class="page-nav" aria-label="Page navigation">
-    <a href="https://rajit13.github.io/">Homepage</a><a href="research.html">Research</a><a href="olympiad.html">Astronomy Olympiads</a><a href="about.html">My Background</a><a href="travels.html">Travel</a><a href="elements.html">Art</a>
+    <a href="https://rajit13.github.io/">Homepage</a><a href="research.html">Research</a><a href="olympiad.html">Astronomy Olympiads</a><a href="about.html">My Background</a><a href="travels.html">Travel</a>
     <span class="spacer"></span><label class="searchbox"><span>Search page</span><input id="page-search" type="search" placeholder="Search this article…" aria-label="Search this article"></label>
   </nav>
 </header>
