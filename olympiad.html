@@ -1,239 +1,358 @@
-<!DOCTYPE HTML>
-<!--
-	Editorial by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>Olympiad, Outreach, and Teaching</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<link rel="icon" href="images/ori_website.png" type="image/x-icon">
-		<style>
-		    figcaption {
-			text-align: center;
-		    }
-		</style>
-	</head>
-	<body class="is-preload">
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Olympiad, Outreach, and Teaching · Fahim Rajit Hossain Shwadhin</title>
+<meta name="description" content="Astronomy Olympiad training, outreach, teaching, notes, books, observational resources, and astrophotography by Fahim Rajit Hossain Shwadhin.">
+<link rel="icon" href="images/ori_website.png" type="image/x-icon">
+<link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#101319;--panel:#191e27;--panel2:#151a23;--panel3:#111720;
+  --border:#30394a;--border2:#46556a;--muted:#b3bdce;--text:#edf2fa;
+  --blue:#85b7ff;--green:#7ddab3;--amber:#f5c47b;--violet:#bf9cff;--red:#ff9287;
+  --shadow:0 18px 50px rgba(0,0,0,.24);--radius:14px;--max:1220px
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:
+radial-gradient(circle at 18% 2%,rgba(86,132,211,.13),transparent 28rem),
+radial-gradient(circle at 90% 28%,rgba(91,211,187,.07),transparent 28rem),
+linear-gradient(180deg,#0b1017,#101319 36%,#0b1017);
+color:var(--text);font:15px/1.65 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.18;background-image:
+radial-gradient(circle at 12% 18%,#fff 0 1px,transparent 1.4px),
+radial-gradient(circle at 42% 78%,#fff 0 1px,transparent 1.4px),
+radial-gradient(circle at 72% 34%,#dcecff 0 1px,transparent 1.4px),
+radial-gradient(circle at 90% 74%,#fff 0 1px,transparent 1.4px);
+background-size:220px 220px,310px 310px,260px 260px,360px 360px}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+img{display:block;max-width:100%}button,input{font:inherit}
+.wrap{width:min(calc(100% - 36px),var(--max));margin:0 auto}
+.site-header{border-bottom:1px solid var(--border)}
+.author-bar{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:12px max(18px,calc((100vw - var(--max))/2));border-bottom:1px solid var(--border);background:rgba(13,19,29,.94);backdrop-filter:blur(15px)}
+.author-id{display:flex;flex-direction:column;gap:1px;min-width:0}
+.author-id small{color:var(--green);font-size:10px;letter-spacing:1.5px;text-transform:uppercase}
+.author-id a{color:#7ec8ff;text-decoration:none;font-weight:700;font-size:2em;line-height:1.1;font-variant:small-caps;font-variant-caps:small-caps;font-feature-settings:"smcp" 1;letter-spacing:.08em;font-family:"Palatino Linotype","Book Antiqua",Georgia,serif}
+.author-links{display:flex;align-items:center;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+.orcid-link{display:inline-flex;align-items:center;gap:5px;height:34px;padding:0 10px;border:1px solid #485268;border-radius:9px;color:var(--text);background:#202733;font-size:12px;font-weight:650}
+.author-social{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border:1px solid #485268;border-radius:9px;background:#202733;color:#dce8f6;font-size:14px;transition:.18s ease}
+.author-social:hover{background:#303c4e;transform:translateY(-1px);text-decoration:none}
+.author-social.linkedin:hover{color:#7ec8ff}.author-social.facebook:hover{color:#9bbcff}.author-social.instagram:hover{color:#ff9fce}.author-social.github:hover{color:#fff}.author-social.youtube:hover{color:#ff8c8c}
+.page-nav{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:10px max(18px,calc((100vw - var(--max))/2));background:#151a23;border-bottom:1px solid var(--border)}
+.page-nav a{padding:7px 10px;border:1px solid #3c4658;border-radius:7px;background:#202733;color:var(--text);font-size:12px;text-decoration:none}
+.page-nav a:hover,.page-nav a.active{background:#d9e9ff;color:#101319;border-color:#d9e9ff}
+.page-nav .spacer{flex:1}
+.searchbox{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:12px}
+.searchbox input{width:190px;background:#0e1722;border:1px solid #3c4658;border-radius:7px;color:var(--text);padding:7px 9px}
+.hero{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(300px,.92fr);gap:30px;align-items:stretch;padding:32px 0 24px}
+.eyebrow{font-size:11px;letter-spacing:2px;color:var(--green);text-transform:uppercase;font-weight:750}
+.hero h1{font-size:clamp(2.3rem,5vw,4.5rem);line-height:1.04;letter-spacing:-.045em;margin:7px 0 14px}
+.hero p{color:#c5d0df;max-width:760px;margin:8px 0}
+.hero-media{position:relative;min-height:370px;border:1px solid var(--border2);border-radius:16px;overflow:hidden;background:#09111c;box-shadow:var(--shadow)}
+.hero-media img{width:100%;height:100%;object-fit:cover}
+.hero-media:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(7,12,19,.86))}
+.hero-caption{position:absolute;z-index:2;left:18px;right:18px;bottom:16px;padding:12px 13px;border:1px solid rgba(209,226,247,.18);border-radius:9px;background:rgba(8,15,24,.74);backdrop-filter:blur(9px);color:#dbe6f4;font-size:12px}
+.hero-caption strong{display:block;color:#fff;font-size:14px}
+.factrow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:18px}
+.fact{padding:12px;border:1px solid var(--border);border-radius:9px;background:#151d28}
+.fact b{display:block;color:#fff;font-size:1.05rem}.fact span{color:var(--muted);font-size:11px}
+.resource-strip{padding:22px 0 34px}
+.resource-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:13px}
+.resource-head h2,.section-head h2{margin:3px 0 0;font-size:clamp(1.7rem,3vw,2.35rem);letter-spacing:-.025em}
+.resource-head p,.section-head p{margin:0;color:var(--muted);max-width:610px}
+.resources{display:grid;grid-template-columns:1.2fr .9fr .9fr;gap:12px}
+.resource{position:relative;overflow:hidden;padding:20px;border:1px solid var(--border2);border-radius:12px;background:linear-gradient(145deg,#172130,#111923);min-height:195px}
+.resource:before{content:"";position:absolute;width:180px;height:180px;border:1px solid rgba(133,183,255,.08);border-radius:50%;right:-60px;top:-80px}
+.resource.primary{border-left:4px solid var(--blue)}
+.resource.book{border-left:4px solid var(--amber)}
+.resource.chart{border-left:4px solid var(--green)}
+.resource .kicker{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--green);font-weight:800}
+.resource.book .kicker{color:var(--amber)}.resource.chart .kicker{color:var(--green)}
+.resource h3{font-size:1.28rem;line-height:1.2;margin:7px 0 8px}.resource p{color:#bbc7d7;margin:0 0 13px;font-size:13px}
+.resource a.cta{display:inline-flex;padding:7px 10px;border-radius:7px;border:1px solid #53647a;background:#202b39;color:#fff;font-weight:700;font-size:12px;text-decoration:none}
+.resource a.cta:hover{background:#d9e9ff;color:#101319}
+.section{padding:33px 0;border-top:1px solid var(--border)}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:18px}
+.panel{border:1px solid var(--border);border-radius:var(--radius);background:rgba(23,30,40,.86);padding:22px;box-shadow:0 12px 35px rgba(0,0,0,.12)}
+.split{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(260px,.65fr);gap:22px;align-items:start}
+.logo-card{border:1px solid var(--border);border-radius:12px;background:#0d1520;padding:18px;display:flex;align-items:center;justify-content:center;min-height:180px}
+.logo-card img{max-height:150px;object-fit:contain}
+.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.gallery figure{margin:0;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:#111923}
+.gallery .imagebox{aspect-ratio:4/3;overflow:hidden;background:#0a1018}
+.gallery img{width:100%;height:100%;object-fit:cover;transition:.2s ease}.gallery figure:hover img{transform:scale(1.025)}
+.gallery figcaption{padding:8px 9px;text-align:center;color:#aeb9c9;font-size:11px}
+.subhead{margin:22px 0 11px;font-size:1.05rem;color:#fff}
+.teaching{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.teach-card{border:1px solid var(--border);border-radius:10px;background:#121a25;padding:18px}
+.teach-card h3{margin:0 0 4px;font-size:1.15rem}.teach-card .years{color:var(--green);font-size:11px;font-weight:750;letter-spacing:.08em;text-transform:uppercase}
+.teach-card ol{margin:12px 0 0;padding-left:20px;color:#c4cfdd}
+.notes-feature{border:1px solid #405a76;border-left:4px solid var(--blue);border-radius:10px;background:linear-gradient(145deg,#152131,#101923);padding:22px}
+.notes-feature h3{font-size:1.6rem;margin:3px 0 7px}.notes-feature>p{color:#c4cfdd;max-width:920px}
+.notes-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:16px}
+.note-link{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:#101925;color:#dce7f4;text-decoration:none}
+.note-link:hover{border-color:#58718d;background:#172436;text-decoration:none}
+.note-link span{min-width:0}.note-link i{color:var(--blue)}
+.new{color:var(--green);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.07em}
+.youtube-callout{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-top:15px;padding:13px 14px;border-radius:8px;background:#191821;border:1px solid #3a3543}
+.youtube-callout p{margin:0;color:#c5cddd}.ytbtn{display:inline-flex;align-items:center;gap:7px;white-space:nowrap;padding:8px 11px;border-radius:7px;background:#30212a;border:1px solid #68404b;color:#ffd9df;font-weight:700;text-decoration:none}
+.ytbtn:hover{text-decoration:none;background:#4a2a35}
+.outreach-copy p{color:#c4cfdd}
+.project-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.project-card{border:1px solid var(--border);border-radius:10px;overflow:hidden;background:#111923}
+.project-card img{width:100%;height:155px;object-fit:cover}.project-card div{padding:11px}.project-card p{margin:0;color:var(--muted);font-size:12px}
+.utility{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.utility-card{padding:20px;border:1px solid var(--border);border-radius:12px;background:#111923}
+.utility-card h3{margin-top:0}.site-menu{display:flex;flex-wrap:wrap;gap:7px}.site-menu a{padding:7px 9px;border-radius:7px;border:1px solid #39485b;background:#17212d;color:#dbe6f4;text-decoration:none;font-size:12px}.site-menu a:hover{background:#26364a}
+.contact{list-style:none;padding:0;margin:0;display:grid;gap:8px;color:#c6d0de}.contact li{display:flex;gap:9px;align-items:flex-start}.contact i{width:16px;color:var(--blue);margin-top:5px}
+.footer{border-top:1px solid var(--border);padding:20px 0 34px;color:#8694a6;font-size:11px}.footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.hidden-by-search{display:none!important}
+@media(max-width:930px){.hero,.split{grid-template-columns:1fr}.hero-media{min-height:300px}.resources{grid-template-columns:1fr}.gallery{grid-template-columns:repeat(2,1fr)}.teaching,.utility{grid-template-columns:1fr}.project-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.author-bar{align-items:flex-start;flex-direction:column;padding:12px 16px}.author-links{justify-content:flex-start}.page-nav{padding:9px 16px}.page-nav .spacer{display:none}.searchbox{width:100%}.searchbox input{flex:1;width:auto}.hero{padding-top:22px}.factrow,.gallery,.notes-grid,.project-grid{grid-template-columns:1fr}.resource-head,.section-head{align-items:flex-start;flex-direction:column}.youtube-callout{align-items:flex-start;flex-direction:column}.hero h1{font-size:2.8rem}}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="author-bar">
+    <div class="author-id">
+      <small>Olympiad · Outreach · Teaching</small>
+      <a href="https://rajit13.github.io/">Fahim Rajit Hossain Shwadhin</a>
+    </div>
+    <nav class="author-links" aria-label="Author links">
+      <a class="orcid-link" href="https://orcid.org/0009-0002-4699-8059" target="_blank" rel="noopener">ORCID ↗</a>
+      <a class="author-social linkedin" href="https://www.linkedin.com/in/fahim-rajit-hossain/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      <a class="author-social facebook" href="https://www.facebook.com/fahimrajithossain.shwadhin" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a class="author-social instagram" href="https://www.instagram.com/rajit_13/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a class="author-social github" href="https://github.com/Rajit13/" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+      <a class="author-social youtube" href="https://www.youtube.com/@Rajit_13/" target="_blank" rel="noopener" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+    </nav>
+  </div>
+  <nav class="page-nav" aria-label="Page navigation">
+    <a href="https://rajit13.github.io/">Homepage</a>
+    <a href="research.html">Research</a>
+    <a class="active" href="olympiad.html">Astronomy Olympiads</a>
+    <a href="about.html">My Background</a>
+    <a href="travels.html">Travel</a>
+    <a href="elements.html">Art</a>
+    <span class="spacer"></span>
+    <label class="searchbox"><span>Search page</span><input id="page-search" type="search" placeholder="Try notes, BDOAA, telescope…" aria-label="Search this page"></label>
+  </nav>
+</header>
 
-		<!-- Wrapper -->
-			<div id="wrapper">
+<main>
+<div class="wrap">
+  <section class="hero searchable">
+    <div>
+      <div class="eyebrow">From participant to trainer and team leader</div>
+      <h1>Olympiad, Outreach, and Teaching</h1>
+      <p>Since high school, I've been participating in different science contests, and the Astronomy Olympiad had a major impact on me. I've participated in two different international olympiads as a student (i.e. IOAA 2016 and IESO 2017, Bronze). Since 2018, I've been working at the Bangladesh Olympiad on Astronomy and Astrophysics (BDOAA) as an academic coordinator and coach. I was the <strong>youngest team leader</strong> of the International Olympiad on Astronomy and Astrophysics (IOAA) on behalf of Bangladesh in 2018 among experienced Astronomers and educators from more than 43 countries when I participated first. ✨</p>
+      <p>Here I'll eventually add all the blogs, notes, and details about the Astronomy Olympiad and outreach I've created over the years.</p>
+      <div class="factrow">
+        <div class="fact"><b>IOAA 2016</b><span>International Olympiad participant</span></div>
+        <div class="fact"><b>Since 2018</b><span>Bangladesh team leader & trainer</span></div>
+        <div class="fact"><b>IESO 2017</b><span>Bronze medal</span></div>
+      </div>
+    </div>
+    <figure class="hero-media">
+      <img src="images/oly2.jpg" alt="Bangladesh team at an International Olympiad on Astronomy and Astrophysics">
+      <figcaption class="hero-caption"><strong>A decade shaped by Olympiad astronomy</strong>Competition, training, observation, teaching, and open resources.</figcaption>
+    </figure>
+  </section>
 
-				<!-- Main -->
-					<div id="main">
-						<div class="inner">
+  <section class="resource-strip searchable" id="featured-resources">
+    <div class="resource-head">
+      <div><div class="eyebrow">Featured preparation resources</div><h2>Start here for Astronomy Olympiad preparation</h2></div>
+      <p>My notes, open observational-astronomy book, and Bengali textbook are collected here so students can move directly from preparation to practice.</p>
+    </div>
+    <div class="resources">
+      <article class="resource primary">
+        <div class="kicker">Olympiad notes · highlighted</div>
+        <h3>Astronomy Notes for Olympiads</h3>
+        <p>Olympiad-focused notes written mainly for Bangladesh team preparation for IOAA, including new 2026 material, problem solving, analemma, radiation, and problem-of-the-day resources.</p>
+        <a class="cta" href="#notes">Browse all Olympiad notes ↓</a>
+      </article>
+      <article class="resource book">
+        <div class="kicker">Bengali astronomy book</div>
+        <h3>জ্যোতির্বিজ্ঞানের যতকিছু — অলিম্পিয়াড ও অন্যান্য</h3>
+        <p>A Bengali astronomy book for Olympiad preparation and broader mathematical and physical astronomy learning.</p>
+        <a class="cta" href="https://www.rokomari.com/book/471442/jyotirbigganer-jotokichu" target="_blank" rel="noopener">View the book on Rokomari ↗</a>
+      </article>
+      <article class="resource chart">
+        <div class="kicker">Interactive observational astronomy</div>
+        <h3>Star Charts 101 and Practices</h3>
+        <p>Learn from the book, then explore the links through the Book Reading Guide and interactive Knowledge Graph.</p>
+        <a class="cta" href="https://rajit13.github.io/starcharts101/" target="_blank" rel="noopener">Open Star Charts 101 ↗</a>
+      </article>
+    </div>
+  </section>
 
-							<!-- Header -->
-								<header id="header">
-									<a href="https://rajit13.github.io/" class="logo"><strong>Fahim's</strong> portfolio</a>
-									<ul class="icons">
-										<li><a href="https://www.linkedin.com/in/fahim-rajit-hossain/" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
-										<li><a href="https://www.facebook.com/fahimrajithossain.shwadhin" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-										<li><a href="https://www.instagram.com/rajit_13/" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-										<li><a href="https://github.com/Rajit13/" class="icon brands fa-github"><span class="label">Github</span></a></li>
-										<li><a href="https://www.youtube.com/@Rajit_13/" class="icon brands fa-youtube"><span class="label">YouTube</span></a></li>
-									</ul>
-								</header>
+  <section class="section searchable">
+    <div class="section-head">
+      <div><div class="eyebrow">Preparation guide</div><h2>Astronomy Olympiad preparation blog</h2></div>
+      <p>A detailed Bengali guide on how to prepare, what to read, and how to perform better in Astronomy Olympiad problems.</p>
+    </div>
+    <div class="panel">
+      I've written a detailed blog on the Astronomy Olympiad preparation and how to read and perform better (in Bengali). The blog also contains a list of Books and notes. You can read the blog <a href="https://bdoaa.org/preparation/" target="_blank" rel="noopener"><strong>here ↗</strong></a>.
+    </div>
+  </section>
 
-							<!-- Content -->
-								<section>
-									<header class="main">
-										<h1>Olympiad, Outreach, and Teaching</h1>
-									</header>
+  <section class="section searchable" id="bdoaaa">
+    <div class="section-head">
+      <div><div class="eyebrow">Training & national program</div><h2><a href="https://www.bdoaa.org" target="_blank" rel="noopener">Bangladesh Olympiad on Astronomy and Astrophysics (BDOAA) ↗</a></h2></div>
+      <p>National Olympiad work, team preparation, training, and international representation.</p>
+    </div>
+    <div class="panel split">
+      <div>
+        <p>Bangladesh Olympiad on Astronomy and Astrophysics (BDOAA) is a non-profit organization that organizes the regional and national olympiads on astronomy and astrophysics (A&A), hosts the national A&A camp in Bangladesh, and sends students to the International Olympiad on A&A (IOAA) co-founded by me back in 2018. BDOAA is the most prestigious competition on A&A in Bangladesh for school and college students and IOAA is the most prestigious international competition on A&A for students up to the age of eighteen.</p>
+        <p>I've since been the lead academic member and trainer of the Olympiad and also acting as the <a href="https://www.ioaastrophysics.org/international-board/" target="_blank" rel="noopener">team leader of Bangladesh</a> since 2018 participating in China, Hungary, Estonia, Colombia, Georgia, and Poland in different editions of IOAA.</p>
+      </div>
+      <a class="logo-card" href="https://www.bdoaa.org" target="_blank" rel="noopener"><img src="https://bdoaa.org/wp-content/uploads/2022/05/BDOAA-Committee-Official-Logooo-1536x819.png" alt="Bangladesh Olympiad on Astronomy and Astrophysics logo"></a>
+    </div>
 
-									<span class="image main"><img src="images/oly2.jpg" alt="" /></span>
+    <h3 class="subhead">Pictures from IOAA and BDOAA</h3>
+    <div class="gallery">
+      <figure><div class="imagebox"><img src="images/ioaa2023.jpg" alt="IOAA 2023 Team leaders"></div><figcaption>At Planetarium Slaskie, Poland</figcaption></figure>
+      <figure><div class="imagebox"><img src="images/medal.jpg" alt="Medals of IOAA 2023"></div><figcaption>Medals my team achieved</figcaption></figure>
+      <figure><div class="imagebox"><img src="images/working.jpg" alt="Moderation during IOAA 2023"></div><figcaption>Working on Scripts of IOAA</figcaption></figure>
+      <figure><div class="imagebox"><img src="https://bdoaa.org/wp-content/uploads/2019/01/IMG_20180814_171859-scaled.jpg" alt="First BDOAA Camp 2018"></div><figcaption>First BDOAA Camp 2018</figcaption></figure>
+      <figure><div class="imagebox"><img src="https://bdoaa.org/wp-content/uploads/2019/01/15317735_1808664726058030_3407355998647124675_n.jpg" alt="Representing Bangladesh at IOAA 2016"></div><figcaption>Representing Bangladesh at IOAA 2016</figcaption></figure>
+      <figure><div class="imagebox"><img src="https://bdoaa.org/wp-content/uploads/2019/01/Forbidden-City-1-scaled.jpg" alt="First time Team leader in China"></div><figcaption>Forbidden City, IOAA 2018, China</figcaption></figure>
+    </div>
+  </section>
 
-									<p>Since high school, I've been participating in different science contests, and the Astronomy Olympiad had a major impact on me. I've participated in two different international olympiads as a student (i.e. IOAA 2016 and IESO 2017, Bronze). Since 2018, I've been working at the Bangladesh Olympiad on Astronomy and Astrophysics (BDOAA) as an academic coordinator and coach. I was the <strong>youngest team leader</strong> of the International Olympiad on Astronomy and Astrophysics (IOAA) on behalf of Bangladesh in 2018 among experienced Astronomers and educators from more than 43 countries when I participated first. ✨.  </p>
-									<p> Here I'll eventually add all the blogs, notes, and details about the Astronomy Olympiad and outreach I've created over the years.</p>
-									
-									<hr class="major" />
-									I've written a detailed blog on the Astronomy Olympiad preparation and how to read and perform better (in Bengali). The blog also contains a list of Books and notes. You can read the blog <a href="https://bdoaa.org/preparation/" target="_blank">here</a> 
-									<hr class="major" />
+  <section class="section searchable" id="teaching">
+    <div class="section-head">
+      <div><div class="eyebrow">Teaching experience</div><h2>Topics I've taught</h2></div>
+      <p>Olympiad teaching across astronomy, observation, astrophysics, and Earth science.</p>
+    </div>
+    <div class="teaching">
+      <article class="teach-card">
+        <div class="years">BDOAA · 2018–Present</div>
+        <h3>Bangladesh Olympiad on Astronomy and Astrophysics</h3>
+        <ol>
+          <li>Astronomical Geometry</li>
+          <li>Radiation Mechanics and Astronomical Photometry</li>
+          <li>Astronomical Observation Techniques</li>
+          <li>Binary Stars and Variables</li>
+          <li>Galaxy Morphology and Gravitational Lensing</li>
+        </ol>
+      </article>
+      <article class="teach-card">
+        <div class="years">NEO Bangladesh · 2017–2019</div>
+        <h3>National Earth Science Olympiad</h3>
+        <ol>
+          <li>Astronomical Observations</li>
+          <li>Astro-geology</li>
+          <li>Planetary Science</li>
+        </ol>
+      </article>
+    </div>
+  </section>
 
-									<h2 id="bdoaaa"><a href="https://www.bdoaa.org" target="_blank">Bangladesh Olympiad on Astronomy and Astrophysics (BDOAA)</a></h2>
+  <section class="section searchable" id="notes">
+    <div class="notes-feature">
+      <div class="eyebrow">Highlighted resource library</div>
+      <h3>Astronomy Notes for Olympiads</h3>
+      <p>Most of the notes are Olympiad-focused that I've written for Bangladesh team preparation for IOAA. I am also writing my own Astronomy textbook named <strong>জ্যোতির্বিজ্ঞানের যতকিছু — অলিম্পিয়াড ও অন্যান্য (All about Astronomy, Olympiad and Extra)</strong>. You can find the book on <a href="https://www.rokomari.com/book/471442/jyotirbigganer-jotokichu" target="_blank" rel="noopener">Rokomari</a>, and more information about the project on my <a href="https://rajit13.github.io/research.html#astrobook" target="_blank" rel="noopener">research page</a>.</p>
+      <div class="notes-grid">
+        <a class="note-link" href="website_docs/Astronomy_via_LaTeX.pdf" target="_blank" rel="noopener"><span>Astronomy Writing with LaTeX and LLMs <em class="new">2026 New!</em></span><i class="fas fa-external-link-alt"></i></a>
+        <a class="note-link" href="website_docs/Analemma_Primer.pdf" target="_blank" rel="noopener"><span>Analemma Primer for IOAA <em class="new">2026 New!</em></span><i class="fas fa-external-link-alt"></i></a>
+        <a class="note-link" href="website_docs/problem_solving.pdf" target="_blank" rel="noopener"><span>Approaches to Solving Problems in Physics</span><i class="fas fa-external-link-alt"></i></a>
+        <a class="note-link" href="website_docs/Astro_POTD.pdf" target="_blank" rel="noopener"><span>Astronomy Problem of the Day <em class="new">Updated</em></span><i class="fas fa-external-link-alt"></i></a>
+        <a class="note-link" href="https://drive.google.com/file/d/122kOyZLAyQbvn27LrB7munLpXDP3kKAM/view?usp=sharing" target="_blank" rel="noopener"><span>Radiation Mechanics Handwritten Notes</span><i class="fas fa-external-link-alt"></i></a>
+        <a class="note-link" href="https://rajit13.github.io/starcharts101/" target="_blank" rel="noopener"><span>Star Charts 101 and Practices · Book + Knowledge Graph</span><i class="fas fa-external-link-alt"></i></a>
+      </div>
+      <div class="youtube-callout">
+        <p>I also publish my Astronomy lecture classes that I've taken during the training session for the Astronomy Olympiads. The videos can be found on BDOAA's official channel.</p>
+        <a class="ytbtn" href="https://www.youtube.com/@bdoaa" target="_blank" rel="noopener"><i class="fab fa-youtube"></i> BDOAA Channel</a>
+      </div>
+    </div>
+  </section>
 
-									
-									<article>
-									<span class="image right"> <img src="https://bdoaa.org/wp-content/uploads/2022/05/BDOAA-Committee-Official-Logooo-1536x819.png" alt="" /></span>
-									<p> Bangladesh Olympiad on Astronomy and Astrophysics (BDOAA) is a non-profit organization that organizes the regional and national olympiads on astronomy and astrophysics (A&A), hosts the national A&A camp in Bangladesh, and sends students to the International Olympiad on A&A (IOAA) co-founded by me back in 2018. BDOAA is the most prestigious competition on A&A in Bangladesh for school and college students and IOAA is the most prestigious international competition on A&A for students up to the age of eighteen.</p>
-									<p>I've since been the lead academic member and trainer of the Olympiad and also acting as the <a href="https://www.ioaastrophysics.org/international-board/" target="_blank">team leader of Bangladesh</a> since 2018 participating in China, Hungary, Estonia, Colombia, Georgia, and Poland in different editions of IOAA.</p>
-									</article>
-									<h4>Pictures from IOAA and BDOAA</h4>
-									<div class="box alt">
-										<div class="row gtr-50 gtr-uniform">
-											<div class="col-4"><figure><span class="image fit"><img src="images/ioaa2023.jpg" alt="IOAA 2023 Team leaders" /></span><figcaption>At Planetarium Slaskie, Poland</figcaption></figure></div>
-											<div class="col-4"><figure><span class="image fit"><img src="images/medal.jpg" alt="Medals of IOAA 2023" /></span><figcaption>Medals my team achieved</figcaption></figure></div>
-											<div class="col-4"><figure><span class="image fit"><img src="images/working.jpg" alt="Moderation during IOAA 2023" /></span><figcaption>Working on Scripts of IOAA</figcaption></figure></div>
-											<!-- Break -->
-											<div class="col-4"><figure><span class="image fit"><img src="https://bdoaa.org/wp-content/uploads/2019/01/IMG_20180814_171859-scaled.jpg" alt="First BDOAA Camp 2018" /></span><figcaption>First BDOAA Camp 2018</figcaption></figure></div>
-											<div class="col-4"><figure><span class="image fit"><img src="https://bdoaa.org/wp-content/uploads/2019/01/15317735_1808664726058030_3407355998647124675_n.jpg" alt="" /></span><figcaption>Representing Bangladesh at IOAA 2016</figcaption></figure></div>
-											<div class="col-4"><figure><span class="image fit"><img src="https://bdoaa.org/wp-content/uploads/2019/01/Forbidden-City-1-scaled.jpg" alt="First time Team leader in China" /></span><figcaption>Forbidden City, IOAA 2018, China</figcaption></figure></div>
-											<!-- Break -->
-										</div>
-									</div>
+  <section class="section searchable" id="durbin">
+    <div class="section-head">
+      <div><div class="eyebrow">Observation & outreach</div><h2><a href="https://durbin.cc/en/" target="_blank" rel="noopener">দূর বিশ্বের নাগরিক — Citizens of the Universe ↗</a></h2></div>
+      <p>Observational campaigns, astrophotography, and public astronomy outreach across Bangladesh.</p>
+    </div>
+    <div class="panel split">
+      <div class="outreach-copy">
+        <p>Durbin is the first observational group that is traveling around Bangladesh to do astrophotography of planets, nebula, stars, galaxies, and other exciting astronomical objects. We will share our images and their stories with everyone to raise awareness about the Universe in which we live.</p>
+        <p>This is a fairly amateur Astronomer group that mainly specializes in Astronomy outreach through observational campaigns. I am one of the key <a href="https://durbin.cc/en/volunteers/" target="_blank" rel="noopener">National Volunteer</a> of the group. The project is funded by the Dunlap Institute for Astronomy and Astrophysics and Independent University, Bangladesh (IUB).</p>
+      </div>
+      <a class="logo-card" href="https://durbin.cc/en/" target="_blank" rel="noopener"><img src="https://durbin.cc/wp-content/uploads/2023/03/Durbin-Logo-BW-01-1-300x300.png" alt="Durbin logo"></a>
+    </div>
+    <h3 class="subhead">✨ My Astrophotography for this project! 🔭</h3>
+    <div class="gallery">
+      <figure><div class="imagebox"><img src="images/milkyway.jpg" alt="Milky Way astrophotography"></div><figcaption>Milky Way</figcaption></figure>
+      <figure><div class="imagebox"><img src="images/moon.jpg" alt="Moon astrophotography"></div><figcaption>Moon</figcaption></figure>
+      <figure><div class="imagebox"><img src="images/omega_nebula.jpg" alt="Omega Nebula astrophotography"></div><figcaption>Omega Nebula</figcaption></figure>
+      <figure><div class="imagebox"><img src="images/ring_nebula.jpg" alt="Ring Nebula astrophotography"></div><figcaption>Ring Nebula</figcaption></figure>
+      <figure><div class="imagebox"><img src="images/lagoon_nebula.jpg" alt="Lagoon Nebula astrophotography"></div><figcaption>Lagoon Nebula</figcaption></figure>
+      <figure><div class="imagebox"><img src="images/me_telescope.jpg" alt="Telescope observing"></div><figcaption>Observing with a telescope</figcaption></figure>
+    </div>
+  </section>
 
-									<hr class="major" />
-									<h3> Teaching Experience </h3>
-									<p> 
-									<strong>BDOAA</strong>
-									<br>
-									2018-Present
-									<br>
-									Topics I've taught:
-									<ol>
-										<li> Astronomical Geometry</li>
-										<li> Radiation Mechanics and Astronomical Photometry </li> 
-										<li> Astronomical Observation Techniques</li>
-										<li> Binary Stars and Variables</li>
-										<li> Galaxy Morphology and Gravitational Lensing</li>
-									</ol>
-									</p>
-									<p>
-									<strong>National Earth Science Olympiad (NEO), Bangladesh</strong>
-									<br>
-									2017-2019
-									<br>
-									Topics I've taught:
-									<ol>
-										<li> Astronomical Observations</li>
-										<li> Astro-geology</li> 
-										<li> Planetary Science</li>
-									</ol>
-									</p>
-									
-									<h4 id="notes">Astronomy Notes for Olympiads</h4>
-									<p>Most of the notes are Olympiad-focused that I've written for Bangladesh team preparation for IOAA. I am also writing my own Astronomy textbook named <strong>জ্যোতির্বিজ্ঞানের যত কিছু, অলিম্পিয়াড ও অন্যান্য (All about Astronomy, Olympiad and Extra)</strong>. The details about this project can be found <a href="https://rajit13.github.io/research.html#astrobook" target="_blank">here</a> </p>
-									<li> <a href="website_docs/Astronomy_via_LaTeX.pdf" target="_blank">Astronomy Writing with LaTeX and LLMs [2026 New!] </a> </li>
-									<li> <a href="website_docs/Analemma_Primer.pdf" target="_blank"> Analemma Primer for IOAA [2026 New!] </a> </li>
-									<li> <a href="website_docs/problem_solving.pdf" target="_blank">Approaches to Solving Problems in Physics </a> </li>
-									<li> <a href="website_docs/Astro_POTD.pdf" target="_blank">Astronomy Problem of the Day [Updated]</a> </li>
-									<li> <a href="https://drive.google.com/file/d/122kOyZLAyQbvn27LrB7munLpXDP3kKAM/view?usp=sharing" target="_blank">Radiation Mechanics Handwritten Notes</a> </li>
-									<li> <a href="https://github.com/Rajit13/Star-Maps-101-and-Practices" target="_blank">Star Maps 101 and Practices</a></li>
-									<br>
-									<p> I also publish my Astronomy lecture classes that I've taken during the training session for the Astronomy Olympiads. The videos can be found on BDOAA's official channel.</p>
-									<ul class="actions"> <li><a href="https://www.youtube.com/@bdoaa" class="icon brands fa-youtube button primary large">BDOAA Channel</a></li></ul>
-				
-									<hr class="major" />
+  <section class="section searchable" id="more">
+    <div class="section-head">
+      <div><div class="eyebrow">From the original sidebar</div><h2>Research and Projects</h2></div>
+      <p>Related work and pages from across the portfolio.</p>
+    </div>
+    <div class="project-grid">
+      <a class="project-card" href="https://rajit13.github.io/research.html#bdlensing"><img src="images/bdlensing.gif" alt="Lens Modeling"><div><p>Galaxy Lense Modeling.</p></div></a>
+      <a class="project-card" href="https://bdoaa.org/about-us/" target="_blank" rel="noopener"><img src="images/working.jpg" alt="Working on Script Moderation of Olympiads"><div><p>Working on Script Moderation of Olympiads</p></div></a>
+      <a class="project-card" href="#bdoaaa"><img src="images/oly2.jpg" alt="Bangladesh Team at IOAA 2023"><div><p>Bangladesh Team at IOAA 2023, Chorzow, Poland.</p></div></a>
+    </div>
+  </section>
 
-									<h2 id="durbin"><a href="https://durbin.cc/en/" target="_blank">দূর বিশ্বের নাগরিক -  Citizens of the Universe</a></h2>
+  <section class="section searchable">
+    <div class="utility">
+      <article class="utility-card">
+        <div class="eyebrow">Explore the portfolio</div>
+        <h3>Menu</h3>
+        <nav class="site-menu">
+          <a href="https://rajit13.github.io/">Homepage</a>
+          <a href="research.html">Research</a>
+          <a href="olympiad.html">Astronomy Olympiads</a>
+          <a href="about.html">My Background</a>
+          <a href="libration.html">Libration of Moon</a>
+          <a href="#">Ipsum Adipiscing</a>
+          <a href="#">Tempus Magna</a>
+          <a href="#">Feugiat Veroeros</a>
+          <a href="travels.html">Travel</a>
+          <a href="elements.html">Art</a>
+        </nav>
+      </article>
+      <article class="utility-card">
+        <div class="eyebrow">Get in touch</div>
+        <h3>Contact</h3>
+        <p>You can contact me through any social media or the information below.</p>
+        <ul class="contact">
+          <li><i class="fas fa-envelope"></i><a href="mailto:farahoshwadhin.13@gmail.com">farahoshwadhin.13@gmail.com</a></li>
+          <li><i class="fas fa-phone"></i><span>(+880) 1781259313</span></li>
+          <li><i class="fas fa-home"></i><span>75-A/W, University of Rajshahi residential Area,<br>Bangladesh-6205</span></li>
+        </ul>
+      </article>
+    </div>
+  </section>
+</div>
+</main>
 
-									<span class="image right"> <img src="https://durbin.cc/wp-content/uploads/2023/03/Durbin-Logo-BW-01-1-300x300.png" alt="" width="30%" /></span>
-									<p>Durbin is the first observational group that is traveling around Bangladesh to do astrophotography of planets, nebula, stars, galaxies, and other exciting astronomical objects. We will share our images and their stories with everyone to raise awareness about the Universe in which we live. </p>
-									<p>This is a fairly amateur Astronomer group that mainly specializes in Astronomy outreach through observational campaigns. I am one of the key <a href="https://durbin.cc/en/volunteers/" target="_blank">National Volunteer</a> of the group. The project is funded by the Dunlap Institute for Astronomy and Astrophysics and Independent University, Bangladesh (IUB).</p>
-									<h4>✨ My Astrophotography for this project! 🔭</h4>
-									<br>
-									<div class="box alt">
-										<div class="row gtr-50 gtr-uniform">
-											<div class="col-4"><span class="image fit"><img src="images/milkyway.jpg" /></span></div>
-											<div class="col-4"><span class="image fit"><img src="images/moon.jpg" alt="Medals of IOAA 2023" /></span></div>
-											<div class="col-4"><span class="image fit"><img src="images/omega_nebula.jpg" alt="Moderation during IOAA 2023" /></span></div>
-											<!-- Break -->
-											<div class="col-4"><span class="image fit"><img src="images/ring_nebula.jpg" alt="First BDOAA Camp 2018" /></span></div>
-											<div class="col-4"><span class="image fit"><img src="images/lagoon_nebula.jpg" alt="" /></span></div>
-											<div class="col-4"><span class="image fit"><img src="images/me_telescope.jpg" /></span></div>
-											<!-- Break -->
-										</div>
-									</div>
+<footer class="footer"><div class="wrap"><span>© Fahim Rajit Hossain Shwadhin. All rights reserved.</span><span>Astronomy Olympiad · outreach · observational astronomy</span></div></footer>
 
-									
-								</section>
-
-						</div>
-					</div>
-
-				<!-- Sidebar -->
-					<div id="sidebar">
-						<div class="inner">
-
-							<!-- Search -->
-								<section id="search" class="alt">
-									<form method="post" action="#">
-										<input type="text" name="query" id="query" placeholder="Search" />
-									</form>
-								</section>
-							<!-- Menu -->
-								<nav id="menu">
-									<header class="major">
-										<h2>Menu</h2>
-									</header>
-									<ul>
-										<li><a href="https://rajit13.github.io/">Homepage</a></li>
-										<li><a href="research.html">Research</a></li>
-										<li><a href="olympiad.html">Astronomy Olympiads</a></li>
-										<li><a href="about.html">My Background</a></li>
-										<li>
-											<span class="opener">Blogs and Posts</span>
-											<ul>
-												
-												<li><a href="libration.html">Libration of Moon</a></li>
-												<li><a href="#">Ipsum Adipiscing</a></li>
-												<li><a href="#">Tempus Magna</a></li>
-												<li><a href="#">Feugiat Veroeros</a></li>
-											</ul>
-										</li>
-										<li><a href="travels.html">Travel</a></li>
-										<li><a href="elements.html">Art</a></li>
-								
-									</ul>
-								</nav>
-
-							<!-- Section -->
-								<section>
-									<header class="major">
-										<h2>Research and Projects</h2>
-									</header>
-									<div class="mini-posts">
-										<article>
-											<a href="https://rajit13.github.io/research.html#bdlensing" class="image"><img src="images/bdlensing.gif" alt="Lens Modeling" /></a>
-											<p> Galaxy Lense Modeling.</p>
-										</article>
-										<article>
-											<a href="https://bdoaa.org/about-us/" class="image"><img src="images/working.jpg" alt="" /></a>
-											<p>Working on Script Moderation of Olympiads</p>
-										</article>
-										<article>
-											<a href="#" class="image"><img src="images/oly2.jpg" alt="" /></a>
-											<p> Bangladesh Team at IOAA 2023, Chorzow, Poland.</p>
-										</article>
-									</div>
-									<ul class="actions">
-										<li><a href="research.html" class="button">More</a></li>
-									</ul>
-								</section>
-
-							<!-- Section -->
-								<section>
-									<header class="major">
-										<h2>Get in touch</h2>
-									</header>
-									<p> You can contact me through any social media or the information below.</p>
-									<ul class="contact">
-										<li class="icon solid fa-envelope"><a href="mailto:farahoshwadhin.13@gmail.com"> farahoshwadhin.13@gmail.com</a></li>
-										<li class="icon solid fa-phone">(+880) 1781259313</li>
-										<li class="icon solid fa-home">75-A/W, University of Rajshahi residential Area,<br />
-										 Bangladesh-6205</li>
-									</ul>
-								</section>
-
-							<!-- Footer -->
-								<footer id="footer">
-									<p class="copyright">&copy; Fahim. All rights reserved. </p>
-								</footer>
-
-						</div>
-					</div>
-
-			</div>
-
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-
-	</body>
+<script>
+(()=>{
+  const input=document.getElementById('page-search');
+  if(!input)return;
+  const blocks=[...document.querySelectorAll('.searchable')];
+  input.addEventListener('input',()=>{
+    const q=input.value.trim().toLowerCase();
+    blocks.forEach(block=>{
+      block.classList.toggle('hidden-by-search',!!q&&!block.innerText.toLowerCase().includes(q));
+    });
+  });
+})();
+</script>
+</body>
 </html>
