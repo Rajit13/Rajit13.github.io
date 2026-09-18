@@ -78,14 +78,14 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}butto
 .entry{display:grid;grid-template-columns:95px 26px minmax(0,1fr);gap:10px;position:relative;margin:0 0 14px}
 .when{text-align:right;padding-top:13px}.when strong{display:block;color:#fff;font-size:13px}.when span{display:block;color:#92a1b4;font-size:10px;line-height:1.3}
 .marker{display:flex;justify-content:center;padding-top:16px;position:relative;z-index:2}.marker:before{content:"";width:11px;height:11px;border:3px solid #0d131c;border-radius:50%;background:var(--green);box-shadow:0 0 0 1px rgba(125,218,179,.55)}
-.entry.invited .marker:before{background:#0d131c;border-color:#0d131c;box-shadow:0 0 0 2px var(--amber)}
+.entry.invited .marker:before{background:#0d131c;border-color:#0d131c;box-shadow:0 0 0 2px var(--amber)}.entry.remote .marker:before{background:#0d131c;border-color:#0d131c;box-shadow:0 0 0 2px var(--violet)}
 .travel-card{border:1px solid var(--border);border-radius:11px;background:rgba(18,26,37,.9);padding:15px 16px;transition:.18s ease}
 .travel-card:hover{border-color:#46566c;background:#151f2b}
-.entry.invited .travel-card{border-style:dashed;border-color:#67583f;background:#1a1918}
+.entry.invited .travel-card{border-style:dashed;border-color:#67583f;background:#1a1918}.entry.remote .travel-card{border-style:dashed;border-color:#55466e;background:#171520}
 .card-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
 .place{display:flex;gap:9px;align-items:flex-start}.place .flag{font-size:24px;line-height:1.2}.place h3{font-size:1.08rem;line-height:1.25;margin:0}.place .country-name{color:#9faec0;font-size:11px}
 .type{white-space:nowrap;padding:4px 7px;border:1px solid #415169;border-radius:999px;background:#162131;color:#a9caff;font-size:9px;text-transform:uppercase;letter-spacing:.08em;font-weight:800}
-.type.research{color:#9fe3c7;border-color:#35584c}.type.education{color:#e2c58b;border-color:#5b4c31}.type.invite{color:#efc783;border-color:#725d36}
+.type.research{color:#9fe3c7;border-color:#35584c}.type.education{color:#e2c58b;border-color:#5b4c31}.type.invite{color:#efc783;border-color:#725d36}.type.remote{color:#c6b2ff;border-color:#5c4b7a}
 .event{margin:10px 0 5px;font-size:13px;color:#e7edf5;font-weight:700}.details{display:flex;gap:7px;flex-wrap:wrap;color:#b9c5d4;font-size:11px}
 .detail{padding:4px 7px;border-radius:6px;background:#0f1721;border:1px solid #293548}.detail strong{color:#e8eef7}
 .entry.invited .event{color:#ecd29c}.entry.invited .details{color:#c8bb9f}
@@ -152,7 +152,7 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}butto
 
   <section class="section searchable">
     <div class="wrap">
-      <div class="section-head"><div><div class="eyebrow">Countries</div><h2>Professional travel footprint</h2></div><p>Countries represented in the work timeline below. The Netherlands and United Arab Emirates are marked separately because I was selected for those programs but did not complete the physical trip.</p></div>
+      <div class="section-head"><div><div class="eyebrow">Countries</div><h2>Professional travel footprint</h2></div><p>Countries represented in my physical work-travel footprint are listed here. Remote or hybrid events are shown in the timeline but are not counted as countries I travelled to; for example, IOAA 2021 was hosted from Bogotá, Colombia and I participated remotely.</p></div>
       <div class="country-list">
         <span class="country"><span class="flag">🇮🇳</span>India</span>
         <span class="country"><span class="flag">🇫🇷</span>France</span>
@@ -168,7 +168,7 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}butto
         <span class="country"><span class="flag">🇹🇼</span>Taiwan</span>
         <span class="country"><span class="flag">🇻🇳</span>Vietnam</span>
       </div>
-      <div class="legend"><span><i class="dot"></i> completed / scheduled work travel</span><span><i class="dot invited"></i> selected/invited, participated remotely or physical travel cancelled</span></div>
+      <div class="legend"><span><i class="dot"></i> completed / scheduled work travel</span><span><i class="dot invited"></i> selected/invited, physical travel cancelled</span><span><i class="dot invited" style="border-color:var(--violet)"></i> hybrid/remote participation, no travel</span></div>
     </div>
   </section>
 
@@ -200,6 +200,11 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}butto
         <article class="entry invited">
           <div class="when"><strong>May–Aug 2020</strong><span>Leiden · invitation</span></div><div class="marker"></div>
           <div class="travel-card"><div class="card-top"><div class="place"><span class="flag">🇳🇱</span><div><h3>Leiden, Netherlands</h3><span class="country-name">Netherlands</span></div></div><span class="type invite">Invited · no travel</span></div><div class="event">Leiden/ESA Astrophysics Program for Summer Students (LEAPS) 2020</div><div class="details"><span class="detail"><strong>Status:</strong> Invited participant</span><span class="detail">Physical travel cancelled due to COVID-19</span></div></div>
+        </article>
+
+        <article class="entry remote">
+          <div class="when"><strong>2021</strong><span>Hybrid · Bogotá host</span></div><div class="marker"></div>
+          <div class="travel-card"><div class="card-top"><div class="place"><span class="flag">🇨🇴</span><div><h3>IOAA 2021 · Bogotá, Colombia</h3><span class="country-name">Host location · participated remotely</span></div></div><span class="type remote">Hybrid / remote</span></div><div class="event">International Olympiad on Astronomy and Astrophysics 2021</div><div class="details"><span class="detail"><strong>Role:</strong> Bangladesh Team Leader</span><span class="detail"><strong>Travel:</strong> None — no invitation to travel</span><span class="detail"><strong>Team result under my leadership:</strong> 🥉 1 Bronze · 🎖️🎖️🎖️🎖️ 4 Honorable Mentions</span></div></div>
         </article>
 
         <article class="entry">
