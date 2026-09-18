@@ -79,6 +79,12 @@ img{display:block;max-width:100%}button,input{font:inherit}
 .split{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(260px,.65fr);gap:22px;align-items:start}
 .logo-card{border:1px solid var(--border);border-radius:12px;background:#0d1520;padding:18px;display:flex;align-items:center;justify-content:center;min-height:180px}
 .logo-card img{max-height:150px;object-fit:contain}
+.achievement-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:22px}
+.achievement-card{padding:16px;border:1px solid var(--border);border-radius:10px;background:#111923}
+.achievement-card.pending{border-style:dashed}
+.achievement-year{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);font-weight:800}
+.achievement-medals{font-size:1.55rem;line-height:1.2;margin:7px 0}
+.achievement-card p{margin:0;color:#c1ccda;font-size:12px}
 .gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .gallery figure{margin:0;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:#111923}
 .gallery .imagebox{aspect-ratio:4/3;overflow:hidden;background:#0a1018}
@@ -109,8 +115,8 @@ img{display:block;max-width:100%}button,input{font:inherit}
 .contact{list-style:none;padding:0;margin:0;display:grid;gap:8px;color:#c6d0de}.contact li{display:flex;gap:9px;align-items:flex-start}.contact i{width:16px;color:var(--blue);margin-top:5px}
 .footer{border-top:1px solid var(--border);padding:20px 0 34px;color:#8694a6;font-size:11px}.footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .hidden-by-search{display:none!important}
-@media(max-width:930px){.hero,.split{grid-template-columns:1fr}.hero-media{min-height:300px}.resources{grid-template-columns:1fr}.gallery{grid-template-columns:repeat(2,1fr)}.teaching,.utility{grid-template-columns:1fr}.project-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:620px){.author-bar{align-items:flex-start;flex-direction:column;padding:12px 16px}.author-links{justify-content:flex-start}.page-nav{padding:9px 16px}.page-nav .spacer{display:none}.searchbox{width:100%}.searchbox input{flex:1;width:auto}.hero{padding-top:22px}.factrow,.gallery,.notes-grid,.project-grid{grid-template-columns:1fr}.resource-head,.section-head{align-items:flex-start;flex-direction:column}.youtube-callout{align-items:flex-start;flex-direction:column}.hero h1{font-size:2.8rem}}
+@media(max-width:930px){.hero,.split{grid-template-columns:1fr}.hero-media{min-height:300px}.resources{grid-template-columns:1fr}.achievement-grid{grid-template-columns:repeat(2,1fr)}.gallery{grid-template-columns:repeat(2,1fr)}.teaching,.utility{grid-template-columns:1fr}.project-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.achievement-grid{grid-template-columns:1fr}.author-bar{align-items:flex-start;flex-direction:column;padding:12px 16px}.author-links{justify-content:flex-start}.page-nav{padding:9px 16px}.page-nav .spacer{display:none}.searchbox{width:100%}.searchbox input{flex:1;width:auto}.hero{padding-top:22px}.factrow,.gallery,.notes-grid,.project-grid{grid-template-columns:1fr}.resource-head,.section-head{align-items:flex-start;flex-direction:column}.youtube-callout{align-items:flex-start;flex-direction:column}.hero h1{font-size:2.8rem}}
 
 @media(max-width:620px){.author-id a{font-size:24px!important}}
 </style>
@@ -148,12 +154,12 @@ img{display:block;max-width:100%}button,input{font:inherit}
     <div>
       <div class="eyebrow">From participant to trainer and team leader</div>
       <h1>Olympiad, Outreach, and Teaching</h1>
-      <p>Since high school, I've been participating in different science contests, and the Astronomy Olympiad had a major impact on me. I've participated in two different international olympiads as a student (i.e. IOAA 2016 and IESO 2017, Bronze). Since 2018, I've been working at the Bangladesh Olympiad on Astronomy and Astrophysics (BDOAA) as an academic coordinator and coach. I was the <strong>youngest team leader</strong> of the International Olympiad on Astronomy and Astrophysics (IOAA) on behalf of Bangladesh in 2018 among experienced Astronomers and educators from more than 43 countries when I participated first. ✨</p>
+      <p>Since high school, I've been participating in different science contests, and the Astronomy Olympiad had a major impact on me. I've participated in two different international olympiads as a student (i.e. IOAA 2016 and IESO 2017, where I earned a Bronze medal as a participant). Since 2018, I've been working at the Bangladesh Olympiad on Astronomy and Astrophysics (BDOAA) as an academic coordinator and coach. I was the <strong>youngest team leader</strong> of the International Olympiad on Astronomy and Astrophysics (IOAA) on behalf of Bangladesh in 2018 among experienced Astronomers and educators from more than 43 countries when I participated first. ✨</p>
       <p>Here I'll eventually add all the blogs, notes, and details about the Astronomy Olympiad and outreach I've created over the years.</p>
       <div class="factrow">
         <div class="fact"><b>IOAA 2016</b><span>International Olympiad participant</span></div>
         <div class="fact"><b>Since 2018</b><span>Bangladesh team leader & trainer</span></div>
-        <div class="fact"><b>IESO 2017</b><span>Bronze medal</span></div>
+        <div class="fact"><b>IESO 2017</b><span>🥉 Bronze medal · participant</span></div>
       </div>
     </div>
     <figure class="hero-media square-photo">
@@ -210,6 +216,15 @@ img{display:block;max-width:100%}button,input{font:inherit}
         <p>I've since been the lead academic member and trainer of the Olympiad and also acting as the <a href="https://www.ioaastrophysics.org/international-board/" target="_blank" rel="noopener">team leader of Bangladesh</a> since 2018 participating in China, Hungary, Estonia, Colombia, Georgia, and Poland in different editions of IOAA.</p>
       </div>
       <a class="logo-card" href="https://www.bdoaa.org" target="_blank" rel="noopener"><img src="images/white%20bdoaa.png" alt="Bangladesh Olympiad on Astronomy and Astrophysics logo"></a>
+    </div>
+
+    <h3 class="subhead">International Olympiad results under my leadership</h3>
+    <div class="achievement-grid">
+      <article class="achievement-card"><div class="achievement-year">IOAA 2023</div><div class="achievement-medals">🥈🥈 🥉</div><p><strong>2 Silver medals</strong> and <strong>1 Bronze medal</strong> for Bangladesh under my leadership.</p></article>
+      <article class="achievement-card"><div class="achievement-year">IOAA 2024</div><div class="achievement-medals">🥉 🎖️</div><p><strong>1 Bronze medal</strong> and <strong>1 Honorable Mention</strong> under my leadership.</p></article>
+      <article class="achievement-card"><div class="achievement-year">IOAAjr 2024</div><div class="achievement-medals">🥈 🥉🥉 🎖️</div><p><strong>1 Silver</strong>, <strong>2 Bronze medals</strong>, and <strong>1 Honorable Mention</strong> under my leadership.</p></article>
+      <article class="achievement-card"><div class="achievement-year">IOAA 2025</div><div class="achievement-medals">🥈 🎖️🎖️ 🏆</div><p><strong>1 Silver medal</strong>, <strong>2 Honorable Mentions</strong>, and <strong>1 Best Group Award</strong> under my leadership.</p></article>
+      <article class="achievement-card pending"><div class="achievement-year">IOAA 2026</div><div class="achievement-medals">⏳</div><p>Bangladesh Team Leader · <strong>medals TBD</strong>.</p></article>
     </div>
 
     <h3 class="subhead">Pictures from IOAA and BDOAA</h3>
