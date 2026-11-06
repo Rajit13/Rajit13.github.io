@@ -87,7 +87,7 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}.wrap
  const starInput=document.getElementById('star-search');
  const starRows=[...document.querySelectorAll('#stars-panel tbody tr')];
  const zodiacNames=new Set(["aries","taurus","gemini","cancer","leo","virgo","libra","scorpius","sagittarius","capricornus","aquarius","pisces"]);
- function constellationLabel(r){const cell=r.querySelector('.constellation-en');if(!cell)return '';const copy=cell.cloneNode(true);copy.querySelectorAll('.zodiac-symbol,mjx-container').forEach(x=>x.remove());return copy.textContent.replace(/\\\([\\s\\S]*?\\\)/g,'').replace(/[\\u2648-\\u2653\\uFE0E\\uFE0F]/g,'').trim();}
+ function constellationLabel(r){const cell=r.querySelector('.constellation-en');if(!cell)return '';const copy=cell.cloneNode(true);copy.querySelectorAll('.zodiac-symbol,mjx-container').forEach(x=>x.remove());return copy.textContent.replace(/\\\([\s\S]*?\\\)/g,'').replace(/[♈♉♊♋♌♍♎♏♐♑♒♓︎]/g,'').trim();}
  let activeConstellation='';
  starRows.forEach(r=>{const label=constellationLabel(r);if(label)activeConstellation=label;const group=normalize(activeConstellation);r.dataset.constellationSearch=group;r.dataset.isZodiac=String(zodiacNames.has(group));});
  const zodiacBody=document.createElement('tbody');
