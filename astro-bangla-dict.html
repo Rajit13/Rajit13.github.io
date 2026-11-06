@@ -87,8 +87,9 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}.wrap
  const starInput=document.getElementById('star-search');
  const starRows=[...document.querySelectorAll('#stars-panel tbody tr')];
  const zodiacNames=new Set(["aries","taurus","gemini","cancer","leo","virgo","libra","scorpius","sagittarius","capricornus","aquarius","pisces"]);
+ function constellationLabel(r){const cell=r.querySelector('.constellation-en');if(!cell)return '';const copy=cell.cloneNode(true);copy.querySelectorAll('.zodiac-symbol').forEach(x=>x.remove());return copy.textContent.trim();}
  let activeConstellation='';
- starRows.forEach(r=>{const label=r.querySelector('.constellation-en')?.textContent.trim();if(label)activeConstellation=label;const group=normalize(activeConstellation);r.dataset.constellationSearch=group;r.dataset.isZodiac=String(zodiacNames.has(group));});
+ starRows.forEach(r=>{const label=constellationLabel(r);if(label)activeConstellation=label;const group=normalize(activeConstellation);r.dataset.constellationSearch=group;r.dataset.isZodiac=String(zodiacNames.has(group));});
  const zodiacBody=document.createElement('tbody');
  const sourceTable=document.querySelector('#stars-panel .table-scroll table');
  const zodiacTable=sourceTable?.cloneNode(false);
@@ -100,7 +101,7 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}.wrap
  }
  function isExactStarMatch(r,q){return [...r.querySelectorAll('td')].some(cell=>{const copy=cell.cloneNode(true);copy.querySelectorAll('.external,.zodiac-symbol').forEach(x=>x.remove());if(normalize(copy.textContent)===q)return true;return [...cell.querySelectorAll('a')].some(a=>{const link=a.cloneNode(true);link.querySelectorAll('.external').forEach(x=>x.remove());return normalize(link.textContent)===q;});});}
  function filterStars(){const q=normalize(starInput.value);starRows.forEach(r=>{const group=r.dataset.constellationSearch;const groupMatch=!!q&&group.includes(q);const text=normalize(r.innerText);const exact=isExactStarMatch(r,q);r.hidden=!!q&&!text.includes(q)&&!groupMatch;r.classList.toggle('search-match',!!q&&(exact||group===q));});}
- const starLetters=[...document.querySelectorAll('.star-letter-jump')];if(starInput&&starLetters.length){const firstByLetter=new Map();let name='';starRows.forEach(r=>{const label=r.querySelector('.constellation-en').textContent.trim();if(label)name=label;const letter=name.charAt(0).toUpperCase();if(letter&&!firstByLetter.has(letter))firstByLetter.set(letter,r);});starLetters.forEach(b=>{const target=firstByLetter.get(b.dataset.letter);b.disabled=!target;if(target)b.addEventListener('click',()=>{if(starInput.value){starInput.value='';starInput.dispatchEvent(new Event('input',{bubbles:true}));}target.scrollIntoView({behavior:'smooth',block:'start'});});});}
+ const starLetters=[...document.querySelectorAll('.star-letter-jump')];if(starInput&&starLetters.length){const firstByLetter=new Map();let name='';starRows.forEach(r=>{const label=constellationLabel(r);if(label)name=label;const letter=name.charAt(0).toUpperCase();if(letter&&!firstByLetter.has(letter))firstByLetter.set(letter,r);});starLetters.forEach(b=>{const target=firstByLetter.get(b.dataset.letter);b.disabled=!target;if(target)b.addEventListener('click',()=>{if(starInput.value){starInput.value='';starInput.dispatchEvent(new Event('input',{bubbles:true}));}target.scrollIntoView({behavior:'smooth',block:'start'});});});}
 })();
 </script>
 </body></html>
