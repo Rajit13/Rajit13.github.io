@@ -95,7 +95,9 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}.wrap
  const zodiacTable=sourceTable?.cloneNode(false);
  if(zodiacTable&&sourceTable){
    zodiacTable.append(sourceTable.querySelector('colgroup').cloneNode(true),sourceTable.querySelector('thead').cloneNode(true),zodiacBody);
-   starRows.filter(r=>r.dataset.isZodiac==='true').forEach(r=>zodiacBody.append(r.cloneNode(true)));
+   zodiacNames.forEach(name=>{
+     starRows.filter(r=>r.dataset.constellationSearch===name).forEach(r=>zodiacBody.append(r.cloneNode(true)));
+   });
    document.getElementById('zodiac-table-wrap')?.append(zodiacTable);
    if(window.MathJax?.typesetPromise)window.MathJax.typesetPromise([zodiacTable]);
  }
