@@ -57,6 +57,7 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}.wrap
 <button type="button" class="dictionary-tab active" role="tab" id="terms-tab" aria-controls="terms-panel" aria-selected="true" tabindex="0">জ্যোতির্বৈজ্ঞানিক পরিভাষা</button>
 <button type="button" class="dictionary-tab" role="tab" id="stars-tab" aria-controls="stars-panel" aria-selected="false" tabindex="-1">তারার বাংলা নাম</button>
 <button type="button" class="dictionary-tab" role="tab" id="zodiac-tab" aria-controls="zodiac-panel" aria-selected="false" tabindex="-1">রাশিমণ্ডল</button>
+<button type="button" class="dictionary-tab" role="tab" id="nakshatra-tab" aria-controls="nakshatra-panel" aria-selected="false" tabindex="-1">নক্ষত্র ও চন্দ্রমঞ্জিল</button>
 </div>
 <section class="tab-panel" id="terms-panel" role="tabpanel" aria-labelledby="terms-tab">
   <div class="panel-tools"><p class="bn">ইংরেজি জ্যোতির্বৈজ্ঞানিক পরিভাষা ও বাংলা অর্থ বর্ণানুক্রমে সাজানো হয়েছে। অক্ষর বেছে দেখুন, অথবা যেকোনো ইংরেজি/বাংলা শব্দ লিখে খুঁজুন।</p><label class="filter-label">পরিভাষা খুঁজুন<input id="term-search" type="search" placeholder="English term বা বাংলা অর্থ" autocomplete="off"></label></div>
@@ -72,12 +73,70 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}.wrap
   <div class="table-scroll" id="zodiac-table-wrap"></div>
 </section>
 
+<section class="tab-panel" id="nakshatra-panel" role="tabpanel" aria-labelledby="nakshatra-tab" hidden>
+  <div class="panel-tools"><p class="bn">২৭টি ভারতীয় নক্ষত্র, অতিরিক্ত অভিজিৎ এবং আরবি চন্দ্রমঞ্জিলের ঐতিহাসিক তুলনা; নক্ষত্রের প্রধান তারা, তারামণ্ডল ও চাঁদের গতির হিসাব।</p></div>
+  <div class="nak-intro bn" lang="bn">
+    <h2>তারা বনাম নক্ষত্র</h2>
+    <p><strong>তারা (Star)</strong> বলতে সাধারণত নিজস্ব আলো বিকিরণকারী জ্যোতিষ্ক বোঝায়। কিন্তু প্রাচীন ভারতীয় জ্যোতির্বিজ্ঞানের <strong>নক্ষত্র (Nakshatra)</strong> একটি নির্দিষ্ট তারা বোঝাত না। চাঁদ আকাশের যে পথ বরাবর চলতে দেখা যায়, তার আশপাশের তারা বা তারাগোষ্ঠীকে চিহ্ন হিসেবে ব্যবহার করে আকাশকে ২৭টি, কখনও ২৮টি, পর্যায়ে ভাগ করা হয়েছিল। এই পর্যায়গুলোই নক্ষত্র বা <em>lunar mansions</em>। অশ্বিনী, রোহিণী, পুনর্বসু ও আর্দ্রা তার উদাহরণ।</p>
+    <p>ভারতীয় প্রচলিত ২৭-নক্ষত্র পদ্ধতিতে প্রতিটি নক্ষত্রকে ক্রান্তিবৃত্তীয় দ্রাঘিমার <strong>১৩°২০′</strong> বিস্তৃত সমান একটি অঞ্চল হিসেবেও ধরা হয়। ঐতিহাসিক নক্ষত্রের চিহ্নিত তারা, আকাশে চোখে দেখা তারাগুচ্ছ এবং আধুনিক গণনায় ব্যবহৃত সমান-কোণীয় অঞ্চল—এই তিনটি ধারণা সংশ্লিষ্ট হলেও এক নয়। অতিরিক্ত <strong>অভিজিৎ</strong> কিছু ২৮-নক্ষত্র তালিকায় উত্তরাষাঢ়া ও শ্রবণার মাঝখানে থাকে।</p>
+    <p>আরব জ্যোতির্বিদ্যার <strong>মানাযিল আল-কামার</strong> (<span lang="ar" dir="rtl">منازل القمر</span>, <em>Manāzil al-Qamar</em>) বা <strong>চন্দ্রমঞ্জিল</strong> পদ্ধতিতেও ২৮টি চন্দ্রাবাসের নাম আছে। আরবি তালিকা মেষ মণ্ডলের আল-শারাতাইন দিয়ে শুরু হয়ে আল-রিশায় শেষ হয়। প্রাচীন ইংরেজি গ্রন্থে এগুলোর পরিচয় কখনও দুটি উজ্জ্বল তারা, কখনও তারাগুচ্ছ, কখনও আকাশের অপেক্ষাকৃত ফাঁকা অঞ্চল দিয়ে বর্ণনা করা হয়েছে। ভারতের নক্ষত্রগুলোর সঙ্গে তাদের <strong>ক্রমগত তুলনা</strong> করা যায়, কিন্তু সব ক্ষেত্রে তারা একই নক্ষত্রপুঞ্জ বা একই মূল তারা বোঝায় না। চীনা ২৮টি চন্দ্রাবাসের ব্যবধানও ঐতিহাসিকভাবে সমান ছিল না।</p>
+    <p>এই অভিধানের সাধারণ বাংলা ব্যবহারে <strong>তারা</strong> ও <strong>নক্ষত্র</strong> অনেক সময় সমার্থক; কোনও কোনও প্রাচীন নক্ষত্রের নাম তার প্রধান উজ্জ্বল তারাটির নাম হিসেবেও চলে এসেছে। তবে ছাত্রছাত্রীদের জন্য ঐতিহাসিক নক্ষত্র (lunar mansion), পৃথক তারা (star), তারাগুচ্ছ (star cluster) এবং তারামণ্ডল (constellation) আলাদা ধারণা। এখানে <strong>খগোল</strong> বা <strong>খগোলক</strong> বলতে পৃথিবীকে কেন্দ্রে ধরে কল্পিত বিশাল <em>celestial sphere</em> বোঝানো হয়েছে; এটি কোনও বাস্তব কঠিন গোলক নয়।</p>
+    <aside class="nak-warning" role="note"><strong>জ্যোতির্বিজ্ঞানের শিক্ষার্থীদের জন্য সতর্কতা:</strong> চলিত বাংলায় ‘নক্ষত্র’ শব্দটি ‘তারা’র অর্থে ব্যবহৃত হলেও বৈজ্ঞানিক লেখায় শব্দ দুটি নির্বিচারে অদলবদল করবেন না। একটি তারা বলতে <em>star</em>, নক্ষত্রপদ্ধতির একটি ঘর বোঝাতে <em>nakshatra/lunar mansion</em>, এবং আকাশে কয়েকটি তারার আকৃতি বোঝাতে <em>asterism</em> লিখুন। উদাহরণ: রোহিণী নক্ষত্রের প্রধান তারা অ্যালডেবারান (α Tauri)।</aside>
+
+    <h3>চাঁদের পথ ও প্রতিটি নক্ষত্রে থাকার সময়</h3>
+    <p>দূরবর্তী তারার সাপেক্ষে চাঁদ পৃথিবীকে একবার প্রদক্ষিণ করে গড়ে <strong>২৭.৩২১৬৬২ দিনে</strong> (sidereal month)। এই মানটি অমাবস্যা থেকে পরের অমাবস্যার ব্যবধান, অর্থাৎ ২৯.৫৩০৫৮৯ দিনের synodic month, থেকে আলাদা। ফলে চাঁদ তারার পটভূমিতে গড়ে প্রতিদিন পূর্বদিকে প্রায় ১৩.১৮° সরে যায়।</p>
+    <div class="nak-formula">
+      <p>\[T_{\mathrm{sid}}=27.321662\ \mathrm{d},\qquad
+      \overline{\omega}=\frac{360^\circ}{T_{\mathrm{sid}}}
+      =13.17636^\circ\,\mathrm{d}^{-1}.\]</p>
+      <p>\[\Delta\lambda=\frac{360^\circ}{27}
+      =13^\circ20',\qquad
+      \overline{t}_{\mathrm{nak}}=\frac{\Delta\lambda}{\overline{\omega}}
+      =\frac{27.321662}{27}\ \mathrm{d}
+      =24.286\ \mathrm{h}
+      \approx 24\ \text{ঘণ্টা}\ 17\ \text{মিনিট}.\]</p>
+    </div>
+    <p>অর্থাৎ আদর্শ ২৭টি সমান অঞ্চলের ক্ষেত্রে একটি নক্ষত্র অতিক্রম করতে চাঁদের গড়ে প্রায় <strong>২৪ ঘণ্টা ১৭ মিনিট</strong> লাগে। এটি প্রতিটি নক্ষত্রের জন্য স্থির সময় নয়। পৃথিবীর চারদিকে চাঁদের কক্ষপথ উপবৃত্তাকার এবং সৌর মহাকর্ষীয় ব্যাঘাতও রয়েছে; তাই চাঁদের আপাত কৌণিক বেগ ক্রমাগত বদলায়।</p>
+
+    <h3>কোন নক্ষত্রে চাঁদ সবচেয়ে দ্রুত বা ধীরে চলে?</h3>
+    <p><strong>কোনও নির্দিষ্ট নক্ষত্রে সবসময় সবচেয়ে দ্রুত বা ধীরে চলে না।</strong> চাঁদ সাধারণত পৃথিবীর কাছাকাছি <strong>অনুভূ (perigee)</strong> অবস্থানে দ্রুততম এবং দূরবর্তী <strong>অপভূ (apogee)</strong> অবস্থানে ধীরতম হয়। অনুভূ ও অপভূর দিক নক্ষত্রগুলোর তুলনায় সময়ের সঙ্গে সরে যায়, তাই এক মাসে যে নক্ষত্র দ্রুত পেরোয়, অন্য সময়ে সেই নক্ষত্র ধীরে পেরোতে পারে।</p>
+    <div class="nak-formula">
+      <p>\[ \omega_{\mathrm{peri}}\simeq\overline{\omega}\,
+        \frac{\sqrt{1-e^2}}{(1-e)^2},\qquad
+        \omega_{\mathrm{apo}}\simeq\overline{\omega}\,
+        \frac{\sqrt{1-e^2}}{(1+e)^2},\qquad e\simeq0.0549.\]</p>
+      <p>\[ \omega_{\mathrm{peri}}\simeq14.73^\circ/\mathrm{d},\quad
+         \omega_{\mathrm{apo}}\simeq11.82^\circ/\mathrm{d};\qquad
+         t_{\mathrm{peri}}\simeq21.7\ \mathrm{h},\quad
+         t_{\mathrm{apo}}\simeq27.1\ \mathrm{h}.\]</p>
+    </div>
+    <p>এটি সরল কেপলারীয় আনুমানিক হিসাব। বাস্তব চন্দ্রগতিতে সূর্যের ব্যাঘাত, কক্ষপথের ঝোঁক এবং দ্রাঘিমা গণনার পদ্ধতির কারণে প্রকৃত সময় আরও কিছুটা বদলাতে পারে। <strong>২১.৭ ঘণ্টা এবং ২৭.১ ঘণ্টা কোনও নক্ষত্রের স্থায়ী সময়সীমা নয়।</strong></p>
+    <h3>চাঁদ এখন কোন নক্ষত্রে আছে, তা গণনার পদ্ধতি</h3>
+    <p>প্রচলিত ২৭টি সমান নক্ষত্রের তালিকায় চাঁদের <strong>নিরয়ণ ক্রান্তিবৃত্তীয় দ্রাঘিমা</strong> \(\lambda_{\mathrm{sid}}\) জানা থাকলে, ০° থেকে শুরু করে প্রতি ১৩°২০′ কোণ পরপর একটি নক্ষত্র গণনা করতে হয়।</p>
+    <div class="nak-formula">
+      <p>\[n=1+\left\lfloor\frac{\lambda_{\mathrm{sid}}\bmod360^\circ}{13^\circ20'}\right\rfloor,\qquad 1\le n\le27.\]</p>
+    </div>
+    <p>যেমন, \(\lambda_{\mathrm{sid}}=47^\circ\) হলে \(\lfloor47/(13\frac13)\rfloor+1=4\), অর্থাৎ চাঁদ <strong>রোহিণী</strong> নক্ষত্রে। এখানে ০° বলতে নিরয়ণ মেষাদির শুরু বোঝানো হয়েছে, আধুনিক তারামণ্ডলের দৃশ্যমান সীমারেখা নয়। ২৮টি ঐতিহাসিক নক্ষত্রের ক্ষেত্রে অভিজিৎ যোগ করে সবগুলোকে সমান ৩৬০°/২৮ ভাগ করা সর্বজনস্বীকৃত নিয়ম নয়।</p>
+
+    <h3>নক্ষত্র ও আরবি চন্দ্রমঞ্জিলের তুলনামূলক তালিকা</h3>
+    <p class="nak-brief">তালিকাটি <strong>অশ্বিনী থেকে রেবতী</strong> ক্রমে সাজানো। অভিজিৎ প্রচলিত ২৭টির বাইরে বিশেষ ২৮তম নক্ষত্র হিসেবে উত্তরাষাঢ়া ও শ্রবণার মাঝে রাখা হয়েছে। বাংলা বিবরণ দুটি প্রাচীন বাংলা গ্রন্থের স্ক্যানের মধ্যে নক্ষত্রবিষয়ক তালিকা থেকে আধুনিক ভাষায় রূপান্তরিত; আরবি বিবরণ ইংরেজি গ্রন্থের ‘Names and significations of the Manazil-Al-Kamar’ (পৃষ্ঠা ২০–২১) থেকে ভাবানুবাদ। মূল তারাগুলোর আধুনিক পরিচয় পৃথকভাবে মিলিয়ে দেওয়া হয়েছে।</p>
+  </div>
+  <div id="nakshatra-table-root"><p class="bn">নক্ষত্রের তালিকা লোড হচ্ছে…</p></div>
+  <p class="nak-table-note bn">নোট: একই সারির ভারতীয় ও আরবি চন্দ্রাবাস ক্রমগতভাবে সামঞ্জস্যপূর্ণ; মূল তারার পরিচয় ভিন্ন হতে পারে। ঐতিহাসিক বর্ণনায় ‘তিনটি’ বা ‘একশোটি’ তারা বলার অর্থ আধুনিক সীমার মধ্যে তারার বৈজ্ঞানিক গণনা নয়। তারার গ্রিক চিহ্নগুলো Bayer designation; কিছু ক্ষেত্রে Flamsteed সংখ্যা ব্যবহার করা হয়েছে।</p>
+  <div class="source-credit bn">
+    <strong>উৎস ও আরও পড়ুন:</strong> ব্যবহারকারীর প্রদত্ত বাংলা গ্রন্থের পৃষ্ঠা ৩২৩–৩২৪ ও ইংরেজি <em>Hindu Astronomy</em> / <em>Aryan Migrations</em> অংশের পৃষ্ঠা ১৭–২১;
+    <a href="https://en.wikipedia.org/wiki/List_of_Nakshatras" target="_blank" rel="noopener noreferrer">List of Nakshatras</a>;
+    <a href="https://packolkata.imd.gov.in/panchang/en/astronomical-info" target="_blank" rel="noopener noreferrer">Rashtriya Panchang (sidereal month)</a>;
+    <a href="https://islam.museum/en/concept/manazil-al-qamar/" target="_blank" rel="noopener noreferrer">Arabic lunar mansions</a>;
+    <a href="https://ignca.gov.in/Asi_data/34958.pdf" target="_blank" rel="noopener noreferrer">The Hindu Calendar — বিভিন্ন ২৮-নক্ষত্র পদ্ধতি</a>।
+  </div>
+</section>
 
 </main><footer class="footer"><div class="wrap"><span>© Fahim Rajit Hossain Shwadhin</span><span>Astronomy · Bengali star names</span></div></footer>
 <script>
 (()=>{
  const tabs=[...document.querySelectorAll('[role="tab"]')];
- const tabHashes={'terms-tab':'#bn-translation','stars-tab':'#bn-star-names','zodiac-tab':'#bn-zodiacs'};
+ const tabHashes={'terms-tab':'#bn-translation','stars-tab':'#bn-star-names','zodiac-tab':'#bn-zodiacs','nakshatra-tab':'#nakshatra'};
  function activate(tab,focus=false,updateUrl=true){
    tabs.forEach(t=>{const on=t===tab;t.setAttribute('aria-selected',on?'true':'false');t.tabIndex=on?0:-1;t.classList.toggle('active',on);document.getElementById(t.getAttribute('aria-controls')).hidden=!on;});
    if(updateUrl&&location.hash!==tabHashes[tab.id])history.pushState(null,'',tabHashes[tab.id]);
@@ -120,4 +179,5 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}.wrap
  const starLetters=[...document.querySelectorAll('.star-letter-jump')];if(starInput&&starLetters.length){const firstByLetter=new Map();let name='';starRows.forEach(r=>{const label=constellationLabel(r);if(label)name=label;const letter=name.charAt(0).toUpperCase();if(letter&&!firstByLetter.has(letter))firstByLetter.set(letter,r);});starLetters.forEach(b=>{const target=firstByLetter.get(b.dataset.letter);b.disabled=!target;if(target)b.addEventListener('click',()=>{if(starInput.value){starInput.value='';starInput.dispatchEvent(new Event('input',{bubbles:true}));}target.scrollIntoView({behavior:'smooth',block:'start'});});});}
 })();
 </script>
+<script src="assets/js/nakshatra.js"></script>
 </body></html>
