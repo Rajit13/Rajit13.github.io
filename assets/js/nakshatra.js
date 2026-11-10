@@ -11,7 +11,7 @@ const raw=[
 "রোহিণী||পাঁচটি তারা নিয়ে গরুর গাড়ি বা চাকার মতো একটি আকৃতি কল্পনা করা হয়েছে।||বৃষ / Taurus||রোহিণী / Aldebaran (\\(\\alpha\\) Tau)||Al-Debasan (Al-Dabarān)||الدبران||প্রকৃত অর্থে Hyades তারা স্তবক; সাধারণভাবে বৃষের মাথার উজ্জ্বল Aldebaran (\\(\\alpha\\) Tau)। আরবি নাম ‘Ain al-Thawr’, অর্থ বৃষের চোখ।",
 "মৃগশিরা||তিনটি তারার বিন্যাসকে হরিণের মাথার সঙ্গে তুলনা করা হয়েছে।||কালপুরুষ / Orion||Meissa (\\(\\lambda\\) Ori), \\(\\phi\\) Ori||Al-Hekah (Al-Haqʿa)||الهقعة||Orion (কালপুরুষ) তারামণ্ডলীর মাথার তিনটি তারা।",
 "আর্দ্রা||একটি উজ্জ্বল লালচে তারা দিয়ে নক্ষত্রটি চিহ্নিত; আধুনিক নাম Betelgeuse (\\(\\alpha\\) Ori)।||কালপুরুষ / Orion||আর্দ্রা / Betelgeuse (\\(\\alpha\\) Ori)||Al-Henah (Al-Hanʿa)||الهنعة||মিথুন তারামণ্ডলীর দুই পায়ের মাঝামাঝি দুটি তারা; ভারতীয় আর্দ্রার Betelgeuse (\\(\\alpha\\) Ori) নয়।",
-"পুনর্বসু||চারটি তারার বিন্যাসে ঘর এবং তার মধ্যে ছোট একটি কুটিরের আকৃতি কল্পনা করা হয়েছে।||মিথুন / Gemini||Castor (\\(\\alpha\\) Gem), Pollux (\\(\\beta\\) Gem)||Al-Dira (Al-Dhirāʿ)||الذراع||মিথুনের দুই যমজের মাথার দুটি উজ্জ্বল তারা—Castor (\\(\\alpha\\) Gem) ও Pollux (\\(\\beta\\) Gem)।",
+"পুনর্বসু||চারটি তারার বিন্যাসে ঘর এবং তার মধ্যে ছোট একটি কুটিরের আকৃতি কল্পনা করা হয়েছে।||মিথুন / Gemini||বিষ্ণুতারা — Castor (\\(\\alpha\\) Gem), সোমতারা — Pollux (\\(\\beta\\) Gem)||Al-Dira (Al-Dhirāʿ)||الذراع||মিথুনের দুই যমজের মাথার দুটি উজ্জ্বল তারা—বিষ্ণুতারা — Castor (\\(\\alpha\\) Gem) ও সোমতারা — Pollux (\\(\\beta\\) Gem)।",
 "পুষ্যা||ছয়টি তারায় গঠিত, তীরের মতো আকৃতির নক্ষত্রসমষ্টি।||কর্কট / Cancer||Asellus Borealis (\\(\\gamma\\) Cnc), Asellus Australis (\\(\\delta\\) Cnc), \\(\\theta\\) Cnc||Al-Nethra (Al-Nathra)||النثرة||সিংহের মুখের অংশ হিসেবে বর্ণিত; এটি আরবি চন্দ্রমঞ্জিলের প্রাচীন প্রতীকী পরিচয়।",
 "অশ্লেষা||পাঁচটি তারার বিন্যাসকে কুণ্ডলী পাকানো বৃত্তের মতো কল্পনা করা হয়েছে।||হৃদসর্প / Hydra||\\(\\delta\\), \\(\\epsilon\\), \\(\\eta\\), \\(\\rho\\), \\(\\sigma\\) Hya||Al-Terpha (Al-Tarf)||الطرف||সিংহের চোখের অঞ্চল।",
 "মঘা||পাঁচটি তারাকে কেন্দ্র করে চতুষ্কোণ খাট, সিংহাসন বা মন্দিরের প্রতীকী আকৃতি।||সিংহ / Leo||মঘা / Regulus (\\(\\alpha\\) Leo)||Al-Giebha (Al-Jabha)||الجبهة||সিংহের কপাল। আল-ফারগানির মতে সিংহ মণ্ডলের চারটি উজ্জ্বল তারা, যার একটি Cor Leonis (‘সিংহের হৃৎপিণ্ড’, Regulus (\\(\\alpha\\) Leo))।",
@@ -69,8 +69,8 @@ css.textContent=[
 "#nakshatra-panel .nak-extra{background:rgba(245,196,123,.095)}",
 "#nakshatra-panel .nak-mismatch{color:var(--amber);font-size:.82em}",
 "#nakshatra-panel .nak-table-note{font-size:.95rem;color:#c5d0df;margin:12px 0}",
-"#nakshatra-panel .nak-formula{color:#f4ce62}",
-"#nakshatra-panel .nak-formula mjx-container{color:#f4ce62!important}",
+"#nakshatra-panel .nak-formula{color:rgba(244,206,98,.72)}",
+"#nakshatra-panel .nak-formula mjx-container{color:rgba(244,206,98,.72)!important}",
 "#nakshatra-panel .nak-table-frame{overflow-x:visible}",
 "#nakshatra-panel .nak-table-shell{width:calc(100vw - 38px);max-width:1740px;position:relative;left:50%;transform:translateX(-50%);padding:0 10px}",
 "@media(max-width:800px){#nakshatra-panel .nak-table-frame{overflow-x:auto}#nakshatra-panel table{min-width:970px;font-size:12.5px}#nakshatra-panel .nak-table-shell{width:calc(100vw - 16px);padding:0}}",
@@ -82,7 +82,8 @@ const esc=x=>String(x).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"
 root.innerHTML='<div class="nak-controls"><label for="nak-search">নক্ষত্র, তারা বা আরবি নাম খুঁজুন: <input type="search" id="nak-search" autocomplete="off" placeholder="যেমন: কৃত্তিকা, Spica, Al-Qalb"></label><label class="nak-check"><input type="checkbox" id="nak-show-abhijit" checked> অতিরিক্ত অভিজিৎ দেখান</label><span class="nak-count" id="nak-result-count" aria-live="polite"></span></div><div class="nak-table-shell"><div class="table-scroll nak-table-frame"><table aria-label="ভারতীয় নক্ষত্র ও আরবি চন্দ্রমঞ্জিলের তুলনামূলক তালিকা"><thead><tr><th>নক্ষত্রের নাম</th><th>ভারতীয়/বাংলা বিবরণ</th><th>তারামণ্ডল (বাংলা / English)</th><th>মূল তারা</th><th>আরবি নাম</th><th>আরবি বিবরণ</th></tr></thead><tbody></tbody></table></div></div>';
 const tbody=root.querySelector("tbody");
 tbody.innerHTML=rows.map((r,i)=>{
- const n=i===21?"২১ক":String(i<21?i+1:i);
+ const bnDigits=value=>String(value).replace(/[0-9]/g,d=>"০১২৩৪৫৬৭৮৯"[Number(d)]);
+ const n=i===21?"২১ক":bnDigits(i<21?i+1:i);
  const special=i===21;
  return '<tr'+(special?' class="nak-extra" data-abhijit="1"':'')+' data-query="'+esc(r.join(" ").toLocaleLowerCase())+'">'+
  '<td class="nak-first">'+esc(n)+'. '+esc(r[0])+(special?'<small>২৭-এর অতিরিক্ত</small>':'')+'</td>'+
@@ -107,14 +108,20 @@ search.addEventListener("input",filter);
 toggle.addEventListener("change",filter);
 filter();
 
-/* Render only supported LaTeX commands; the historical spellings remain searchable. */
-const visibleMathNodes = new Set();
-function typesetTable(){
+/* Render formulas after the hidden panel becomes visible. */
+let nakMathRendering = false;
+async function typesetTable(){
+  if(document.getElementById("nakshatra-panel")?.hidden || nakMathRendering)return;
   if(!window.MathJax?.typesetPromise)return;
-  const mathNodes=[...root.querySelectorAll("td")].filter(c=>c.textContent.includes("\\(")&&!visibleMathNodes.has(c));
-  if(!mathNodes.length)return;
-  mathNodes.forEach(c=>visibleMathNodes.add(c));
-  window.MathJax.typesetPromise(mathNodes).catch(err=>console.warn("Nakshatra MathJax:",err));
+  nakMathRendering=true;
+  try {
+    await window.MathJax.startup?.promise;
+    await window.MathJax.typesetPromise([root]);
+  } catch(err) {
+    console.warn("Nakshatra MathJax:",err);
+  } finally {
+    nakMathRendering=false;
+  }
 }
 typesetTable();
 window.addEventListener("load",typesetTable,{once:true});
