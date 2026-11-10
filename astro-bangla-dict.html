@@ -77,8 +77,22 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}.wrap
 <script>
 (()=>{
  const tabs=[...document.querySelectorAll('[role="tab"]')];
- function activate(tab,focus=false){tabs.forEach(t=>{const on=t===tab;t.setAttribute('aria-selected',on?'true':'false');t.tabIndex=on?0:-1;t.classList.toggle('active',on);document.getElementById(t.getAttribute('aria-controls')).hidden=!on;});if(focus)tab.focus();}
+ const tabHashes={'terms-tab':'#bn-translation','stars-tab':'#bn-star-names','zodiac-tab':'#bn-zodiacs'};
+ function activate(tab,focus=false,updateUrl=true){
+   tabs.forEach(t=>{const on=t===tab;t.setAttribute('aria-selected',on?'true':'false');t.tabIndex=on?0:-1;t.classList.toggle('active',on);document.getElementById(t.getAttribute('aria-controls')).hidden=!on;});
+   if(updateUrl&&location.hash!==tabHashes[tab.id])history.pushState(null,'',tabHashes[tab.id]);
+   if(focus)tab.focus();
+ }
+ function activateFromHash(scroll=false){
+   const hash=location.hash;
+   const tab=tabs.find(t=>tabHashes[t.id]===hash||'#'+t.id===hash||'#'+t.getAttribute('aria-controls')===hash);
+   if(tab||!hash)activate(tab||tabs[0],false,false);
+   if(tab&&scroll)requestAnimationFrame(()=>document.querySelector('.dictionary-tabs').scrollIntoView({block:'start'}));
+ }
  tabs.forEach((tab,i)=>{tab.addEventListener('click',()=>activate(tab));tab.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();let n=i;if(e.key==='ArrowRight')n=(i+1)%tabs.length;if(e.key==='ArrowLeft')n=(i+tabs.length-1)%tabs.length;if(e.key==='Home')n=0;if(e.key==='End')n=tabs.length-1;activate(tabs[n],true);});});
+ window.addEventListener('hashchange',()=>activateFromHash(true));
+ window.addEventListener('popstate',()=>activateFromHash());
+ activateFromHash(true);
  const termInput=document.getElementById('term-search'),groups=[...document.querySelectorAll('.letter-group')],entries=[...document.querySelectorAll('.term-row')],result=document.getElementById('term-results');
  const normalize=s=>s.trim().replace(/\s+/g,' ').toLocaleLowerCase();
  function filterTerms(){const q=normalize(termInput.value);let count=0;groups.forEach((g,i)=>{let n=0;g.querySelectorAll('.term-row').forEach(r=>{const hit=!q||r.dataset.search.toLocaleLowerCase().includes(q);r.hidden=!hit;const en=r.querySelector('.term-en').cloneNode(true);en.querySelectorAll('.inline-math').forEach(x=>x.remove());const enText=normalize(en.textContent).replace(/\s*\(\s*\)$/,'');const enFull=normalize(r.querySelector('.term-en').textContent);const bn=normalize(r.querySelector('.term-bn').textContent);r.classList.toggle('search-match',!!q&&[enText,enFull,bn].includes(q));if(hit)n++;});g.hidden=n===0;g.open=q? n>0 : i===0;count+=n;});result.style.display=q?'block':'none';result.textContent=q?(count+'টি পরিভাষা পাওয়া গেছে') : '';}
