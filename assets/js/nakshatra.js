@@ -41,8 +41,9 @@ const root=document.getElementById("nakshatra-table-root");
 if(!root)return;
 const css=document.createElement("style");
 css.textContent=[
+"#nakshatra-panel .nak-shell{width:min(100%,1120px);margin:0 auto;padding:0 clamp(14px,2.4vw,34px)}",
 "#nakshatra-panel .nak-intro{font-family:Kalpurush,system-ui,sans-serif;font-size:1.05rem;line-height:1.9}",
-"#nakshatra-panel .nak-intro p{max-width:1050px}",
+"#nakshatra-panel .nak-intro p{max-width:none}",
 "#nakshatra-panel .nak-intro h3{font-size:1.25rem;margin:23px 0 8px;color:#dceaff}",
 "#nakshatra-panel .nak-formula{padding:18px 22px;margin:13px 0;border:1px solid #435269;border-radius:11px;background:#151e2b;overflow-x:auto}",
 "#nakshatra-panel .nak-formula p{margin:6px 0}",
@@ -53,18 +54,18 @@ css.textContent=[
 "#nakshatra-panel .nak-controls label{font-family:Kalpurush,system-ui,sans-serif}",
 "#nakshatra-panel .nak-check{display:inline-flex;gap:7px;align-items:center;white-space:nowrap}",
 "#nakshatra-panel .nak-count{color:var(--muted);font-size:.87rem}",
-"#nakshatra-panel table{min-width:1450px;table-layout:fixed}",
+"#nakshatra-panel table{min-width:1480px;table-layout:fixed;font-family:Kalpurush,system-ui,sans-serif}",
 "#nakshatra-panel th,#nakshatra-panel td{padding:12px 14px;vertical-align:top;text-align:left;line-height:1.6}",
-"#nakshatra-panel th:nth-child(1){width:14%}",
-"#nakshatra-panel th:nth-child(2){width:25%}",
-"#nakshatra-panel th:nth-child(3){width:15%}",
-"#nakshatra-panel th:nth-child(4){width:19%}",
-"#nakshatra-panel th:nth-child(5){width:14%}",
-"#nakshatra-panel th:nth-child(6){width:25%}",
+"#nakshatra-panel th:nth-child(1){width:12%}",
+"#nakshatra-panel th:nth-child(2){width:21%}",
+"#nakshatra-panel th:nth-child(3){width:14%}",
+"#nakshatra-panel th:nth-child(4){width:18%}",
+"#nakshatra-panel th:nth-child(5){width:15%}",
+"#nakshatra-panel th:nth-child(6){width:20%}",
 "#nakshatra-panel .nak-first{font-weight:750;color:var(--green)}",
 "#nakshatra-panel .nak-first small{display:block;color:var(--muted);font-weight:400}",
 "#nakshatra-panel .nak-arabic{display:block;color:#dbddf4;font-family:serif;font-size:1.06rem;direction:rtl;text-align:left}",
-"#nakshatra-panel .nak-latin{font-family:Georgia,serif;color:#e7edf8}",
+"#nakshatra-panel .nak-latin{font-family:Kalpurush,system-ui,sans-serif;color:#e7edf8}",
 "#nakshatra-panel .nak-extra{background:rgba(245,196,123,.095)}",
 "#nakshatra-panel .nak-mismatch{color:var(--amber);font-size:.82em}",
 "#nakshatra-panel .nak-table-note{font-size:.95rem;color:#c5d0df;margin:12px 0}",
@@ -72,10 +73,10 @@ css.textContent=[
 ].join("\n");
 document.head.append(css);
 const esc=x=>String(x).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-root.innerHTML='<div class="nak-controls"><label for="nak-search">নক্ষত্র, তারা বা আরবি নাম খুঁজুন: <input type="search" id="nak-search" autocomplete="off" placeholder="যেমন: কৃত্তিকা, Spica, Al-Qalb"></label><label class="nak-check"><input type="checkbox" id="nak-show-abhijit" checked> অতিরিক্ত অভিজিৎ দেখান</label><span class="nak-count" id="nak-result-count" aria-live="polite"></span></div><div class="table-scroll"><table aria-label="ভারতীয় নক্ষত্র ও আরবি চন্দ্রমঞ্জিলের তুলনামূলক তালিকা"><thead><tr><th>নক্ষত্রের নাম</th><th>বিবরণ (বাংলা গ্রন্থ)</th><th>তারামণ্ডল (বাংলা / English)</th><th>মূল তারা (Bayer চিহ্নসহ)</th><th>আরবি নাম</th><th>আরবি বিবরণ (ইংরেজি গ্রন্থ)</th></tr></thead><tbody></tbody></table></div>';
+root.innerHTML='<div class="nak-controls"><label for="nak-search">নক্ষত্র, তারা বা আরবি নাম খুঁজুন: <input type="search" id="nak-search" autocomplete="off" placeholder="যেমন: কৃত্তিকা, Spica, Al-Qalb"></label><label class="nak-check"><input type="checkbox" id="nak-show-abhijit" checked> অতিরিক্ত অভিজিৎ দেখান</label><span class="nak-count" id="nak-result-count" aria-live="polite"></span></div><div class="table-scroll"><table aria-label="ভারতীয় নক্ষত্র ও আরবি চন্দ্রমঞ্জিলের তুলনামূলক তালিকা"><thead><tr><th>নক্ষত্রের নাম</th><th>ভারতীয়/বাংলা বিবরণ</th><th>তারামণ্ডল (বাংলা / English)</th><th>মূল তারা</th><th>আরবি নাম</th><th>আরবি বিবরণ</th></tr></thead><tbody></tbody></table></div>';
 const tbody=root.querySelector("tbody");
 tbody.innerHTML=rows.map((r,i)=>{
- const n=i===21?"০ (বিশেষ)":String(i<21?i+1:i);
+ const n=i===21?"২১ক":String(i<21?i+1:i);
  const special=i===21;
  return '<tr'+(special?' class="nak-extra" data-abhijit="1"':'')+' data-query="'+esc(r.join(" ").toLocaleLowerCase())+'">'+
  '<td class="nak-first">'+esc(n)+'. '+esc(r[0])+(special?'<small>২৭-এর অতিরিক্ত</small>':'')+'</td>'+
@@ -99,4 +100,13 @@ function filter(){
 search.addEventListener("input",filter);
 toggle.addEventListener("change",filter);
 filter();
+function typesetTable(){
+  if(!window.MathJax?.typesetPromise)return;
+  const mathNodes=[...root.querySelectorAll("td")].filter(c=>c.textContent.includes("\\("));
+  if(mathNodes.length) window.MathJax.typesetPromise(mathNodes).catch(err=>console.warn("Nakshatra MathJax:",err));
+}
+typesetTable();
+window.addEventListener("load",typesetTable,{once:true});
+document.getElementById("nakshatra-tab")?.addEventListener("click",()=>requestAnimationFrame(typesetTable));
+window.addEventListener("hashchange",()=>requestAnimationFrame(typesetTable));
 })();
