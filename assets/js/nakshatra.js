@@ -54,8 +54,8 @@ css.textContent=[
 "#nakshatra-panel .nak-controls label{font-family:Kalpurush,system-ui,sans-serif}",
 "#nakshatra-panel .nak-check{display:inline-flex;gap:7px;align-items:center;white-space:nowrap}",
 "#nakshatra-panel .nak-count{color:var(--muted);font-size:.87rem}",
-"#nakshatra-panel table{min-width:1480px;table-layout:fixed;font-family:Kalpurush,system-ui,sans-serif}",
-"#nakshatra-panel th,#nakshatra-panel td{padding:12px 14px;vertical-align:top;text-align:left;line-height:1.6}",
+"#nakshatra-panel table{min-width:0;width:100%;table-layout:fixed;font-family:Kalpurush,system-ui,sans-serif;font-size:clamp(11.5px,.83vw,14px)}",
+"#nakshatra-panel th,#nakshatra-panel td{padding:9px 8px;vertical-align:top;text-align:left;line-height:1.55;overflow-wrap:anywhere;word-break:normal;white-space:normal}",
 "#nakshatra-panel th:nth-child(1){width:12%}",
 "#nakshatra-panel th:nth-child(2){width:21%}",
 "#nakshatra-panel th:nth-child(3){width:14%}",
@@ -69,11 +69,17 @@ css.textContent=[
 "#nakshatra-panel .nak-extra{background:rgba(245,196,123,.095)}",
 "#nakshatra-panel .nak-mismatch{color:var(--amber);font-size:.82em}",
 "#nakshatra-panel .nak-table-note{font-size:.95rem;color:#c5d0df;margin:12px 0}",
+"#nakshatra-panel .nak-formula{color:#f4ce62}",
+"#nakshatra-panel .nak-formula mjx-container{color:#f4ce62!important}",
+"#nakshatra-panel .nak-table-frame{overflow-x:visible}",
+"#nakshatra-panel .nak-table-shell{width:calc(100vw - 38px);max-width:1740px;position:relative;left:50%;transform:translateX(-50%);padding:0 10px}",
+"@media(max-width:800px){#nakshatra-panel .nak-table-frame{overflow-x:auto}#nakshatra-panel table{min-width:970px;font-size:12.5px}#nakshatra-panel .nak-table-shell{width:calc(100vw - 16px);padding:0}}",
+"@media(min-width:801px) and (max-width:1050px){#nakshatra-panel table{font-size:11.5px}#nakshatra-panel th,#nakshatra-panel td{padding:8px 5px}}",
 "@media(max-width:650px){#nakshatra-panel .nak-controls{align-items:stretch}#nakshatra-panel .nak-controls input{width:100%}}"
 ].join("\n");
 document.head.append(css);
 const esc=x=>String(x).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-root.innerHTML='<div class="nak-controls"><label for="nak-search">নক্ষত্র, তারা বা আরবি নাম খুঁজুন: <input type="search" id="nak-search" autocomplete="off" placeholder="যেমন: কৃত্তিকা, Spica, Al-Qalb"></label><label class="nak-check"><input type="checkbox" id="nak-show-abhijit" checked> অতিরিক্ত অভিজিৎ দেখান</label><span class="nak-count" id="nak-result-count" aria-live="polite"></span></div><div class="table-scroll"><table aria-label="ভারতীয় নক্ষত্র ও আরবি চন্দ্রমঞ্জিলের তুলনামূলক তালিকা"><thead><tr><th>নক্ষত্রের নাম</th><th>ভারতীয়/বাংলা বিবরণ</th><th>তারামণ্ডল (বাংলা / English)</th><th>মূল তারা</th><th>আরবি নাম</th><th>আরবি বিবরণ</th></tr></thead><tbody></tbody></table></div>';
+root.innerHTML='<div class="nak-controls"><label for="nak-search">নক্ষত্র, তারা বা আরবি নাম খুঁজুন: <input type="search" id="nak-search" autocomplete="off" placeholder="যেমন: কৃত্তিকা, Spica, Al-Qalb"></label><label class="nak-check"><input type="checkbox" id="nak-show-abhijit" checked> অতিরিক্ত অভিজিৎ দেখান</label><span class="nak-count" id="nak-result-count" aria-live="polite"></span></div><div class="nak-table-shell"><div class="table-scroll nak-table-frame"><table aria-label="ভারতীয় নক্ষত্র ও আরবি চন্দ্রমঞ্জিলের তুলনামূলক তালিকা"><thead><tr><th>নক্ষত্রের নাম</th><th>ভারতীয়/বাংলা বিবরণ</th><th>তারামণ্ডল (বাংলা / English)</th><th>মূল তারা</th><th>আরবি নাম</th><th>আরবি বিবরণ</th></tr></thead><tbody></tbody></table></div></div>';
 const tbody=root.querySelector("tbody");
 tbody.innerHTML=rows.map((r,i)=>{
  const n=i===21?"২১ক":String(i<21?i+1:i);
@@ -100,10 +106,15 @@ function filter(){
 search.addEventListener("input",filter);
 toggle.addEventListener("change",filter);
 filter();
+
+/* Render only supported LaTeX commands; the historical spellings remain searchable. */
+const visibleMathNodes = new Set();
 function typesetTable(){
   if(!window.MathJax?.typesetPromise)return;
-  const mathNodes=[...root.querySelectorAll("td")].filter(c=>c.textContent.includes("\\("));
-  if(mathNodes.length) window.MathJax.typesetPromise(mathNodes).catch(err=>console.warn("Nakshatra MathJax:",err));
+  const mathNodes=[...root.querySelectorAll("td")].filter(c=>c.textContent.includes("\\(")&&!visibleMathNodes.has(c));
+  if(!mathNodes.length)return;
+  mathNodes.forEach(c=>visibleMathNodes.add(c));
+  window.MathJax.typesetPromise(mathNodes).catch(err=>console.warn("Nakshatra MathJax:",err));
 }
 typesetTable();
 window.addEventListener("load",typesetTable,{once:true});
