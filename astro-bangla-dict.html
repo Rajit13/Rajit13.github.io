@@ -36,6 +36,18 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}.wrap
 
 .term-en{font-family:"Latin Modern Roman","CMU Serif","Computer Modern",Georgia,serif;font-weight:500}.crescent-ascii{display:inline-block;font-family:monospace;font-weight:700;font-size:1.15em;line-height:1;color:var(--amber);padding:0 2px}.term-row.search-match{background:rgba(245,196,123,.2);box-shadow:inset 4px 0 var(--amber);border-radius:6px}#stars-panel tr.search-match td{background:rgba(245,196,123,.2)!important;box-shadow:inset 0 1px 0 var(--amber),inset 0 -1px 0 var(--amber)}#stars-panel tr.search-match td:first-child{box-shadow:inset 4px 0 var(--amber),inset 0 1px 0 var(--amber),inset 0 -1px 0 var(--amber)}#stars-panel tr.zodiac-highlight td{background:rgba(168,198,123,.24)!important;box-shadow:inset 0 1px 0 rgba(168,198,123,.88),inset 0 -1px 0 rgba(168,198,123,.88)}#stars-panel tr.zodiac-highlight td:first-child{box-shadow:inset 4px 0 #a8c67b,inset 0 1px 0 rgba(168,198,123,.88),inset 0 -1px 0 rgba(168,198,123,.88)}
 .zodiac-symbol{display:inline-block;margin-left:.42em;color:var(--amber);font-size:1.12em;white-space:nowrap}.zodiac-symbol mjx-container{display:inline-block!important;margin:0!important}
+
+/* Vector nakshatra sky chart */
+#nakshatra-panel .nak-sky-chart{margin:24px 0;padding:16px;border:1px solid var(--border2);border-radius:12px;background:#10171f}
+#nakshatra-panel .nak-sky-chart-header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+#nakshatra-panel .nak-sky-chart h3{margin:0;font-size:1.35rem}
+#nakshatra-panel .nak-sky-chart-open{padding:7px 12px;border:1px solid var(--border2);border-radius:8px;white-space:nowrap}
+#nakshatra-panel .nak-sky-chart-scroll{overflow-x:auto;background:#030507;border-radius:8px}
+#nakshatra-panel .nak-sky-chart-scroll:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+#nakshatra-panel .nak-sky-chart img{display:block;width:100%;min-width:900px;height:auto}
+#nakshatra-panel .nak-sky-chart figcaption{margin-top:12px;color:#c5d0df;font-size:.95rem}
+#nakshatra-panel .nak-sky-chart-credit{display:block;margin-top:6px;color:var(--muted);font-size:.8rem}
+@media(max-width:650px){#nakshatra-panel .nak-sky-chart{padding:10px}#nakshatra-panel .nak-sky-chart h3{font-size:1.2rem}}
 </style>
 </head>
 <body>
@@ -156,6 +168,20 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}.wrap
       <h3>ভারতীয় নক্ষত্র ও আরবি চন্দ্রমঞ্জিলের তুলনামূলক তালিকা</h3>
       <p>নিচে অশ্বিনী থেকে রেবতী পর্যন্ত নক্ষত্রচক্রের ক্রম রাখা হয়েছে। অতিরিক্ত অভিজিৎ উত্তরাষাঢ়া ও শ্রবণার মাঝখানে আছে। <strong>ভারতীয়/বাংলা বিবরণ</strong>-এ নক্ষত্রের প্রাচীন আকৃতি ও তারাসংখ্যার বর্ণনা আধুনিক বাংলায় দেওয়া হয়েছে। <strong>আরবি বিবরণ</strong>-এ আরবি চন্দ্রমঞ্জিলের নামের অর্থ, অবস্থান, ঐতিহাসিক জ্যোতির্বিদদের উল্লেখ ও তারা শনাক্তকরণের প্রয়োজনীয় বিস্তারিত তথ্য রাখা হয়েছে। মূল তারা কলামে পরিচিত ইংরেজি তারার নাম ও তারাচিহ্ন ব্যবহার করা হয়েছে।</p>
     </div>
+    <figure class="nak-sky-chart bn" aria-labelledby="nak-sky-chart-title">
+      <div class="nak-sky-chart-header">
+        <h3 id="nak-sky-chart-title">২৭ নক্ষত্রের আকাশমানচিত্র</h3>
+        <a class="nak-sky-chart-open" href="images/nakshatra-bangla.svg" target="_blank" rel="noopener">পূর্ণ আকারে দেখুন ↗</a>
+      </div>
+      <div class="nak-sky-chart-scroll" tabindex="0" role="region" aria-label="নক্ষত্রের মানচিত্র; ছোট পর্দায় পাশে সরিয়ে দেখুন">
+        <a href="images/nakshatra-bangla.svg" target="_blank" rel="noopener" aria-label="নক্ষত্রের মানচিত্র পূর্ণ আকারে খুলুন">
+          <img src="images/nakshatra-bangla.svg" width="1560" height="975" loading="lazy" decoding="async" alt="উত্তর ক্রান্তিমেরুকে কেন্দ্র করে ২৭টি নক্ষত্রের বাংলা নাম, সংশ্লিষ্ট তারাগুচ্ছ, তারামণ্ডলের রেখা ও লাল ক্রান্তিবৃত্তসহ আকাশমানচিত্র।">
+        </a>
+      </div>
+      <figcaption>উত্তর ক্রান্তিমেরুকে কেন্দ্র করে আঁকা এই মানচিত্রে লাল বৃত্তটি ক্রান্তিবৃত্ত। পটভূমিতে আপাত দৃশ্যমান মান ৪ পর্যন্ত উজ্জ্বল তারা দেখানো হয়েছে; উজ্জ্বল তারার বিন্দু তুলনামূলক বড়। নামের পাশে ছোট লাল চিহ্ন সংশ্লিষ্ট নির্দেশক তারার অবস্থান দেখায়, যার কয়েকটি চতুর্থ মানের চেয়েও ফিকে। এটি তারাগুচ্ছের অবস্থানের মানচিত্র, সৌরপথের ২৭টি সমান ভাগের চিত্র নয়। ছোট পর্দায় ছবিটি পাশে সরিয়ে অথবা পূর্ণ আকারে খুলে দেখুন।
+        <span class="nak-sky-chart-credit">J2000 · তারার তথ্য: <a href="https://github.com/astronexus/HYG-Database" target="_blank" rel="noopener">David Nash / HYG v4.1</a> · তারামণ্ডলের রেখা: <a href="https://stellarium.org/" target="_blank" rel="noopener">Stellarium</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a></span>
+      </figcaption>
+    </figure>
     <div id="nakshatra-table-root"><p class="bn">নক্ষত্রের তালিকা লোড হচ্ছে…</p></div>
     <p class="nak-table-note bn">তালিকার একই সারির ভারতীয় নক্ষত্র ও আরবি চন্দ্রমঞ্জিল <strong>অবস্থানক্রমে</strong> তুলনীয় হলেও সব সময় একই তারাগুলোকে বোঝায় না। পুরোনো গ্রন্থে তারার সংখ্যার উল্লেখ আধুনিক নির্ভুল গণনা নয়। মূল তারার গ্রিক অক্ষরগুলো Bayer-এর তারাচিহ্ন, আর সংখ্যাগুলো প্রয়োজনে Flamsteed চিহ্ন।</p>
     <div class="source-credit bn">
