@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#101319">
-<meta name="description" content="Professional and academic travel timeline of Fahim Rajit Hossain Shwadhin for astronomy research, Olympiads, education, and international programs.">
-<title>Work Travel · Fahim Rajit Hossain Shwadhin</title>
+<meta name="description" content="Travel timeline of Fahim Rajit Hossain Shwadhin, separating astronomy-related work and academic travel from personal tours, with an interactive world map.">
+<title>Travel · Fahim Rajit Hossain Shwadhin</title>
 <link rel="icon" href="images/ori_website.png" type="image/x-icon">
 <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
 <style>
@@ -73,6 +73,25 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}butto
 .legend span{display:inline-flex;align-items:center;gap:5px}
 .dot{width:8px;height:8px;border-radius:50%;background:var(--green)}.dot.invited{background:transparent;border:1px dashed var(--amber)}
 
+/* Interactive travel map */
+.map-shell{border:1px solid var(--border);border-radius:14px;background:linear-gradient(180deg,#0b1420,#0d1926);padding:14px;box-shadow:var(--shadow)}
+.travel-map{position:relative;overflow:hidden;border:1px solid #29394e;border-radius:11px;aspect-ratio:1100/750;background:#0a1725 url("https://commons.wikimedia.org/wiki/Special:Redirect/file/World_map_blank_shorelines_semiwikimapia.svg") center/contain no-repeat}
+.travel-map:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(7,16,27,.05),rgba(7,16,27,.18))}
+.map-pin{position:absolute;z-index:3;transform:translate(-50%,-100%);display:inline-flex;align-items:center;justify-content:center;width:28px;height:34px;text-decoration:none;filter:drop-shadow(0 3px 4px rgba(0,0,0,.55));transition:transform .16s ease,filter .16s ease}
+.map-pin:hover,.map-pin:focus{transform:translate(-50%,-100%) scale(1.22);filter:drop-shadow(0 4px 8px rgba(0,0,0,.8));text-decoration:none;outline:none}
+.map-pin .pin-symbol{font-size:25px;line-height:1}
+.map-pin.personal .pin-symbol{filter:hue-rotate(155deg) saturate(1.25)}
+.map-pin .pin-label{position:absolute;left:50%;bottom:33px;transform:translateX(-50%);opacity:0;pointer-events:none;white-space:nowrap;padding:4px 7px;border:1px solid #41516a;border-radius:6px;background:rgba(10,17,27,.96);color:#edf3fb;font-size:10px;font-weight:700;transition:opacity .15s ease}
+.map-pin:hover .pin-label,.map-pin:focus .pin-label{opacity:1}
+.map-legend{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:10px;color:#aeb9c8;font-size:11px}
+.map-legend span{display:inline-flex;align-items:center;gap:5px}.map-legend .pin-key{font-size:17px;line-height:1}.map-legend .personal-key{filter:hue-rotate(155deg) saturate(1.25)}
+.map-note{margin-left:auto;color:#7f8da0}.map-note a{color:#9bbfe8}
+.personal-timeline .timeline:before{background:linear-gradient(180deg,rgba(245,196,123,.65),rgba(191,156,255,.35))}
+.entry.personal .marker:before{background:var(--amber);box-shadow:0 0 0 1px rgba(245,196,123,.65)}
+.entry.personal .travel-card{border-color:#5a4b35;background:rgba(30,25,20,.82)}
+.type.personal{color:#f5d199;border-color:#6b5738;background:#231d15}
+
+
 .timeline{position:relative;max-width:1020px;margin:0 auto;padding:3px 0}
 .timeline:before{content:"";position:absolute;left:117px;top:8px;bottom:8px;width:1px;background:linear-gradient(180deg,rgba(125,218,179,.55),rgba(133,183,255,.38),rgba(191,156,255,.35))}
 .entry{display:grid;grid-template-columns:95px 26px minmax(0,1fr);gap:10px;position:relative;margin:0 0 14px}
@@ -107,7 +126,7 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}butto
 }
 @media(max-width:620px){
   .author-bar{align-items:flex-start;flex-direction:column;padding:12px 16px}.author-id a{font-size:24px!important}.author-links{justify-content:flex-start}.page-nav{padding:9px 16px}.page-nav .spacer{display:none}.searchbox{width:100%}.searchbox input{flex:1;width:auto}
-  .hero{padding-top:30px}.section-head{align-items:flex-start;flex-direction:column}.card-top{flex-direction:column}.type{white-space:normal}
+  .hero{padding-top:30px}.section-head{align-items:flex-start;flex-direction:column}.card-top{flex-direction:column}.type{white-space:normal}.map-note{width:100%;margin-left:0}.map-pin{width:24px;height:30px}.map-pin .pin-symbol{font-size:21px}
 }
 </style>
 </head>
@@ -141,12 +160,41 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}butto
 <main>
   <section class="hero searchable">
     <div class="wrap">
-      <div class="eyebrow">A timeline of astronomy-related travel</div>
-      <h1>Work and Academic Travel</h1>
-      <p class="lead">International travel connected to astronomy research, Olympiads, education programs, workshops, and scientific training.</p>
-      <p>This is intentionally <strong>not a general travel diary</strong>. Personal holidays and leisure trips are not included; the timeline below records travel directly connected to my academic, research, Olympiad, or astronomy-education work.</p>
+      <div class="eyebrow">Academic journeys and personal tours</div>
+      <h1>Travel</h1>
+      <p class="lead">International travel connected to astronomy research, Olympiads, education programs, workshops, scientific training, and a small separate record of personal tours.</p>
+      <p>The <strong>work and academic timeline</strong> remains distinct from personal travel. Bhutan (2019) and Singapore (November 2026) are listed separately below and are not counted as professional travel.</p>
       <div class="notice"><i class="fas fa-info-circle"></i><span>Entries marked as invited/online record programs for which I was selected but could not complete the physical trip: LEAPS 2020 due to COVID-19 and the Sharjah IAU workshop in January 2025 due to visa restrictions.</span></div>
       <div class="hero-actions"><a class="btn" href="research.html">Research projects</a><a class="btn" href="olympiad.html">Olympiad work</a><a class="btn" href="about.html">Background</a></div>
+    </div>
+  </section>
+
+
+  <section class="section searchable" id="travel-map">
+    <div class="wrap">
+      <div class="section-head"><div><div class="eyebrow">World map</div><h2>Countries I have travelled to</h2></div><p>Physical travel only. Click a 📍 pin to jump directly to that country’s entry in the work/academic or personal timeline.</p></div>
+      <div class="map-shell">
+        <div class="travel-map" role="img" aria-label="Mercator world map showing countries Fahim Rajit Hossain Shwadhin has travelled to">
+          <a class="map-pin work" style="left:73.8%;top:44.2%" href="#work-india" aria-label="India — work and academic travel"><span class="pin-symbol">📍</span><span class="pin-label">India · 2016, 2025</span></a>
+          <a class="map-pin work" style="left:52.0%;top:36.5%" href="#work-france" aria-label="France — work and academic travel"><span class="pin-symbol">📍</span><span class="pin-label">France · 2017</span></a>
+          <a class="map-pin work" style="left:82.3%;top:37.9%" href="#work-china" aria-label="China — work and academic travel"><span class="pin-symbol">📍</span><span class="pin-label">China · 2018</span></a>
+          <a class="map-pin work" style="left:54.8%;top:35.3%" href="#work-hungary" aria-label="Hungary — work and academic travel"><span class="pin-symbol">📍</span><span class="pin-label">Hungary · 2019</span></a>
+          <a class="map-pin work" style="left:61.9%;top:37.0%" href="#work-georgia" aria-label="Georgia — work and academic travel"><span class="pin-symbol">📍</span><span class="pin-label">Georgia · 2022</span></a>
+          <a class="map-pin work" style="left:55.3%;top:33.8%" href="#work-poland" aria-label="Poland — work and academic travel"><span class="pin-symbol">📍</span><span class="pin-label">Poland · 2023</span></a>
+          <a class="map-pin work" style="left:53.3%;top:30.3%" href="#work-sweden" aria-label="Sweden — work and academic travel"><span class="pin-symbol">📍</span><span class="pin-label">Sweden · 2024</span></a>
+          <a class="map-pin work" style="left:38.0%;top:56.5%" href="#work-brazil" aria-label="Brazil — work and academic travel"><span class="pin-symbol">📍</span><span class="pin-label">Brazil · 2024</span></a>
+          <a class="map-pin work" style="left:73.7%;top:42.0%" href="#work-nepal" aria-label="Nepal — work and academic travel"><span class="pin-symbol">📍</span><span class="pin-label">Nepal · 2024</span></a>
+          <a class="map-pin work" style="left:83.8%;top:42.8%" href="#work-taiwan" aria-label="Taiwan — work and academic travel"><span class="pin-symbol">📍</span><span class="pin-label">Taiwan · 2025</span></a>
+          <a class="map-pin work" style="left:79.4%;top:44.0%" href="#work-vietnam" aria-label="Vietnam — work and academic travel"><span class="pin-symbol">📍</span><span class="pin-label">Vietnam · 2026</span></a>
+          <a class="map-pin personal" style="left:75.1%;top:42.0%" href="#personal-bhutan" aria-label="Bhutan — personal travel"><span class="pin-symbol">📍</span><span class="pin-label">Bhutan · 2019 · personal</span></a>
+          <a class="map-pin personal" style="left:78.8%;top:49.6%" href="#personal-singapore" aria-label="Singapore — personal travel"><span class="pin-symbol">📍</span><span class="pin-label">Singapore · Nov 2026 · personal</span></a>
+        </div>
+        <div class="map-legend">
+          <span><i class="pin-key">📍</i> work / academic travel</span>
+          <span><i class="pin-key personal-key">📍</i> personal travel / tours</span>
+          <span class="map-note">Mercator base map: <a href="https://commons.wikimedia.org/wiki/File:World_map_blank_shorelines_semiwikimapia.svg" target="_blank" rel="noopener">Wikimedia Commons ↗</a></span>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -177,22 +225,22 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}butto
       <div class="section-head"><div><div class="eyebrow">2016–2026</div><h2>Timeline</h2></div><p>Olympiad representation gradually expanded into team leadership, research fellowships, astronomy education, and international schools.</p></div>
 
       <div class="timeline">
-        <article class="entry">
+        <article class="entry" id="work-india">
           <div class="when"><strong>Dec 2016</strong><span>Bhubaneswar</span></div><div class="marker"></div>
           <div class="travel-card"><div class="card-top"><div class="place"><span class="flag">🇮🇳</span><div><h3>Bhubaneswar, India</h3><span class="country-name">India</span></div></div><span class="type">Olympiad</span></div><div class="event">10th IOAA · 2016</div><div class="details"><span class="detail"><strong>Role:</strong> Bangladesh Representative</span></div></div>
         </article>
 
-        <article class="entry">
+        <article class="entry" id="work-france">
           <div class="when"><strong>Aug 2017</strong><span>Nice / Côte d’Azur</span></div><div class="marker"></div>
           <div class="travel-card"><div class="card-top"><div class="place"><span class="flag">🇫🇷</span><div><h3>Nice, France</h3><span class="country-name">France</span></div></div><span class="type education">Olympiad</span></div><div class="event">11th International Earth Science Olympiad (IESO 2017)</div><div class="details"><span class="detail"><strong>Role:</strong> Bangladesh Representative / Participant</span><span class="detail">🥉 <strong>Bronze medal</strong> as participant</span></div></div>
         </article>
 
-        <article class="entry">
+        <article class="entry" id="work-china">
           <div class="when"><strong>Dec 2018</strong><span>Beijing</span></div><div class="marker"></div>
           <div class="travel-card"><div class="card-top"><div class="place"><span class="flag">🇨🇳</span><div><h3>Beijing, China</h3><span class="country-name">China</span></div></div><span class="type">Olympiad</span></div><div class="event">12th IOAA · 2018</div><div class="details"><span class="detail"><strong>Role:</strong> Bangladesh Team Leader</span><span class="detail">First time as Team Leader</span><span class="detail"><strong>Team result under my leadership:</strong> 🎖️ 1 Honorable Mention</span></div></div>
         </article>
 
-        <article class="entry">
+        <article class="entry" id="work-hungary">
           <div class="when"><strong>Aug 2019</strong><span>Keszthely</span></div><div class="marker"></div>
           <div class="travel-card"><div class="card-top"><div class="place"><span class="flag">🇭🇺</span><div><h3>Keszthely, Hungary</h3><span class="country-name">Hungary</span></div></div><span class="type">Olympiad</span></div><div class="event">13th IOAA · 2019</div><div class="details"><span class="detail"><strong>Role:</strong> Bangladesh Team Leader</span><span class="detail">Second time as Team Leader</span></div></div>
         </article>
@@ -207,27 +255,27 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}butto
           <div class="travel-card"><div class="card-top"><div class="place"><span class="flag">🇨🇴</span><div><h3>IOAA 2021 · Bogotá, Colombia</h3><span class="country-name">Host location · participated remotely</span></div></div><span class="type remote">Hybrid / remote</span></div><div class="event">14th IOAA · 2021</div><div class="details"><span class="detail"><strong>Role:</strong> Bangladesh Team Leader</span><span class="detail"><strong>Travel:</strong> None — no invitation to travel</span><span class="detail"><strong>Team result under my leadership:</strong> 🥉 1 Bronze · 🎖️🎖️🎖️🎖️ 4 Honorable Mentions</span></div></div>
         </article>
 
-        <article class="entry">
+        <article class="entry" id="work-georgia">
           <div class="when"><strong>Aug 2022</strong><span>Kutaisi</span></div><div class="marker"></div>
           <div class="travel-card"><div class="card-top"><div class="place"><span class="flag">🇬🇪</span><div><h3>Kutaisi, Georgia</h3><span class="country-name">Georgia</span></div></div><span class="type">Olympiad</span></div><div class="event">15th IOAA · 2022</div><div class="details"><span class="detail"><strong>Role:</strong> Bangladesh Team Leader</span></div></div>
         </article>
 
-        <article class="entry">
+        <article class="entry" id="work-poland">
           <div class="when"><strong>Aug 2023</strong><span>Chorzów</span></div><div class="marker"></div>
           <div class="travel-card"><div class="card-top"><div class="place"><span class="flag">🇵🇱</span><div><h3>Chorzów, Poland</h3><span class="country-name">Poland</span></div></div><span class="type">Olympiad</span></div><div class="event">16th IOAA · 2023</div><div class="details"><span class="detail"><strong>Role:</strong> Bangladesh Team Leader</span><span class="detail"><strong>Team result under my leadership:</strong> 🥈🥈 2 Silver · 🥉 1 Bronze</span></div></div>
         </article>
 
-        <article class="entry">
+        <article class="entry" id="work-sweden">
           <div class="when"><strong>May–Aug 2024</strong><span>Gothenburg</span></div><div class="marker"></div>
           <div class="travel-card"><div class="card-top"><div class="place"><span class="flag">🇸🇪</span><div><h3>Gothenburg, Sweden</h3><span class="country-name">Sweden</span></div></div><span class="type research">Research</span></div><div class="event">CASSUM 2024</div><div class="details"><span class="detail"><strong>Role:</strong> CASSUM Research Fellow</span><span class="detail">Exoplanet atmosphere research</span></div></div>
         </article>
 
-        <article class="entry">
+        <article class="entry" id="work-brazil">
           <div class="when"><strong>Aug 2024</strong><span>Rio de Janeiro</span></div><div class="marker"></div>
           <div class="travel-card"><div class="card-top"><div class="place"><span class="flag">🇧🇷</span><div><h3>Rio de Janeiro, Brazil</h3><span class="country-name">Brazil</span></div></div><span class="type">Olympiad</span></div><div class="event">17th IOAA · 2024</div><div class="details"><span class="detail"><strong>Role:</strong> Bangladesh Team Leader</span><span class="detail"><strong>Team result under my leadership:</strong> 🥉 1 Bronze · 🎖️ 1 Honorable Mention</span></div></div>
         </article>
 
-        <article class="entry">
+        <article class="entry" id="work-nepal">
           <div class="when"><strong>Oct 2024</strong><span>Kathmandu</span></div><div class="marker"></div>
           <div class="travel-card"><div class="card-top"><div class="place"><span class="flag">🇳🇵</span><div><h3>Kathmandu, Nepal</h3><span class="country-name">Nepal</span></div></div><span class="type">Olympiad</span></div><div class="event">IOAAjr 2024</div><div class="details"><span class="detail"><strong>Role:</strong> Bangladesh Team Leader</span><span class="detail"><strong>Team result under my leadership:</strong> 🥈 1 Silver · 🥉🥉 2 Bronze · 🎖️ 1 Honorable Mention</span></div></div>
         </article>
@@ -247,12 +295,12 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}butto
           <div class="travel-card"><div class="card-top"><div class="place"><span class="flag">🇮🇳</span><div><h3>Mumbai, India</h3><span class="country-name">India</span></div></div><span class="type">Olympiad</span></div><div class="event">18th IOAA · 2025</div><div class="details"><span class="detail"><strong>Role:</strong> Bangladesh Team Leader</span><span class="detail"><strong>Team result under my leadership:</strong> 🥈 1 Silver · 🎖️🎖️ 2 Honorable Mentions · 🏆 1 Best Group Award</span></div></div>
         </article>
 
-        <article class="entry">
+        <article class="entry" id="work-taiwan">
           <div class="when"><strong>Nov–Dec 2025</strong><span>Taipei</span></div><div class="marker"></div>
           <div class="travel-card"><div class="card-top"><div class="place"><span class="flag">🇹🇼</span><div><h3>Taipei, Taiwan</h3><span class="country-name">Taiwan</span></div></div><span class="type education">Astronomy school</span></div><div class="event">47th International School for Young Astronomers</div><div class="details"><span class="detail"><strong>Role:</strong> Bangladesh Participant</span></div></div>
         </article>
 
-        <article class="entry">
+        <article class="entry" id="work-vietnam">
           <div class="when"><strong>Sep 2026</strong><span>Hanoi</span></div><div class="marker"></div>
           <div class="travel-card"><div class="card-top"><div class="place"><span class="flag">🇻🇳</span><div><h3>Hanoi, Vietnam</h3><span class="country-name">Vietnam</span></div></div><span class="type">Olympiad</span></div><div class="event">19th IOAA · 2026</div><div class="details"><span class="detail"><strong>Role:</strong> Bangladesh Team Leader</span><span class="detail"><strong>Team result under my leadership:</strong> 🥉 1 Bronze · 🎖️ 1 Honorable Mention · 🏆 1 Best Group member award · <strong>3 prizes in total</strong></span></div></div>
         </article>
@@ -260,9 +308,26 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}butto
     </div>
   </section>
 
+
+  <section class="section searchable personal-timeline" id="personal-travel">
+    <div class="wrap">
+      <div class="section-head"><div><div class="eyebrow">Personal travel / tours</div><h2>Personal travel</h2></div><p>Kept deliberately separate from the professional timeline above.</p></div>
+      <div class="timeline">
+        <article class="entry personal" id="personal-bhutan">
+          <div class="when"><strong>2019</strong><span>Bhutan</span></div><div class="marker"></div>
+          <div class="travel-card"><div class="card-top"><div class="place"><span class="flag">🇧🇹</span><div><h3>Bhutan</h3><span class="country-name">Bhutan</span></div></div><span class="type personal">Personal tour</span></div><div class="event">Personal travel · 2019</div></div>
+        </article>
+        <article class="entry personal" id="personal-singapore">
+          <div class="when"><strong>Nov 2026</strong><span>Singapore</span></div><div class="marker"></div>
+          <div class="travel-card"><div class="card-top"><div class="place"><span class="flag">🇸🇬</span><div><h3>Singapore</h3><span class="country-name">Singapore</span></div></div><span class="type personal">Personal tour</span></div><div class="event">Personal travel · November 2026</div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <section class="section searchable">
     <div class="wrap">
-      <div class="section-head"><div><div class="eyebrow">At a glance</div><h2>What these trips represent</h2></div><p>The timeline reflects three connected parts of my astronomy work rather than tourism.</p></div>
+      <div class="section-head"><div><div class="eyebrow">At a glance</div><h2>What the professional trips represent</h2></div><p>The work timeline reflects three connected parts of my astronomy activity; personal tours are intentionally kept in their own section.</p></div>
       <div class="summary-grid">
         <div class="summary-card"><b>Olympiads</b><span>International representation as a student, then recurring Bangladesh Team Leader responsibilities.</span></div>
         <div class="summary-card"><b>Research</b><span>International research training and fellowship work, including LEAPS and CASSUM.</span></div>
@@ -282,7 +347,7 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}butto
   </section>
 </main>
 
-<footer class="site-footer"><div class="wrap"><span>© Fahim Rajit Hossain Shwadhin. All rights reserved.</span><span>Professional travel · astronomy · research · education</span></div></footer>
+<footer class="site-footer"><div class="wrap"><span>© Fahim Rajit Hossain Shwadhin. All rights reserved.</span><span>Work/academic travel · personal tours · astronomy</span></div></footer>
 
 <script>
 (()=>{
