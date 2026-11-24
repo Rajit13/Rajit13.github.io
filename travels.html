@@ -75,17 +75,26 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}butto
 
 /* Interactive travel map */
 .map-shell{border:1px solid var(--border);border-radius:14px;background:linear-gradient(180deg,#0b1420,#0d1926);padding:14px;box-shadow:var(--shadow)}
-.travel-map{position:relative;overflow:hidden;border:1px solid #29394e;border-radius:11px;aspect-ratio:12/7;background:#081522 url("images/world_mercator.svg") center/100% 100% no-repeat}
-.travel-map:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(7,16,27,.05),rgba(7,16,27,.18))}
-.map-pin{position:absolute;z-index:3;transform:translate(-50%,-100%);display:inline-flex;align-items:center;justify-content:center;width:28px;height:34px;text-decoration:none;filter:drop-shadow(0 3px 4px rgba(0,0,0,.55));transition:transform .16s ease,filter .16s ease}
-.map-pin:hover,.map-pin:focus{transform:translate(-50%,-100%) scale(1.22);filter:drop-shadow(0 4px 8px rgba(0,0,0,.8));text-decoration:none;outline:none}
-.map-pin .pin-symbol{font-size:25px;line-height:1}
-.map-pin.personal .pin-symbol{filter:hue-rotate(155deg) saturate(1.25)}
-.map-pin .pin-label{position:absolute;left:50%;bottom:33px;transform:translateX(-50%);opacity:0;pointer-events:none;white-space:nowrap;padding:4px 7px;border:1px solid #41516a;border-radius:6px;background:rgba(10,17,27,.96);color:#edf3fb;font-size:10px;font-weight:700;transition:opacity .15s ease}
-.map-pin:hover .pin-label,.map-pin:focus .pin-label{opacity:1}
+.travel-map{position:relative;overflow:hidden;border:1px solid #29394e;border-radius:11px;aspect-ratio:12/7;background:linear-gradient(180deg,#071420,#0a1a29)}
+.travel-map svg{display:block;width:100%;height:100%}
+.map-ocean{fill:#081522}
+.map-graticule{fill:none;stroke:#1f3243;stroke-width:.55;vector-effect:non-scaling-stroke}
+.map-country{fill:#314b61;stroke:#9ab0c1;stroke-width:.48;vector-effect:non-scaling-stroke;transition:fill .15s ease,stroke .15s ease}
+.map-country.work-visited{fill:#3f6680}
+.map-country.personal-visited{fill:#70542f}
+.map-country:hover{fill:#4f7893;stroke:#d9e6ef}
+.map-pin-svg{cursor:pointer;text-decoration:none}
+.map-pin-svg .pin-halo{fill:#0a1420;stroke:#9fc5ff;stroke-width:1.2;vector-effect:non-scaling-stroke}
+.map-pin-svg.personal .pin-halo{stroke:#f5c47b}
+.map-pin-svg .pin-glyph{font-size:28px;text-anchor:middle;dominant-baseline:central;filter:drop-shadow(0 2px 2px rgba(0,0,0,.65))}
+.map-pin-svg:focus .pin-halo,.map-pin-svg:hover .pin-halo{stroke-width:2.3}
+.map-loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;color:#aeb9c8;background:linear-gradient(180deg,rgba(8,21,34,.94),rgba(8,21,34,.78));font-size:12px;z-index:2}
+.map-loading.is-hidden{display:none}
 .map-legend{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:10px;color:#aeb9c8;font-size:11px}
-.map-legend span{display:inline-flex;align-items:center;gap:5px}.map-legend .pin-key{font-size:17px;line-height:1}.map-legend .personal-key{filter:hue-rotate(155deg) saturate(1.25)}
-.map-note{margin-left:auto;color:#7f8da0}.map-note a{color:#9bbfe8}
+.map-legend span{display:inline-flex;align-items:center;gap:5px}
+.map-legend .pin-key{font-size:17px;line-height:1}
+.map-note{margin-left:auto;color:#7f8da0}
+.map-note a{color:#9bbfe8}
 .personal-timeline .timeline:before{background:linear-gradient(180deg,rgba(245,196,123,.65),rgba(191,156,255,.35))}
 .entry.personal .marker:before{background:var(--amber);box-shadow:0 0 0 1px rgba(245,196,123,.65)}
 .entry.personal .travel-card{border-color:#5a4b35;background:rgba(30,25,20,.82)}
@@ -172,27 +181,16 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}butto
 
   <section class="section searchable" id="travel-map">
     <div class="wrap">
-      <div class="section-head"><div><div class="eyebrow">World map</div><h2>Countries I have travelled to</h2></div><p>Physical travel only. Pin positions are calculated from latitude and longitude on the same Mercator projection as the map. Click a 📍 pin to jump to that country’s timeline entry.</p></div>
+      <div class="section-head"><div><div class="eyebrow">World map</div><h2>Countries I have travelled to</h2></div><p>Physical travel only. The political boundaries are drawn from Natural Earth’s dedicated <strong>Bangladesh point-of-view</strong> country dataset. Click a 📍 pin to jump to the corresponding timeline entry.</p></div>
       <div class="map-shell">
-        <div class="travel-map" role="img" aria-label="Mercator world map showing countries Fahim Rajit Hossain Shwadhin has travelled to">
-          <a class="map-pin work" data-lat="22.97" data-lon="78.66" href="#work-india" aria-label="India — work and academic travel"><span class="pin-symbol">📍</span><span class="pin-label">India · 2016, 2025</span></a>
-          <a class="map-pin work" data-lat="46.23" data-lon="2.21" href="#work-france" aria-label="France — work and academic travel"><span class="pin-symbol">📍</span><span class="pin-label">France · 2017</span></a>
-          <a class="map-pin work" data-lat="35.86" data-lon="104.20" href="#work-china" aria-label="China — work and academic travel"><span class="pin-symbol">📍</span><span class="pin-label">China · 2018</span></a>
-          <a class="map-pin work" data-lat="47.16" data-lon="19.50" href="#work-hungary" aria-label="Hungary — work and academic travel"><span class="pin-symbol">📍</span><span class="pin-label">Hungary · 2019</span></a>
-          <a class="map-pin work" data-lat="42.315" data-lon="43.36" href="#work-georgia" aria-label="Georgia — work and academic travel"><span class="pin-symbol">📍</span><span class="pin-label">Georgia · 2022</span></a>
-          <a class="map-pin work" data-lat="51.92" data-lon="19.15" href="#work-poland" aria-label="Poland — work and academic travel"><span class="pin-symbol">📍</span><span class="pin-label">Poland · 2023</span></a>
-          <a class="map-pin work" data-lat="60.13" data-lon="18.64" href="#work-sweden" aria-label="Sweden — work and academic travel"><span class="pin-symbol">📍</span><span class="pin-label">Sweden · 2024</span></a>
-          <a class="map-pin work" data-lat="-14.24" data-lon="-51.93" href="#work-brazil" aria-label="Brazil — work and academic travel"><span class="pin-symbol">📍</span><span class="pin-label">Brazil · 2024</span></a>
-          <a class="map-pin work" data-lat="28.39" data-lon="84.12" href="#work-nepal" aria-label="Nepal — work and academic travel"><span class="pin-symbol">📍</span><span class="pin-label">Nepal · 2024</span></a>
-          <a class="map-pin work" data-lat="23.70" data-lon="120.96" href="#work-taiwan" aria-label="Taiwan — work and academic travel"><span class="pin-symbol">📍</span><span class="pin-label">Taiwan · 2025</span></a>
-          <a class="map-pin work" data-lat="14.06" data-lon="108.28" href="#work-vietnam" aria-label="Vietnam — work and academic travel"><span class="pin-symbol">📍</span><span class="pin-label">Vietnam · 2026</span></a>
-          <a class="map-pin personal" data-lat="27.51" data-lon="90.43" href="#personal-bhutan" aria-label="Bhutan — personal travel"><span class="pin-symbol">📍</span><span class="pin-label">Bhutan · 2019 · personal</span></a>
-          <a class="map-pin personal" data-lat="1.3521" data-lon="103.8198" href="#personal-singapore" aria-label="Singapore — personal travel"><span class="pin-symbol">📍</span><span class="pin-label">Singapore · Nov 2026 · personal</span></a>
+        <div class="travel-map">
+          <div class="map-loading" id="map-loading">Loading high-resolution Bangladesh-view world boundaries…</div>
+          <svg id="travel-world-map" viewBox="0 0 1200 700" role="img" aria-label="Mercator world map using Natural Earth Bangladesh point-of-view country boundaries, with pins for countries travelled to"></svg>
         </div>
         <div class="map-legend">
           <span><i class="pin-key">📍</i> work / academic travel</span>
-          <span><i class="pin-key personal-key">📍</i> personal travel / tours</span>
-          <span class="map-note">Mercator projection · latitude range 80°S–80°N</span>
+          <span><i class="pin-key">📍</i> personal travel / tours</span>
+          <span class="map-note">Boundary data: <a href="https://www.naturalearthdata.com/downloads/10m-cultural-vectors/" target="_blank" rel="noopener">Natural Earth · Admin-0 Countries (Bangladesh POV) ↗</a></span>
         </div>
       </div>
     </div>
@@ -349,6 +347,7 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}butto
 
 <footer class="site-footer"><div class="wrap"><span>© Fahim Rajit Hossain Shwadhin. All rights reserved.</span><span>Work/academic travel · personal tours · astronomy</span></div></footer>
 
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
 <script>
 (()=>{
   const input=document.getElementById('page-search');
@@ -358,20 +357,86 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}butto
     blocks.forEach(block=>block.classList.toggle('hidden-by-search',!!q&&!block.innerText.toLowerCase().includes(q)));
   });
 
-  // The map asset and the pin coordinates use the same Mercator projection:
-  // longitude -180°..180°, latitude -80°..80°.
-  const maxLat=80;
-  const maxY=Math.log(Math.tan(Math.PI/4+(maxLat*Math.PI/180)/2));
-  document.querySelectorAll('.map-pin[data-lat][data-lon]').forEach(pin=>{
-    const lat=Math.max(-maxLat,Math.min(maxLat,parseFloat(pin.dataset.lat)));
-    const lon=parseFloat(pin.dataset.lon);
-    const phi=lat*Math.PI/180;
-    const mercY=Math.log(Math.tan(Math.PI/4+phi/2));
-    const left=((lon+180)/360)*100;
-    const top=((maxY-mercY)/(2*maxY))*100;
-    pin.style.left=left+'%';
-    pin.style.top=top+'%';
-  });
+  const svg=d3.select('#travel-world-map');
+  const loading=document.getElementById('map-loading');
+  const W=1200,H=700;
+  const geoUrl='https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_admin_0_countries_bdg.geojson';
+
+  const workNames=new Set(['India','France','China','Hungary','Georgia','Poland','Sweden','Brazil','Nepal','Taiwan','Vietnam']);
+  const personalNames=new Set(['Bhutan','Singapore']);
+
+  const pins=[
+    {name:'India',lat:22.97,lon:78.66,href:'#work-india',label:'India · 2016, 2025',kind:'work'},
+    {name:'France',lat:46.23,lon:2.21,href:'#work-france',label:'France · 2017',kind:'work'},
+    {name:'China',lat:35.86,lon:104.20,href:'#work-china',label:'China · 2018',kind:'work'},
+    {name:'Hungary',lat:47.16,lon:19.50,href:'#work-hungary',label:'Hungary · 2019',kind:'work'},
+    {name:'Georgia',lat:42.315,lon:43.36,href:'#work-georgia',label:'Georgia · 2022',kind:'work'},
+    {name:'Poland',lat:51.92,lon:19.15,href:'#work-poland',label:'Poland · 2023',kind:'work'},
+    {name:'Sweden',lat:60.13,lon:18.64,href:'#work-sweden',label:'Sweden · 2024',kind:'work'},
+    {name:'Brazil',lat:-14.24,lon:-51.93,href:'#work-brazil',label:'Brazil · 2024',kind:'work'},
+    {name:'Nepal',lat:28.39,lon:84.12,href:'#work-nepal',label:'Nepal · 2024',kind:'work'},
+    {name:'Taiwan',lat:23.70,lon:120.96,href:'#work-taiwan',label:'Taiwan · 2025',kind:'work'},
+    {name:'Vietnam',lat:14.06,lon:108.28,href:'#work-vietnam',label:'Vietnam · 2026',kind:'work'},
+    {name:'Bhutan',lat:27.51,lon:90.43,href:'#personal-bhutan',label:'Bhutan · 2019 · personal',kind:'personal'},
+    {name:'Singapore',lat:1.3521,lon:103.8198,href:'#personal-singapore',label:'Singapore · Nov 2026 · personal',kind:'personal'}
+  ];
+
+  function countryName(d){
+    const p=d.properties||{};
+    return p.NAME || p.NAME_LONG || p.ADMIN || p.SOVEREIGNT || '';
+  }
+
+  fetch(geoUrl)
+    .then(r=>{if(!r.ok) throw new Error('Boundary data could not be loaded'); return r.json();})
+    .then(world=>{
+      const features=world.features.filter(d=>countryName(d)!=='Antarctica');
+      const collection={type:'FeatureCollection',features};
+
+      // True Mercator projection, fitted to the inhabited world while retaining
+      // the published Natural Earth Bangladesh-POV country geometry.
+      const projection=d3.geoMercator()
+        .fitExtent([[24,28],[W-24,H-28]],collection);
+      const path=d3.geoPath(projection);
+
+      svg.append('rect').attr('class','map-ocean').attr('width',W).attr('height',H);
+      svg.append('path')
+        .datum(d3.geoGraticule10())
+        .attr('class','map-graticule')
+        .attr('d',path);
+
+      const countries=svg.append('g').attr('aria-label','Country boundaries');
+      const countryPaths=countries.selectAll('path')
+        .data(features)
+        .join('path')
+        .attr('class',d=>{
+          const n=countryName(d);
+          return 'map-country'+(workNames.has(n)?' work-visited':personalNames.has(n)?' personal-visited':'');
+        })
+        .attr('d',path);
+
+      countryPaths.append('title').text(d=>countryName(d));
+
+      const pinLayer=svg.append('g').attr('aria-label','Travel pins');
+      const pin=pinLayer.selectAll('a')
+        .data(pins)
+        .join('a')
+        .attr('class',d=>'map-pin-svg '+d.kind)
+        .attr('href',d=>d.href)
+        .attr('aria-label',d=>d.label)
+        .attr('transform',d=>{
+          const p=projection([d.lon,d.lat]);
+          return p?'translate('+p[0]+','+p[1]+')':'translate(-100,-100)';
+        });
+
+      pin.append('circle').attr('class','pin-halo').attr('r',16);
+      pin.append('text').attr('class','pin-glyph').attr('y',-1).text('📍');
+      pin.append('title').text(d=>d.label);
+
+      loading.classList.add('is-hidden');
+    })
+    .catch(err=>{
+      loading.textContent='The detailed boundary map could not be loaded. '+err.message+'.';
+    });
 })();
 </script>
 </body>
