@@ -83,11 +83,18 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}butto
 .map-country.work-visited{fill:#3f6680}
 .map-country.personal-visited{fill:#70542f}
 .map-country:hover{fill:#4f7893;stroke:#d9e6ef}
-.map-pin-svg{cursor:pointer;text-decoration:none}
-.map-pin-svg .pin-halo{fill:#0a1420;stroke:#9fc5ff;stroke-width:1.2;vector-effect:non-scaling-stroke}
-.map-pin-svg.personal .pin-halo{stroke:#f5c47b}
-.map-pin-svg .pin-glyph{font-size:28px;text-anchor:middle;dominant-baseline:central;filter:drop-shadow(0 2px 2px rgba(0,0,0,.65))}
-.map-pin-svg:focus .pin-halo,.map-pin-svg:hover .pin-halo{stroke-width:2.3}
+.map-pin-svg{cursor:pointer;text-decoration:none;outline:none}
+.map-pin-svg .pin-marker{transition:transform .16s ease}
+.map-pin-svg .pin-head{fill:#9fc5ff;stroke:#07111c;stroke-width:1.2;vector-effect:non-scaling-stroke}
+.map-pin-svg .pin-stem{stroke:#9fc5ff;stroke-width:1.8;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.map-pin-svg.personal .pin-head{fill:#f5c47b}
+.map-pin-svg.personal .pin-stem{stroke:#f5c47b}
+.map-pin-svg:hover .pin-head,.map-pin-svg:focus .pin-head{fill:#fff;stroke:#fff}
+.map-pin-svg:hover .pin-stem,.map-pin-svg:focus .pin-stem{stroke:#fff}
+.map-controls{position:absolute;top:10px;right:10px;z-index:3;display:flex;flex-direction:column;gap:6px}
+.map-control{width:34px;height:34px;border:1px solid #415169;border-radius:8px;background:rgba(9,18,29,.9);color:#eaf2fb;font-weight:800;cursor:pointer;backdrop-filter:blur(6px)}
+.map-control:hover,.map-control:focus{background:#d9e9ff;color:#101319;border-color:#d9e9ff;outline:none}
+.map-hint{position:absolute;left:10px;bottom:10px;z-index:3;padding:5px 8px;border:1px solid #33465c;border-radius:7px;background:rgba(9,18,29,.82);color:#aeb9c8;font-size:10px;pointer-events:none}
 .map-loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;color:#aeb9c8;background:linear-gradient(180deg,rgba(8,21,34,.94),rgba(8,21,34,.78));font-size:12px;z-index:2}
 .map-loading.is-hidden{display:none}
 .map-legend{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:10px;color:#aeb9c8;font-size:11px}
@@ -181,15 +188,21 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}butto
 
   <section class="section searchable" id="travel-map">
     <div class="wrap">
-      <div class="section-head"><div><div class="eyebrow">World map</div><h2>Countries I have travelled to</h2></div><p>Physical travel only. The political boundaries are drawn from Natural Earth’s dedicated <strong>Bangladesh point-of-view</strong> country dataset. Click a 📍 pin to jump to the corresponding timeline entry.</p></div>
+      <div class="section-head"><div><div class="eyebrow">World map</div><h2>Countries I have travelled to</h2></div><p>Physical travel only. The political boundaries are drawn from Natural Earth’s dedicated <strong>Bangladesh point-of-view</strong> country dataset. Zoom, pan, or click a marker to jump to the corresponding timeline entry.</p></div>
       <div class="map-shell">
         <div class="travel-map">
           <div class="map-loading" id="map-loading">Loading high-resolution Bangladesh-view world boundaries…</div>
-          <svg id="travel-world-map" viewBox="0 0 1200 700" role="img" aria-label="Mercator world map using Natural Earth Bangladesh point-of-view country boundaries, with pins for countries travelled to"></svg>
+          <svg id="travel-world-map" viewBox="0 0 1200 700" role="img" aria-label="Zoomable Mercator world map using Natural Earth Bangladesh point-of-view country boundaries, with travel markers"></svg>
+          <div class="map-controls" aria-label="Map zoom controls">
+            <button class="map-control" id="map-zoom-in" type="button" aria-label="Zoom in">+</button>
+            <button class="map-control" id="map-zoom-out" type="button" aria-label="Zoom out">−</button>
+            <button class="map-control" id="map-zoom-reset" type="button" aria-label="Reset map">↺</button>
+          </div>
+          <div class="map-hint">Scroll / pinch to zoom · drag to pan</div>
         </div>
         <div class="map-legend">
-          <span><i class="pin-key">📍</i> work / academic travel</span>
-          <span><i class="pin-key">📍</i> personal travel / tours</span>
+          <span><i class="dot" style="background:#9fc5ff"></i> work / academic travel</span>
+          <span><i class="dot" style="background:#f5c47b"></i> personal travel / tours</span>
           <span class="map-note">Boundary data: <a href="https://www.naturalearthdata.com/downloads/10m-cultural-vectors/" target="_blank" rel="noopener">Natural Earth · Admin-0 Countries (Bangladesh POV) ↗</a></span>
         </div>
       </div>
@@ -392,19 +405,20 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}butto
       const features=world.features.filter(d=>countryName(d)!=='Antarctica');
       const collection={type:'FeatureCollection',features};
 
-      // True Mercator projection, fitted to the inhabited world while retaining
-      // the published Natural Earth Bangladesh-POV country geometry.
       const projection=d3.geoMercator()
         .fitExtent([[24,28],[W-24,H-28]],collection);
       const path=d3.geoPath(projection);
 
       svg.append('rect').attr('class','map-ocean').attr('width',W).attr('height',H);
-      svg.append('path')
+
+      const zoomLayer=svg.append('g').attr('class','map-zoom-layer');
+
+      zoomLayer.append('path')
         .datum(d3.geoGraticule10())
         .attr('class','map-graticule')
         .attr('d',path);
 
-      const countries=svg.append('g').attr('aria-label','Country boundaries');
+      const countries=zoomLayer.append('g').attr('aria-label','Country boundaries');
       const countryPaths=countries.selectAll('path')
         .data(features)
         .join('path')
@@ -416,7 +430,7 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}butto
 
       countryPaths.append('title').text(d=>countryName(d));
 
-      const pinLayer=svg.append('g').attr('aria-label','Travel pins');
+      const pinLayer=zoomLayer.append('g').attr('aria-label','Travel markers');
       const pin=pinLayer.selectAll('a')
         .data(pins)
         .join('a')
@@ -428,16 +442,40 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}butto
           return p?'translate('+p[0]+','+p[1]+')':'translate(-100,-100)';
         });
 
-      pin.append('circle').attr('class','pin-halo').attr('r',16);
-      pin.append('text').attr('class','pin-glyph').attr('y',-1).text('📍');
+      const marker=pin.append('g').attr('class','pin-marker');
+      marker.append('line').attr('class','pin-stem').attr('x1',0).attr('y1',4).attr('x2',0).attr('y2',10);
+      marker.append('circle').attr('class','pin-head').attr('r',4.6).attr('cy',0);
       pin.append('title').text(d=>d.label);
+
+      const zoom=d3.zoom()
+        .scaleExtent([1,8])
+        .translateExtent([[0,0],[W,H]])
+        .extent([[0,0],[W,H]])
+        .on('zoom',event=>{
+          zoomLayer.attr('transform',event.transform);
+          const inv=1/event.transform.k;
+          pin.select('.pin-marker').attr('transform','scale('+inv+')');
+        });
+
+      svg.call(zoom)
+        .on('dblclick.zoom',null);
+
+      document.getElementById('map-zoom-in').addEventListener('click',()=>{
+        svg.transition().duration(220).call(zoom.scaleBy,1.5);
+      });
+      document.getElementById('map-zoom-out').addEventListener('click',()=>{
+        svg.transition().duration(220).call(zoom.scaleBy,1/1.5);
+      });
+      document.getElementById('map-zoom-reset').addEventListener('click',()=>{
+        svg.transition().duration(260).call(zoom.transform,d3.zoomIdentity);
+      });
 
       loading.classList.add('is-hidden');
     })
     .catch(err=>{
       loading.textContent='The detailed boundary map could not be loaded. '+err.message+'.';
     });
-})();
+})();;
 </script>
 </body>
 </html>
